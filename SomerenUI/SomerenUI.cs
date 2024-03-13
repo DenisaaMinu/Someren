@@ -57,11 +57,15 @@ namespace SomerenUI
         private void DisplayStudents(List<Student> students)
         {
             // clear the listview before filling it
-            listViewStudents.Clear();
+            listViewStudents.Items.Clear();
 
             foreach (Student student in students)
             {
-                ListViewItem li = new ListViewItem($"{student.Number} {student.Name} {student.TelephoneNumber} {student.Class}");
+                ListViewItem li = new ListViewItem(student.Name);
+                li.SubItems.Add(student.Number);
+                li.SubItems.Add(student.TelephoneNumber);
+                li.SubItems.Add(student.Class);
+                //test
                 li.Tag = student;   // link student object to listview item
                 listViewStudents.Items.Add(li);
             }
@@ -101,7 +105,7 @@ namespace SomerenUI
         private void DisplayTeachers(List<Teacher> teachers)
         {
             // clear the listview before filling it
-            listViewTeachers.Clear();
+            listViewTeachers.Items.Clear();
 
             foreach (Teacher teacher in teachers)
             {
@@ -143,7 +147,7 @@ namespace SomerenUI
         private void DisplayRooms(List<Room> rooms)
         {
             // clear the listview before filling it
-            listViewRooms.Clear();
+            listViewRooms.Items.Clear();
 
             foreach (Room room in rooms)
             {

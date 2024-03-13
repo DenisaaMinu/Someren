@@ -41,6 +41,10 @@
             pnlStudents = new System.Windows.Forms.Panel();
             pictureBox1 = new System.Windows.Forms.PictureBox();
             listViewStudents = new System.Windows.Forms.ListView();
+            columnHeader2 = new System.Windows.Forms.ColumnHeader();
+            columnHeader3 = new System.Windows.Forms.ColumnHeader();
+            columnHeader4 = new System.Windows.Forms.ColumnHeader();
+            columnHeader5 = new System.Windows.Forms.ColumnHeader();
             label1 = new System.Windows.Forms.Label();
             pnlTeachers = new System.Windows.Forms.Panel();
             pictureBox2 = new System.Windows.Forms.PictureBox();
@@ -155,12 +159,34 @@
             // 
             // listViewStudents
             // 
+            listViewStudents.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { columnHeader2, columnHeader3, columnHeader4, columnHeader5 });
             listViewStudents.Location = new System.Drawing.Point(23, 70);
             listViewStudents.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             listViewStudents.Name = "listViewStudents";
             listViewStudents.Size = new System.Drawing.Size(1093, 509);
             listViewStudents.TabIndex = 1;
             listViewStudents.UseCompatibleStateImageBehavior = false;
+            listViewStudents.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader2
+            // 
+            columnHeader2.Text = "Name";
+            columnHeader2.Width = 270;
+            // 
+            // columnHeader3
+            // 
+            columnHeader3.Text = "Student number";
+            columnHeader3.Width = 270;
+            // 
+            // columnHeader4
+            // 
+            columnHeader4.Text = "Telephone number";
+            columnHeader4.Width = 270;
+            // 
+            // columnHeader5
+            // 
+            columnHeader5.Text = "Class";
+            columnHeader5.Width = 270;
             // 
             // label1
             // 
@@ -255,11 +281,11 @@
             AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(1374, 842);
-            Controls.Add(pnlRooms);
-            Controls.Add(pnlTeachers);
             Controls.Add(menuStrip1);
             Controls.Add(pnlStudents);
             Controls.Add(pnlDashboard);
+            Controls.Add(pnlRooms);
+            Controls.Add(pnlTeachers);
             MainMenuStrip = menuStrip1;
             Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             Name = "SomerenUI";
@@ -304,5 +330,10 @@
         private System.Windows.Forms.ListView listViewRooms;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.ColumnHeader columnHeader4;
+        private System.Windows.Forms.ColumnHeader columnHeader5;
     }
 }

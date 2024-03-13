@@ -9,6 +9,6 @@ namespace SomerenModel
         public string Number { get; set; } // StudentNumber, e.g. 474791
         public string Class {  get; set; }
         public string TelephoneNumber { get; set; }
-        public DateTime BirthDate { get; set; }
+        //remove it later
     }
 }
