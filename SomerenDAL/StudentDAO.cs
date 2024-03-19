@@ -8,7 +8,7 @@ namespace SomerenDAL
     public class StudentDao : BaseDao
     {
         public List<Student> GetAllStudents()
-        {
+        {//
             string query = "SELECT studentNumber, name, class, phoneNumber FROM [STUDENT]";
             SqlParameter[] sqlParameters = new SqlParameter[0];
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
