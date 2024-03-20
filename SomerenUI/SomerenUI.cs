@@ -22,9 +22,8 @@ namespace SomerenUI
                 {
                     control.Hide();
                 }
-
-                currentPanel.Show();
             }
+            currentPanel.Show();
         }
 
         private void ShowDashboardPanel()
@@ -80,14 +79,20 @@ namespace SomerenUI
 
             foreach (Student student in students)
             {
-                ListViewItem li = new ListViewItem(student.Name);
-                li.SubItems.Add(student.Number);
-                li.SubItems.Add(student.TelephoneNumber);
-                li.SubItems.Add(student.Class);
-                //test
-                li.Tag = student;   // link student object to listview item
+                ListViewItem li = CreateStudentLItem(student);
                 listViewStudents.Items.Add(li);
             }
+        }
+
+        private ListViewItem CreateStudentLItem(Student student)
+        {
+            ListViewItem li = new ListViewItem(student.Name);
+            li.SubItems.Add(student.Number);
+            li.SubItems.Add(student.TelephoneNumber);
+            li.SubItems.Add(student.Class);
+            //test
+            li.Tag = student;   // link student object to listview item
+            return li;
         }
 
 
@@ -269,7 +274,7 @@ namespace SomerenUI
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message );
             }
         }
 

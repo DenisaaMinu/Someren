@@ -2,6 +2,8 @@
 using System.Data;
 using SomerenModel;
 using System.Collections.Generic;
+using System;
+using System.Data.Common;
 
 namespace SomerenDAL
 {
@@ -27,7 +29,7 @@ namespace SomerenDAL
                     Name = dr["name"].ToString(),
                     VATRate = (decimal)dr["VATRate"],
                     Price = (decimal)dr["price"],
-                    Stock = (int)dr["stock"],               
+                    Stock = (int)dr["stock"],
                 };
 
                 if (drink.Stock > 10)
@@ -47,7 +49,8 @@ namespace SomerenDAL
         public void AddDrink(Drink drink)
         {
             string query = "INSERT INTO [DRINK]" +
-                           "VALUES (@Id, @Name, @VATRate, @Price, @Stock";
+                                     "VALUES (@Id, @Name, @VATRate, @Price, @Stock)" +
+                                     "SELECT SCOPE_IDENTITY();";
             SqlParameter[] sqlParameters =
                 {
                 new SqlParameter("@Id", drink.Id),
@@ -57,7 +60,8 @@ namespace SomerenDAL
                 new SqlParameter("@Stock", drink.Stock),
             };
 
-            ExecuteEditQuery(query, sqlParameters);
+            ExecuteAddQuery(query, sqlParameters);
+            drink.Id = Convert.ToInt32(query);
         }
 
         public void DeleteDrink(Drink drink)
