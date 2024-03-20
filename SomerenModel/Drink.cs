@@ -12,6 +12,7 @@ namespace SomerenModel
         public string Name { get; set; }
         public decimal Price { get; set; }
         public decimal VATRate { get; set; }
+        public bool IsAlcoholic { get; set; }
         public int Stock {  get; set; }
         public string StockStatus {  get; set; }
     }

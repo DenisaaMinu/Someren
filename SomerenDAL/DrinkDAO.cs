@@ -29,6 +29,7 @@ namespace SomerenDAL
                     VATRate = (decimal)dr["VATRate"],
                     Price = (decimal)dr["price"],
                     Stock = (int)dr["stock"],
+                    IsAlcoholic = (bool)dr["alcoholic"]
                 };
 
                 if (drink.Stock > 10)

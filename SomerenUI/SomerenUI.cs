@@ -206,8 +206,8 @@ namespace SomerenUI
             ShowRoomsPanel();
         }
 
-        //drinks
-        private void ShowDrinksPanel()
+        //drinks supplies
+        private void ShowDrinksSuppliesPanel()
         {
             // show rooms
             ShowCurrentPanel(pnlDrinks);
@@ -216,7 +216,7 @@ namespace SomerenUI
             {
                 // get and display all drinks
                 List<Drink> drinks = GetDrinks();
-                DisplayDrinks(drinks);
+                DisplaySuppliesDrinks(drinks);
             }
             catch (Exception e)
             {
@@ -231,7 +231,7 @@ namespace SomerenUI
             return drinks;
         }
 
-        private void DisplayDrinks(List<Drink> drinks)
+        private void DisplaySuppliesDrinks(List<Drink> drinks)
         {
             // clear the listview before filling it
             listViewDrinks.Items.Clear();
@@ -257,7 +257,7 @@ namespace SomerenUI
 
         private void drinkSuppliesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ShowDrinksPanel();
+            ShowDrinksSuppliesPanel();
         }
 
         private void listViewDrinks_SelectedIndexChanged(object sender, EventArgs e)
