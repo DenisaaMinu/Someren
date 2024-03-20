@@ -38,6 +38,7 @@
             roomsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             drinksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             drinkSuppliesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            orderingDrinksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             pnlDashboard = new System.Windows.Forms.Panel();
             lblDashboard = new System.Windows.Forms.Label();
             pnlStudents = new System.Windows.Forms.Panel();
@@ -61,39 +62,19 @@
             pictureBox3 = new System.Windows.Forms.PictureBox();
             label3 = new System.Windows.Forms.Label();
             listViewRooms = new System.Windows.Forms.ListView();
+            columnHeader34 = new System.Windows.Forms.ColumnHeader();
+            columnHeader35 = new System.Windows.Forms.ColumnHeader();
+            columnHeader36 = new System.Windows.Forms.ColumnHeader();
+            columnHeader37 = new System.Windows.Forms.ColumnHeader();
+            columnHeader38 = new System.Windows.Forms.ColumnHeader();
+            columnHeader39 = new System.Windows.Forms.ColumnHeader();
             pnlDrinks = new System.Windows.Forms.Panel();
-            textBox13 = new System.Windows.Forms.TextBox();
-            textBox14 = new System.Windows.Forms.TextBox();
-            textBox15 = new System.Windows.Forms.TextBox();
-            textBox16 = new System.Windows.Forms.TextBox();
-            textBox17 = new System.Windows.Forms.TextBox();
-            textBox18 = new System.Windows.Forms.TextBox();
-            listView3 = new System.Windows.Forms.ListView();
-            columnHeader23 = new System.Windows.Forms.ColumnHeader();
-            columnHeader24 = new System.Windows.Forms.ColumnHeader();
-            columnHeader25 = new System.Windows.Forms.ColumnHeader();
-            columnHeader26 = new System.Windows.Forms.ColumnHeader();
-            columnHeader27 = new System.Windows.Forms.ColumnHeader();
-            columnHeader28 = new System.Windows.Forms.ColumnHeader();
-            textBox7 = new System.Windows.Forms.TextBox();
-            textBox8 = new System.Windows.Forms.TextBox();
-            textBox9 = new System.Windows.Forms.TextBox();
-            textBox10 = new System.Windows.Forms.TextBox();
-            textBox11 = new System.Windows.Forms.TextBox();
-            textBox12 = new System.Windows.Forms.TextBox();
-            listView2 = new System.Windows.Forms.ListView();
-            columnHeader17 = new System.Windows.Forms.ColumnHeader();
-            columnHeader18 = new System.Windows.Forms.ColumnHeader();
-            columnHeader19 = new System.Windows.Forms.ColumnHeader();
-            columnHeader20 = new System.Windows.Forms.ColumnHeader();
-            columnHeader21 = new System.Windows.Forms.ColumnHeader();
-            columnHeader22 = new System.Windows.Forms.ColumnHeader();
-            textBox6 = new System.Windows.Forms.TextBox();
-            textBox5 = new System.Windows.Forms.TextBox();
-            textBox4 = new System.Windows.Forms.TextBox();
-            textBox3 = new System.Windows.Forms.TextBox();
-            textBox2 = new System.Windows.Forms.TextBox();
-            textBox1 = new System.Windows.Forms.TextBox();
+            txtStockStatus = new System.Windows.Forms.TextBox();
+            txtStock = new System.Windows.Forms.TextBox();
+            txtPrice = new System.Windows.Forms.TextBox();
+            txtVATRate = new System.Windows.Forms.TextBox();
+            txtName = new System.Windows.Forms.TextBox();
+            txtId = new System.Windows.Forms.TextBox();
             listView1 = new System.Windows.Forms.ListView();
             columnHeader11 = new System.Windows.Forms.ColumnHeader();
             columnHeader12 = new System.Windows.Forms.ColumnHeader();
@@ -113,12 +94,6 @@
             columnHeader10 = new System.Windows.Forms.ColumnHeader();
             pictureBox4 = new System.Windows.Forms.PictureBox();
             label4 = new System.Windows.Forms.Label();
-            columnHeader34 = new System.Windows.Forms.ColumnHeader();
-            columnHeader35 = new System.Windows.Forms.ColumnHeader();
-            columnHeader36 = new System.Windows.Forms.ColumnHeader();
-            columnHeader37 = new System.Windows.Forms.ColumnHeader();
-            columnHeader38 = new System.Windows.Forms.ColumnHeader();
-            columnHeader39 = new System.Windows.Forms.ColumnHeader();
             menuStrip1.SuspendLayout();
             pnlDashboard.SuspendLayout();
             pnlStudents.SuspendLayout();
@@ -186,7 +161,7 @@
             // 
             // drinksToolStripMenuItem
             // 
-            drinksToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { drinkSuppliesToolStripMenuItem });
+            drinksToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { drinkSuppliesToolStripMenuItem, orderingDrinksToolStripMenuItem });
             drinksToolStripMenuItem.Name = "drinksToolStripMenuItem";
             drinksToolStripMenuItem.Size = new System.Drawing.Size(78, 29);
             drinksToolStripMenuItem.Text = "Drinks";
@@ -194,9 +169,15 @@
             // drinkSuppliesToolStripMenuItem
             // 
             drinkSuppliesToolStripMenuItem.Name = "drinkSuppliesToolStripMenuItem";
-            drinkSuppliesToolStripMenuItem.Size = new System.Drawing.Size(226, 34);
+            drinkSuppliesToolStripMenuItem.Size = new System.Drawing.Size(238, 34);
             drinkSuppliesToolStripMenuItem.Text = "Drink supplies";
             drinkSuppliesToolStripMenuItem.Click += drinkSuppliesToolStripMenuItem_Click;
+            // 
+            // orderingDrinksToolStripMenuItem
+            // 
+            orderingDrinksToolStripMenuItem.Name = "orderingDrinksToolStripMenuItem";
+            orderingDrinksToolStripMenuItem.Size = new System.Drawing.Size(238, 34);
+            orderingDrinksToolStripMenuItem.Text = "Ordering drinks";
             // 
             // pnlDashboard
             // 
@@ -241,6 +222,7 @@
             // listViewStudents
             // 
             listViewStudents.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { columnHeader2, columnHeader3, columnHeader4, columnHeader5 });
+            listViewStudents.FullRowSelect = true;
             listViewStudents.Location = new System.Drawing.Point(23, 70);
             listViewStudents.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             listViewStudents.Name = "listViewStudents";
@@ -380,6 +362,7 @@
             // listViewRooms
             // 
             listViewRooms.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { columnHeader34, columnHeader35, columnHeader36, columnHeader37, columnHeader38, columnHeader39 });
+            listViewRooms.FullRowSelect = true;
             listViewRooms.Location = new System.Drawing.Point(23, 70);
             listViewRooms.Name = "listViewRooms";
             listViewRooms.Size = new System.Drawing.Size(1093, 509);
@@ -387,28 +370,44 @@
             listViewRooms.UseCompatibleStateImageBehavior = false;
             listViewRooms.View = System.Windows.Forms.View.Details;
             // 
+            // columnHeader34
+            // 
+            columnHeader34.Text = "Room id";
+            columnHeader34.Width = 160;
+            // 
+            // columnHeader35
+            // 
+            columnHeader35.Text = "Building";
+            columnHeader35.Width = 160;
+            // 
+            // columnHeader36
+            // 
+            columnHeader36.Text = "Number";
+            columnHeader36.Width = 160;
+            // 
+            // columnHeader37
+            // 
+            columnHeader37.Text = "Size";
+            columnHeader37.Width = 160;
+            // 
+            // columnHeader38
+            // 
+            columnHeader38.Text = "Capacity";
+            columnHeader38.Width = 160;
+            // 
+            // columnHeader39
+            // 
+            columnHeader39.Text = "Type";
+            columnHeader39.Width = 160;
+            // 
             // pnlDrinks
             // 
-            pnlDrinks.Controls.Add(textBox13);
-            pnlDrinks.Controls.Add(textBox14);
-            pnlDrinks.Controls.Add(textBox15);
-            pnlDrinks.Controls.Add(textBox16);
-            pnlDrinks.Controls.Add(textBox17);
-            pnlDrinks.Controls.Add(textBox18);
-            pnlDrinks.Controls.Add(listView3);
-            pnlDrinks.Controls.Add(textBox7);
-            pnlDrinks.Controls.Add(textBox8);
-            pnlDrinks.Controls.Add(textBox9);
-            pnlDrinks.Controls.Add(textBox10);
-            pnlDrinks.Controls.Add(textBox11);
-            pnlDrinks.Controls.Add(textBox12);
-            pnlDrinks.Controls.Add(listView2);
-            pnlDrinks.Controls.Add(textBox6);
-            pnlDrinks.Controls.Add(textBox5);
-            pnlDrinks.Controls.Add(textBox4);
-            pnlDrinks.Controls.Add(textBox3);
-            pnlDrinks.Controls.Add(textBox2);
-            pnlDrinks.Controls.Add(textBox1);
+            pnlDrinks.Controls.Add(txtStockStatus);
+            pnlDrinks.Controls.Add(txtStock);
+            pnlDrinks.Controls.Add(txtPrice);
+            pnlDrinks.Controls.Add(txtVATRate);
+            pnlDrinks.Controls.Add(txtName);
+            pnlDrinks.Controls.Add(txtId);
             pnlDrinks.Controls.Add(listView1);
             pnlDrinks.Controls.Add(buttonModifyDrink);
             pnlDrinks.Controls.Add(buttonDeleteDrink);
@@ -421,221 +420,55 @@
             pnlDrinks.Size = new System.Drawing.Size(1340, 777);
             pnlDrinks.TabIndex = 3;
             // 
-            // textBox13
+            // txtStockStatus
             // 
-            textBox13.Location = new System.Drawing.Point(835, 690);
-            textBox13.Name = "textBox13";
-            textBox13.Size = new System.Drawing.Size(163, 31);
-            textBox13.TabIndex = 30;
+            txtStockStatus.Location = new System.Drawing.Point(835, 558);
+            txtStockStatus.Name = "txtStockStatus";
+            txtStockStatus.Size = new System.Drawing.Size(250, 31);
+            txtStockStatus.TabIndex = 16;
             // 
-            // textBox14
+            // txtStock
             // 
-            textBox14.Location = new System.Drawing.Point(674, 690);
-            textBox14.Name = "textBox14";
-            textBox14.Size = new System.Drawing.Size(163, 31);
-            textBox14.TabIndex = 29;
+            txtStock.Location = new System.Drawing.Point(674, 558);
+            txtStock.Name = "txtStock";
+            txtStock.Size = new System.Drawing.Size(250, 31);
+            txtStock.TabIndex = 15;
             // 
-            // textBox15
+            // txtPrice
             // 
-            textBox15.Location = new System.Drawing.Point(512, 690);
-            textBox15.Name = "textBox15";
-            textBox15.Size = new System.Drawing.Size(163, 31);
-            textBox15.TabIndex = 28;
+            txtPrice.Location = new System.Drawing.Point(512, 558);
+            txtPrice.Name = "txtPrice";
+            txtPrice.Size = new System.Drawing.Size(250, 31);
+            txtPrice.TabIndex = 14;
             // 
-            // textBox16
+            // txtVATRate
             // 
-            textBox16.Location = new System.Drawing.Point(353, 690);
-            textBox16.Name = "textBox16";
-            textBox16.Size = new System.Drawing.Size(163, 31);
-            textBox16.TabIndex = 27;
+            txtVATRate.Location = new System.Drawing.Point(353, 558);
+            txtVATRate.Name = "txtVATRate";
+            txtVATRate.Size = new System.Drawing.Size(250, 31);
+            txtVATRate.TabIndex = 13;
             // 
-            // textBox17
+            // txtName
             // 
-            textBox17.Location = new System.Drawing.Point(194, 690);
-            textBox17.Name = "textBox17";
-            textBox17.Size = new System.Drawing.Size(163, 31);
-            textBox17.TabIndex = 26;
+            txtName.Location = new System.Drawing.Point(194, 558);
+            txtName.Name = "txtName";
+            txtName.Size = new System.Drawing.Size(250, 31);
+            txtName.TabIndex = 12;
             // 
-            // textBox18
+            // txtId
             // 
-            textBox18.Location = new System.Drawing.Point(32, 690);
-            textBox18.Name = "textBox18";
-            textBox18.Size = new System.Drawing.Size(163, 31);
-            textBox18.TabIndex = 25;
-            // 
-            // listView3
-            // 
-            listView3.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { columnHeader23, columnHeader24, columnHeader25, columnHeader26, columnHeader27, columnHeader28 });
-            listView3.FullRowSelect = true;
-            listView3.Location = new System.Drawing.Point(32, 647);
-            listView3.Name = "listView3";
-            listView3.Size = new System.Drawing.Size(966, 74);
-            listView3.TabIndex = 24;
-            listView3.UseCompatibleStateImageBehavior = false;
-            listView3.View = System.Windows.Forms.View.Details;
-            // 
-            // columnHeader23
-            // 
-            columnHeader23.Text = "Drink id";
-            columnHeader23.Width = 160;
-            // 
-            // columnHeader24
-            // 
-            columnHeader24.Text = "Name";
-            columnHeader24.Width = 160;
-            // 
-            // columnHeader25
-            // 
-            columnHeader25.Text = "VAT rate";
-            columnHeader25.Width = 160;
-            // 
-            // columnHeader26
-            // 
-            columnHeader26.Text = "Price";
-            columnHeader26.Width = 160;
-            // 
-            // columnHeader27
-            // 
-            columnHeader27.Text = "Stock";
-            columnHeader27.Width = 160;
-            // 
-            // columnHeader28
-            // 
-            columnHeader28.Text = "Stock status";
-            columnHeader28.Width = 160;
-            // 
-            // textBox7
-            // 
-            textBox7.Location = new System.Drawing.Point(835, 533);
-            textBox7.Name = "textBox7";
-            textBox7.Size = new System.Drawing.Size(163, 31);
-            textBox7.TabIndex = 23;
-            // 
-            // textBox8
-            // 
-            textBox8.Location = new System.Drawing.Point(674, 533);
-            textBox8.Name = "textBox8";
-            textBox8.Size = new System.Drawing.Size(163, 31);
-            textBox8.TabIndex = 22;
-            // 
-            // textBox9
-            // 
-            textBox9.Location = new System.Drawing.Point(512, 533);
-            textBox9.Name = "textBox9";
-            textBox9.Size = new System.Drawing.Size(163, 31);
-            textBox9.TabIndex = 21;
-            // 
-            // textBox10
-            // 
-            textBox10.Location = new System.Drawing.Point(353, 533);
-            textBox10.Name = "textBox10";
-            textBox10.Size = new System.Drawing.Size(163, 31);
-            textBox10.TabIndex = 20;
-            // 
-            // textBox11
-            // 
-            textBox11.Location = new System.Drawing.Point(194, 533);
-            textBox11.Name = "textBox11";
-            textBox11.Size = new System.Drawing.Size(163, 31);
-            textBox11.TabIndex = 19;
-            // 
-            // textBox12
-            // 
-            textBox12.Location = new System.Drawing.Point(32, 533);
-            textBox12.Name = "textBox12";
-            textBox12.Size = new System.Drawing.Size(163, 31);
-            textBox12.TabIndex = 18;
-            // 
-            // listView2
-            // 
-            listView2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { columnHeader17, columnHeader18, columnHeader19, columnHeader20, columnHeader21, columnHeader22 });
-            listView2.FullRowSelect = true;
-            listView2.Location = new System.Drawing.Point(32, 490);
-            listView2.Name = "listView2";
-            listView2.Size = new System.Drawing.Size(966, 74);
-            listView2.TabIndex = 17;
-            listView2.UseCompatibleStateImageBehavior = false;
-            listView2.View = System.Windows.Forms.View.Details;
-            // 
-            // columnHeader17
-            // 
-            columnHeader17.Text = "Drink id";
-            columnHeader17.Width = 160;
-            // 
-            // columnHeader18
-            // 
-            columnHeader18.Text = "Name";
-            columnHeader18.Width = 160;
-            // 
-            // columnHeader19
-            // 
-            columnHeader19.Text = "VAT rate";
-            columnHeader19.Width = 160;
-            // 
-            // columnHeader20
-            // 
-            columnHeader20.Text = "Price";
-            columnHeader20.Width = 160;
-            // 
-            // columnHeader21
-            // 
-            columnHeader21.Text = "Stock";
-            columnHeader21.Width = 160;
-            // 
-            // columnHeader22
-            // 
-            columnHeader22.Text = "Stock status";
-            columnHeader22.Width = 160;
-            // 
-            // textBox6
-            // 
-            textBox6.Location = new System.Drawing.Point(835, 368);
-            textBox6.Name = "textBox6";
-            textBox6.Size = new System.Drawing.Size(163, 31);
-            textBox6.TabIndex = 16;
-            // 
-            // textBox5
-            // 
-            textBox5.Location = new System.Drawing.Point(674, 368);
-            textBox5.Name = "textBox5";
-            textBox5.Size = new System.Drawing.Size(163, 31);
-            textBox5.TabIndex = 15;
-            // 
-            // textBox4
-            // 
-            textBox4.Location = new System.Drawing.Point(512, 368);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new System.Drawing.Size(163, 31);
-            textBox4.TabIndex = 14;
-            // 
-            // textBox3
-            // 
-            textBox3.Location = new System.Drawing.Point(353, 368);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new System.Drawing.Size(163, 31);
-            textBox3.TabIndex = 13;
-            // 
-            // textBox2
-            // 
-            textBox2.Location = new System.Drawing.Point(194, 368);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new System.Drawing.Size(163, 31);
-            textBox2.TabIndex = 12;
-            // 
-            // textBox1
-            // 
-            textBox1.Location = new System.Drawing.Point(32, 368);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new System.Drawing.Size(163, 31);
-            textBox1.TabIndex = 11;
+            txtId.Location = new System.Drawing.Point(32, 558);
+            txtId.Name = "txtId";
+            txtId.Size = new System.Drawing.Size(250, 31);
+            txtId.TabIndex = 11;
             // 
             // listView1
             // 
             listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { columnHeader11, columnHeader12, columnHeader13, columnHeader14, columnHeader15, columnHeader16 });
             listView1.FullRowSelect = true;
-            listView1.Location = new System.Drawing.Point(32, 325);
+            listView1.Location = new System.Drawing.Point(32, 515);
             listView1.Name = "listView1";
-            listView1.Size = new System.Drawing.Size(966, 74);
+            listView1.Size = new System.Drawing.Size(1053, 74);
             listView1.TabIndex = 8;
             listView1.UseCompatibleStateImageBehavior = false;
             listView1.View = System.Windows.Forms.View.Details;
@@ -672,7 +505,7 @@
             // 
             // buttonModifyDrink
             // 
-            buttonModifyDrink.Location = new System.Drawing.Point(381, 727);
+            buttonModifyDrink.Location = new System.Drawing.Point(826, 616);
             buttonModifyDrink.Name = "buttonModifyDrink";
             buttonModifyDrink.Size = new System.Drawing.Size(112, 34);
             buttonModifyDrink.TabIndex = 7;
@@ -682,7 +515,7 @@
             // 
             // buttonDeleteDrink
             // 
-            buttonDeleteDrink.Location = new System.Drawing.Point(381, 572);
+            buttonDeleteDrink.Location = new System.Drawing.Point(460, 616);
             buttonDeleteDrink.Name = "buttonDeleteDrink";
             buttonDeleteDrink.Size = new System.Drawing.Size(112, 34);
             buttonDeleteDrink.TabIndex = 6;
@@ -692,7 +525,7 @@
             // 
             // buttonAddDrink
             // 
-            buttonAddDrink.Location = new System.Drawing.Point(381, 405);
+            buttonAddDrink.Location = new System.Drawing.Point(148, 616);
             buttonAddDrink.Name = "buttonAddDrink";
             buttonAddDrink.Size = new System.Drawing.Size(112, 34);
             buttonAddDrink.TabIndex = 5;
@@ -706,7 +539,7 @@
             listViewDrinks.FullRowSelect = true;
             listViewDrinks.Location = new System.Drawing.Point(32, 70);
             listViewDrinks.Name = "listViewDrinks";
-            listViewDrinks.Size = new System.Drawing.Size(966, 217);
+            listViewDrinks.Size = new System.Drawing.Size(1053, 388);
             listViewDrinks.TabIndex = 4;
             listViewDrinks.UseCompatibleStateImageBehavior = false;
             listViewDrinks.View = System.Windows.Forms.View.Details;
@@ -762,47 +595,17 @@
             label4.TabIndex = 0;
             label4.Text = "Drinks";
             // 
-            // columnHeader34
-            // 
-            columnHeader34.Text = "Room id";
-            columnHeader34.Width = 160;
-            // 
-            // columnHeader35
-            // 
-            columnHeader35.Text = "Building";
-            columnHeader35.Width = 160;
-            // 
-            // columnHeader36
-            // 
-            columnHeader36.Text = "Number";
-            columnHeader36.Width = 160;
-            // 
-            // columnHeader37
-            // 
-            columnHeader37.Text = "Size";
-            columnHeader37.Width = 160;
-            // 
-            // columnHeader38
-            // 
-            columnHeader38.Text = "Capacity";
-            columnHeader38.Width = 160;
-            // 
-            // columnHeader39
-            // 
-            columnHeader39.Text = "Type";
-            columnHeader39.Width = 160;
-            // 
             // SomerenUI
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(1374, 842);
             Controls.Add(menuStrip1);
-            Controls.Add(pnlRooms);
-            Controls.Add(pnlTeachers);
             Controls.Add(pnlDrinks);
             Controls.Add(pnlStudents);
             Controls.Add(pnlDashboard);
+            Controls.Add(pnlRooms);
+            Controls.Add(pnlTeachers);
             MainMenuStrip = menuStrip1;
             Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             Name = "SomerenUI";
@@ -876,38 +679,12 @@
         private System.Windows.Forms.ColumnHeader columnHeader14;
         private System.Windows.Forms.ColumnHeader columnHeader15;
         private System.Windows.Forms.ColumnHeader columnHeader16;
-        private System.Windows.Forms.TextBox textBox6;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox13;
-        private System.Windows.Forms.TextBox textBox14;
-        private System.Windows.Forms.TextBox textBox15;
-        private System.Windows.Forms.TextBox textBox16;
-        private System.Windows.Forms.TextBox textBox17;
-        private System.Windows.Forms.TextBox textBox18;
-        private System.Windows.Forms.ListView listView3;
-        private System.Windows.Forms.ColumnHeader columnHeader23;
-        private System.Windows.Forms.ColumnHeader columnHeader24;
-        private System.Windows.Forms.ColumnHeader columnHeader25;
-        private System.Windows.Forms.ColumnHeader columnHeader26;
-        private System.Windows.Forms.ColumnHeader columnHeader27;
-        private System.Windows.Forms.ColumnHeader columnHeader28;
-        private System.Windows.Forms.TextBox textBox7;
-        private System.Windows.Forms.TextBox textBox8;
-        private System.Windows.Forms.TextBox textBox9;
-        private System.Windows.Forms.TextBox textBox10;
-        private System.Windows.Forms.TextBox textBox11;
-        private System.Windows.Forms.TextBox textBox12;
-        private System.Windows.Forms.ListView listView2;
-        private System.Windows.Forms.ColumnHeader columnHeader17;
-        private System.Windows.Forms.ColumnHeader columnHeader18;
-        private System.Windows.Forms.ColumnHeader columnHeader19;
-        private System.Windows.Forms.ColumnHeader columnHeader20;
-        private System.Windows.Forms.ColumnHeader columnHeader21;
-        private System.Windows.Forms.ColumnHeader columnHeader22;
+        private System.Windows.Forms.TextBox txtStockStatus;
+        private System.Windows.Forms.TextBox txtStock;
+        private System.Windows.Forms.TextBox txtPrice;
+        private System.Windows.Forms.TextBox txtVATRate;
+        private System.Windows.Forms.TextBox txtName;
+        private System.Windows.Forms.TextBox txtId;
         private System.Windows.Forms.ColumnHeader columnHeader29;
         private System.Windows.Forms.ColumnHeader columnHeader30;
         private System.Windows.Forms.ColumnHeader columnHeader31;
@@ -919,5 +696,6 @@
         private System.Windows.Forms.ColumnHeader columnHeader37;
         private System.Windows.Forms.ColumnHeader columnHeader38;
         private System.Windows.Forms.ColumnHeader columnHeader39;
+        private System.Windows.Forms.ToolStripMenuItem orderingDrinksToolStripMenuItem;
     }
 }

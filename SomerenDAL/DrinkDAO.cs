@@ -27,8 +27,18 @@ namespace SomerenDAL
                     Name = dr["name"].ToString(),
                     VATRate = (decimal)dr["VATRate"],
                     Price = (decimal)dr["price"],
-                    Stock = (int)dr["stock"]
+                    Stock = (int)dr["stock"],               
                 };
+
+                if (drink.Stock > 10)
+                {
+                    drink.StockStatus = "Stock sufficient";
+                }
+                else
+                {
+                    drink.StockStatus = "Stock nearly depleted";
+                }
+
                 drinks.Add(drink);
             }
             return drinks;

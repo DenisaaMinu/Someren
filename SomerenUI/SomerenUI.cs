@@ -3,6 +3,7 @@ using SomerenModel;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System;
+using SomerenDAL;
 
 namespace SomerenUI
 {
@@ -126,7 +127,7 @@ namespace SomerenUI
                 li.SubItems.Add(teacher.LastName);
                 li.SubItems.Add(teacher.RoomId.ToString());
                 li.SubItems.Add(teacher.TelephoneNumber);
-                li.SubItems.Add(teacher.Age.ToString());    
+                li.SubItems.Add(teacher.Age.ToString());
 
                 li.Tag = teacher;   // link teacher object to listview item
                 listViewTeachers.Items.Add(li);
@@ -225,6 +226,7 @@ namespace SomerenUI
                 li.SubItems.Add(drink.VATRate.ToString());
                 li.SubItems.Add(drink.Price.ToString());
                 li.SubItems.Add(drink.Stock.ToString());
+                li.SubItems.Add(drink.StockStatus);
 
                 li.Tag = drink;   // link drink object to listview item
                 listViewDrinks.Items.Add(li);
@@ -249,17 +251,67 @@ namespace SomerenUI
 
         private void buttonAddDrink_Click(object sender, EventArgs e)
         {
+            try
+            {
+                Drink drink = new Drink
+                {
+                    Id = int.Parse(txtId.Text),
+                    Name = txtName.Text,
+                    VATRate = int.Parse(txtVATRate.Text),
+                    Price = int.Parse(txtPrice.Text),
+                    Stock = int.Parse(txtStock.Text),
+                    StockStatus = txtStockStatus.Text
+                };
 
+                DrinkDao drinkDAO = new DrinkDao();
+                drinkDAO.AddDrink(drink);
+                MessageBox.Show("Drink added");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void buttonDeleteDrink_Click(object sender, EventArgs e)
         {
+            try
+            {
+                Drink drink = new Drink
+                {
+                    Id = int.Parse(txtId.Text)
+                };
 
+                DrinkDao drinkDAO = new DrinkDao();
+                drinkDAO.DeleteDrink(drink);
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         private void buttonModifyDrink_Click(object sender, EventArgs e)
         {
+            try
+            {
+                Drink drink = new Drink
+                {
+                    Id = int.Parse(txtId.Text),
+                    Name = txtName.Text,
+                    VATRate = int.Parse(txtVATRate.Text),
+                    Price = int.Parse(txtPrice.Text),
+                    Stock = int.Parse(txtStock.Text),
+                    StockStatus = txtStockStatus.Text
+                };
 
+                DrinkDao drinkDAO = new DrinkDao();
+                drinkDAO.ModifyDrink(drink);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }
