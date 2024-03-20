@@ -128,15 +128,21 @@ namespace SomerenUI
 
             foreach (Teacher teacher in teachers)
             {
-                ListViewItem li = new ListViewItem(teacher.FirstName);
-                li.SubItems.Add(teacher.LastName);
-                li.SubItems.Add(teacher.RoomId.ToString());
-                li.SubItems.Add(teacher.TelephoneNumber);
-                li.SubItems.Add(teacher.Age.ToString());
+                ListViewItem li = CreateTeacherLiItem(teacher);
 
                 li.Tag = teacher;   // link teacher object to listview item
                 listViewTeachers.Items.Add(li);
             }
+        }
+
+        private static ListViewItem CreateTeacherLiItem(Teacher teacher)
+        {
+            ListViewItem li = new ListViewItem(teacher.FirstName);
+            li.SubItems.Add(teacher.LastName);
+            li.SubItems.Add(teacher.RoomId.ToString());
+            li.SubItems.Add(teacher.TelephoneNumber);
+            li.SubItems.Add(teacher.Age.ToString());
+            return li;
         }
 
         private void lecturersToolStripMenuItem_Click(object sender, EventArgs e)
@@ -177,16 +183,22 @@ namespace SomerenUI
 
             foreach (Room room in rooms)
             {
-                ListViewItem li = new ListViewItem(room.Id.ToString());
-                li.SubItems.Add(room.Building);
-                li.SubItems.Add(room.Number.ToString());
-                li.SubItems.Add(room.Size.ToString());
-                li.SubItems.Add(room.Capacity.ToString());
-                li.SubItems.Add(room.Type.ToString());
+                ListViewItem li = CreateRoomLiItem(room);
 
                 li.Tag = room;   // link room object to listview item
                 listViewRooms.Items.Add(li);
             }
+        }
+
+        private static ListViewItem CreateRoomLiItem(Room room)
+        {
+            ListViewItem li = new ListViewItem(room.Id.ToString());
+            li.SubItems.Add(room.Building);
+            li.SubItems.Add(room.Number.ToString());
+            li.SubItems.Add(room.Size.ToString());
+            li.SubItems.Add(room.Capacity.ToString());
+            li.SubItems.Add(room.Type.ToString());
+            return li;
         }
 
         private void roomsToolStripMenuItem_Click_1(object sender, EventArgs e)
@@ -226,18 +238,22 @@ namespace SomerenUI
 
             foreach (Drink drink in drinks)
             {
-                ListViewItem li = new ListViewItem(drink.Id.ToString());
-                li.SubItems.Add(drink.Name);
-                li.SubItems.Add(drink.VATRate.ToString());
-                li.SubItems.Add(drink.Price.ToString());
-                li.SubItems.Add(drink.Stock.ToString());
-                li.SubItems.Add(drink.StockStatus);
+                ListViewItem li = CreateDrinkLiItem(drink);
 
                 li.Tag = drink;   // link drink object to listview item
                 listViewDrinks.Items.Add(li);
             }
         }
 
+        private static ListViewItem CreateDrinkLiItem(Drink drink)
+        {
+            ListViewItem li = new ListViewItem(drink.Name);
+            li.SubItems.Add(drink.VATRate.ToString());
+            li.SubItems.Add(drink.Price.ToString());
+            li.SubItems.Add(drink.Stock.ToString());
+            li.SubItems.Add(drink.StockStatus);
+            return li;
+        }
 
         private void drinkSuppliesToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -260,7 +276,6 @@ namespace SomerenUI
             {
                 Drink drink = new Drink
                 {
-                    Id = int.Parse(txtId.Text),
                     Name = txtName.Text,
                     VATRate = int.Parse(txtVATRate.Text),
                     Price = int.Parse(txtPrice.Text),
@@ -280,20 +295,7 @@ namespace SomerenUI
 
         private void buttonDeleteDrink_Click(object sender, EventArgs e)
         {
-            try
-            {
-                Drink drink = new Drink
-                {
-                    Id = int.Parse(txtId.Text)
-                };
-
-                DrinkDao drinkDAO = new DrinkDao();
-                drinkDAO.DeleteDrink(drink);
-            }
-            catch(Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+           
         }
 
         private void buttonModifyDrink_Click(object sender, EventArgs e)
@@ -302,7 +304,6 @@ namespace SomerenUI
             {
                 Drink drink = new Drink
                 {
-                    Id = int.Parse(txtId.Text),
                     Name = txtName.Text,
                     VATRate = int.Parse(txtVATRate.Text),
                     Price = int.Parse(txtPrice.Text),

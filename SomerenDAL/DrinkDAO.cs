@@ -11,7 +11,7 @@ namespace SomerenDAL
     {
         public List<Drink> GetAllDrinks()
         {
-            string query = "SELECT drinkId, name, VATRate, price, stock FROM [DRINK]" +
+            string query = "SELECT name, VATRate, price, stock FROM [DRINK]" +
                            "ORDER BY name";
             SqlParameter[] sqlParameters = new SqlParameter[0];
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
@@ -25,7 +25,6 @@ namespace SomerenDAL
             {
                 Drink drink = new Drink()
                 {
-                    Id = (int)dr["drinkId"],
                     Name = dr["name"].ToString(),
                     VATRate = (decimal)dr["VATRate"],
                     Price = (decimal)dr["price"],
@@ -53,7 +52,6 @@ namespace SomerenDAL
                                      "SELECT SCOPE_IDENTITY();";
             SqlParameter[] sqlParameters =
                 {
-                new SqlParameter("@Id", drink.Id),
                 new SqlParameter("@Name", drink.Name),
                 new SqlParameter("@VATRate", drink.VATRate),
                 new SqlParameter("@Price", drink.Price),
