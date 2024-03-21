@@ -3,6 +3,7 @@ using SomerenModel;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System;
+using SomerenDAL;
 
 namespace SomerenUI
 {
@@ -13,27 +14,39 @@ namespace SomerenUI
             InitializeComponent();
         }
 
+        public void ShowCurrentPanel(Panel currentPanel)
+        {
+            foreach (Control control in Controls)
+            {
+                if (control is Panel)
+                {
+                    control.Hide();
+                }
+            }
+            currentPanel.Show();
+        }
+
         private void ShowDashboardPanel()
         {
-            // hide all other panels
-            pnlStudents.Hide();
-            pnlTeachers.Hide();
-            pnlRooms.Hide();
+            //  show dashboard
+            ShowCurrentPanel(pnlDashboard);
+        }
 
-            // show dashboard
-            pnlDashboard.Show();
+        private void dashboardToolStripMenuItem1_Click(object sender, System.EventArgs e)
+        {
+            ShowDashboardPanel();
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, System.EventArgs e)
+        {
+            Application.Exit();
         }
 
         //students
         private void ShowStudentsPanel()
         {
-            // hide all other panels
-            pnlDashboard.Hide();
-            pnlTeachers.Hide();
-            pnlRooms.Hide();
-
             // show students
-            pnlStudents.Show();
+            ShowCurrentPanel(pnlStudents);
 
             try
             {
@@ -45,6 +58,11 @@ namespace SomerenUI
             {
                 MessageBox.Show("Something went wrong while loading the students: " + e.Message);
             }
+        }
+
+        private void studentsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowStudentsPanel();
         }
 
         private List<Student> GetStudents()
@@ -61,27 +79,28 @@ namespace SomerenUI
 
             foreach (Student student in students)
             {
-                ListViewItem li = new ListViewItem(student.Name);
-                li.SubItems.Add(student.Number);
-                li.SubItems.Add(student.TelephoneNumber);
-                li.SubItems.Add(student.Class);
-                //test
-                li.Tag = student;   // link student object to listview item
+                ListViewItem li = CreateStudentLItem(student);
                 listViewStudents.Items.Add(li);
             }
+        }
+
+        private ListViewItem CreateStudentLItem(Student student)
+        {
+            ListViewItem li = new ListViewItem(student.Name);
+            li.SubItems.Add(student.Number);
+            li.SubItems.Add(student.TelephoneNumber);
+            li.SubItems.Add(student.Class);
+            //test
+            li.Tag = student;   // link student object to listview item
+            return li;
         }
 
 
         //teachers
         private void ShowTeachersPanel()
         {
-            // hide all other panels
-            pnlDashboard.Hide();
-            pnlStudents.Hide();
-            pnlRooms.Hide();
-
             // show teachers
-            pnlTeachers.Show();
+            ShowCurrentPanel(pnlTeachers);
 
             try
             {
@@ -109,21 +128,28 @@ namespace SomerenUI
 
             foreach (Teacher teacher in teachers)
             {
-                ListViewItem li = new ListViewItem($"{teacher.FirstName} {teacher.LastName} {teacher.Age} {teacher.TelephoneNumber}");
+                ListViewItem li = new ListViewItem(teacher.FirstName);
+                li.SubItems.Add(teacher.LastName);
+                li.SubItems.Add(teacher.RoomId.ToString());
+                li.SubItems.Add(teacher.TelephoneNumber);
+                li.SubItems.Add(teacher.Age.ToString());
+
                 li.Tag = teacher;   // link teacher object to listview item
                 listViewTeachers.Items.Add(li);
             }
         }
 
+        private void lecturersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowTeachersPanel();
+        }
+
+
         //rooms
         private void ShowRoomsPanel()
         {
-            // hide all other panels
-            pnlDashboard.Hide();
-            pnlStudents.Hide();
-
             // show rooms
-            pnlRooms.Show();
+            ShowCurrentPanel(pnlRooms);
 
             try
             {
@@ -151,36 +177,243 @@ namespace SomerenUI
 
             foreach (Room room in rooms)
             {
-                ListViewItem li = new ListViewItem($"{room.Number} {room.Type} {room.Capacity}");
+                ListViewItem li = new ListViewItem(room.Id.ToString());
+                li.SubItems.Add(room.Building);
+                li.SubItems.Add(room.Number.ToString());
+                li.SubItems.Add(room.Size.ToString());
+                li.SubItems.Add(room.Capacity.ToString());
+                li.SubItems.Add(room.Type.ToString());
+
                 li.Tag = room;   // link room object to listview item
                 listViewRooms.Items.Add(li);
             }
         }
 
-
-        private void dashboardToolStripMenuItem1_Click(object sender, System.EventArgs e)
-        {
-            ShowDashboardPanel();
-        }
-
-        private void exitToolStripMenuItem_Click(object sender, System.EventArgs e)
-        {
-            Application.Exit();
-        }
-
-        private void studentsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ShowStudentsPanel();
-        }
-
-        private void lecturersToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ShowTeachersPanel();
-        }
-
         private void roomsToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             ShowRoomsPanel();
+        }
+
+        //drinks
+        private void ShowDrinksPanel()
+        {
+            // show rooms
+            ShowCurrentPanel(pnlDrinks);
+
+            try
+            {
+                // get and display all drinks
+                List<Drink> drinks = GetDrinks();
+                DisplayDrinks(drinks);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Something went wrong while loading the drinks: " + e.Message);
+            }
+        }
+
+        private List<Drink> GetDrinks()
+        {
+            DrinkService drinkService = new DrinkService();
+            List<Drink> drinks = drinkService.GetDrinks();
+            return drinks;
+        }
+
+        private void DisplayDrinks(List<Drink> drinks)
+        {
+            // clear the listview before filling it
+            listViewDrinks.Items.Clear();
+
+            foreach (Drink drink in drinks)
+            {
+                ListViewItem li = new ListViewItem(drink.Id.ToString());
+                li.SubItems.Add(drink.Name);
+                li.SubItems.Add(drink.VATRate.ToString());
+                li.SubItems.Add(drink.Price.ToString());
+                li.SubItems.Add(drink.Stock.ToString());
+                li.SubItems.Add(drink.StockStatus);
+
+                li.Tag = drink;   // link drink object to listview item
+                listViewDrinks.Items.Add(li);
+            }
+        }
+        private static ListViewItem CreateDrinkLiItem(Drink drink)
+        {
+            ListViewItem li = new ListViewItem(drink.Name);
+            li.SubItems.Add(drink.VATRate.ToString());
+            li.SubItems.Add(drink.Price.ToString());
+            li.SubItems.Add(drink.Stock.ToString());
+            li.SubItems.Add(drink.StockStatus);
+
+            return li;
+        }
+
+        private void drinkSuppliesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowDrinksPanel();
+        }
+
+        private void listViewDrinks_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listViewDrinks.SelectedItems.Count > 0)
+            {
+                ListViewItem selectedItem = listViewDrinks.SelectedItems[0];
+                Drink selectedDrink = (Drink)selectedItem.Tag;
+                MessageBox.Show($"Drink {selectedDrink.Name} selected.");
+            }
+        }
+
+        private void buttonAddDrink_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Drink drink = new Drink
+                {
+                    Id = int.Parse(txtId.Text),
+                    Name = txtName.Text,
+                    VATRate = int.Parse(txtVATRate.Text),
+                    Price = int.Parse(txtPrice.Text),
+                    Stock = int.Parse(txtStock.Text),
+                    StockStatus = txtStockStatus.Text
+                };
+
+                DrinkDao drinkDAO = new DrinkDao();
+                drinkDAO.AddDrink(drink);
+                MessageBox.Show("Drink added");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void buttonDeleteDrink_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Drink drink = new Drink
+                {
+                    Id = int.Parse(txtId.Text)
+                };
+
+                DrinkDao drinkDAO = new DrinkDao();
+                drinkDAO.DeleteDrink(drink);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        private void buttonModifyDrink_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Drink drink = new Drink
+                {
+                    Id = int.Parse(txtId.Text),
+                    Name = txtName.Text,
+                    VATRate = int.Parse(txtVATRate.Text),
+                    Price = int.Parse(txtPrice.Text),
+                    Stock = int.Parse(txtStock.Text),
+                    StockStatus = txtStockStatus.Text
+                };
+
+                DrinkDao drinkDAO = new DrinkDao();
+                drinkDAO.ModifyDrink(drink);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+
+
+        private void orderingDrinksToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowDrinksOrderingPanel();
+            ShowStudentsOrderingPanel();
+        }
+
+        // Ordering drinks 
+        private void ShowDrinksOrderingPanel()
+        {
+            //showing the ordering panel 
+            ShowCurrentPanel(pnlOrdering);
+
+            try
+            {
+                //get and display all drinks
+                List<Drink> drinks = GetDrinks();
+                DisplayOrderDrinks(drinks);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Something went wrong with loading the drinks " + ex.Message);
+            }
+        }
+        private static ListViewItem CreateOrderingDrinkLiItem(Drink drink)
+        {
+            ListViewItem li = new ListViewItem(drink.Name);
+            li.SubItems.Add(drink.Price.ToString());
+            li.SubItems.Add(drink.Stock.ToString());
+            li.SubItems.Add(drink.IsAlcoholic.ToString());
+
+            return li;
+        }
+        private void DisplayOrderDrinks(List<Drink> drinks)
+        {
+            // clear the listview before filling it
+            listViewOrderingDrinks.Items.Clear();
+
+            foreach (Drink drink in drinks)
+            {
+                ListViewItem li = CreateOrderingDrinkLiItem(drink);
+
+                li.Tag = drink;   // link drink object to listview item
+                listViewOrderingDrinks.Items.Add(li);
+            }
+        }
+        //Students that order
+
+        private void ShowStudentsOrderingPanel()
+        {
+            try
+            {
+                // get and display all students
+                List<Student> students = GetStudents();
+                DisplayStudentsOrdering(students);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Something went wrong while loading the students: " + e.Message);
+            }
+        }
+
+        private void DisplayStudentsOrdering(List<Student> students)
+        {
+            // clear the listview before filling it
+            listViewStudentsOrdering.Items.Clear();
+
+            foreach (Student student in students)
+            {
+                ListViewItem li = new ListViewItem(student.Name);
+                listViewStudentsOrdering.Items.Add(li);
+            }
+        }
+
+        private void buttonPlaceOrder_Click(object sender, EventArgs e)
+        {
+            if (listViewOrderingDrinks.SelectedItems.Count > 0 && listViewStudentsOrdering.SelectedItems.Count > 0)
+            {
+                ListViewItem selectedDrink = listViewOrderingDrinks.SelectedItems[0];
+                ListViewItem selectedStudent = listViewStudentsOrdering.SelectedItems[0];
+                double price = Convert.ToDouble(numericUpDownAmount.Value) * Convert.ToDouble(selectedDrink.SubItems[1].Text);
+                MessageBox.Show($"Student: {selectedStudent.Text}\nSelected drink: {selectedDrink.Text}\nPrice: ${price} ");
+
+            }
+
         }
     }
 }
