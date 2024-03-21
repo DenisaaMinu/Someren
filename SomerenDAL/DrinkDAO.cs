@@ -7,7 +7,7 @@ using System.Data.Common;
 
 namespace SomerenDAL
 {
-    public class DrinkDao : BaseDao
+    public class DrinkDAO : BaseDao
     {
         public List<Drink> GetAllDrinks()
         {
@@ -69,7 +69,7 @@ namespace SomerenDAL
                 new SqlParameter("@Stock", drink.Stock),
             };
 
-            ExecuteAddQuery(query, sqlParameters);
+            //ExecuteAddQuery(query, sqlParameters);
             drink.Id = Convert.ToInt32(query);
         }
 
