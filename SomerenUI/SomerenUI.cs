@@ -14,6 +14,7 @@ namespace SomerenUI
             InitializeComponent();
         }
 
+        // showing the current panel
         public void ShowCurrentPanel(Panel currentPanel)
         {
             foreach (Control control in Controls)
@@ -28,7 +29,7 @@ namespace SomerenUI
 
         private void ShowDashboardPanel()
         {
-            //  show dashboard
+            // show dashboard
             ShowCurrentPanel(pnlDashboard);
         }
 
@@ -41,6 +42,7 @@ namespace SomerenUI
         {
             Application.Exit();
         }
+
 
         //students
         private void ShowStudentsPanel()
@@ -56,6 +58,7 @@ namespace SomerenUI
             }
             catch (Exception e)
             {
+                // throw exception
                 MessageBox.Show("Something went wrong while loading the students: " + e.Message);
             }
         }
@@ -79,17 +82,18 @@ namespace SomerenUI
 
             foreach (Student student in students)
             {
-                ListViewItem li = CreateStudentLItem(student);
+                ListViewItem li = CreateStudentLiItem(student);
                 listViewStudents.Items.Add(li);
             }
         }
 
-        private ListViewItem CreateStudentLItem(Student student)
+        private ListViewItem CreateStudentLiItem(Student student)
         {
             ListViewItem li = new ListViewItem(student.Name);
             li.SubItems.Add(student.Number);
             li.SubItems.Add(student.TelephoneNumber);
             li.SubItems.Add(student.Class);
+
             //test
             li.Tag = student;   // link student object to listview item
             return li;
@@ -110,6 +114,7 @@ namespace SomerenUI
             }
             catch (Exception e)
             {
+                // throw exception
                 MessageBox.Show("Something went wrong while loading the teachers: " + e.Message);
             }
         }
@@ -128,15 +133,21 @@ namespace SomerenUI
 
             foreach (Teacher teacher in teachers)
             {
-                ListViewItem li = new ListViewItem(teacher.FirstName);
-                li.SubItems.Add(teacher.LastName);
-                li.SubItems.Add(teacher.RoomId.ToString());
-                li.SubItems.Add(teacher.TelephoneNumber);
-                li.SubItems.Add(teacher.Age.ToString());
-
-                li.Tag = teacher;   // link teacher object to listview item
+                ListViewItem li = CreateTeacherLiItem(teacher);
                 listViewTeachers.Items.Add(li);
             }
+        }
+
+        private static ListViewItem CreateTeacherLiItem(Teacher teacher)
+        {
+            ListViewItem li = new ListViewItem(teacher.FirstName);
+            li.SubItems.Add(teacher.LastName);
+            li.SubItems.Add(teacher.TelephoneNumber);
+            li.SubItems.Add(teacher.Age.ToString());
+
+            // test
+            li.Tag = teacher;   // link teacher object to listview item
+            return li;
         }
 
         private void lecturersToolStripMenuItem_Click(object sender, EventArgs e)
@@ -159,6 +170,7 @@ namespace SomerenUI
             }
             catch (Exception e)
             {
+                // throw exception
                 MessageBox.Show("Something went wrong while loading the rooms: " + e.Message);
             }
         }
@@ -177,16 +189,23 @@ namespace SomerenUI
 
             foreach (Room room in rooms)
             {
-                ListViewItem li = new ListViewItem(room.Id.ToString());
-                li.SubItems.Add(room.Building);
-                li.SubItems.Add(room.Number.ToString());
-                li.SubItems.Add(room.Size.ToString());
-                li.SubItems.Add(room.Capacity.ToString());
-                li.SubItems.Add(room.Type.ToString());
-
-                li.Tag = room;   // link room object to listview item
+                ListViewItem li = CreateRoomLiItem(room);
                 listViewRooms.Items.Add(li);
             }
+        }
+
+        private static ListViewItem CreateRoomLiItem(Room room)
+        {
+            ListViewItem li = new ListViewItem(room.Id.ToString());
+            li.SubItems.Add(room.Building);
+            li.SubItems.Add(room.Number.ToString());
+            li.SubItems.Add(room.Size.ToString());
+            li.SubItems.Add(room.Capacity.ToString());
+            li.SubItems.Add(room.Type.ToString());
+
+            // test
+            li.Tag = room;   // link room object to listview item
+            return li;
         }
 
         private void roomsToolStripMenuItem_Click_1(object sender, EventArgs e)
@@ -194,20 +213,22 @@ namespace SomerenUI
             ShowRoomsPanel();
         }
 
-        //drinks
-        private void ShowDrinksPanel()
+
+        // Drink supplies
+        private void ShowDrinkSuppliesPanel()
         {
-            // show rooms
+            // show drinks
             ShowCurrentPanel(pnlDrinks);
 
             try
             {
                 // get and display all drinks
                 List<Drink> drinks = GetDrinks();
-                DisplayDrinks(drinks);
+                DisplayDrinkSupplies(drinks);
             }
             catch (Exception e)
             {
+                // throw exception
                 MessageBox.Show("Something went wrong while loading the drinks: " + e.Message);
             }
         }
@@ -219,25 +240,18 @@ namespace SomerenUI
             return drinks;
         }
 
-        private void DisplayDrinks(List<Drink> drinks)
+        private void DisplayDrinkSupplies(List<Drink> drinks)
         {
             // clear the listview before filling it
             listViewDrinks.Items.Clear();
 
             foreach (Drink drink in drinks)
             {
-                ListViewItem li = new ListViewItem(drink.Id.ToString());
-                li.SubItems.Add(drink.Name);
-                li.SubItems.Add(drink.VATRate.ToString());
-                li.SubItems.Add(drink.Price.ToString());
-                li.SubItems.Add(drink.Stock.ToString());
-                li.SubItems.Add(drink.StockStatus);
-
-                li.Tag = drink;   // link drink object to listview item
+                ListViewItem li = CreateDrinkSuppliesLiItem(drink);
                 listViewDrinks.Items.Add(li);
             }
         }
-        private static ListViewItem CreateDrinkLiItem(Drink drink)
+        private static ListViewItem CreateDrinkSuppliesLiItem(Drink drink)
         {
             ListViewItem li = new ListViewItem(drink.Name);
             li.SubItems.Add(drink.VATRate.ToString());
@@ -245,12 +259,14 @@ namespace SomerenUI
             li.SubItems.Add(drink.Stock.ToString());
             li.SubItems.Add(drink.StockStatus);
 
+            // test
+            li.Tag = drink;   // link drink object to listview item
             return li;
         }
 
         private void drinkSuppliesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ShowDrinksPanel();
+            ShowDrinkSuppliesPanel();
         }
 
         private void listViewDrinks_SelectedIndexChanged(object sender, EventArgs e)
@@ -259,6 +275,7 @@ namespace SomerenUI
             {
                 ListViewItem selectedItem = listViewDrinks.SelectedItems[0];
                 Drink selectedDrink = (Drink)selectedItem.Tag;
+
                 MessageBox.Show($"Drink {selectedDrink.Name} selected.");
             }
         }
@@ -269,7 +286,6 @@ namespace SomerenUI
             {
                 Drink drink = new Drink
                 {
-                    Id = int.Parse(txtId.Text),
                     Name = txtName.Text,
                     VATRate = int.Parse(txtVATRate.Text),
                     Price = int.Parse(txtPrice.Text),
@@ -336,6 +352,7 @@ namespace SomerenUI
             ShowStudentsOrderingPanel();
         }
 
+
         // Ordering drinks 
         private void ShowDrinksOrderingPanel()
         {
@@ -353,6 +370,7 @@ namespace SomerenUI
                 MessageBox.Show("Something went wrong with loading the drinks " + ex.Message);
             }
         }
+
         private static ListViewItem CreateOrderingDrinkLiItem(Drink drink)
         {
             ListViewItem li = new ListViewItem(drink.Name);
@@ -360,8 +378,11 @@ namespace SomerenUI
             li.SubItems.Add(drink.Stock.ToString());
             li.SubItems.Add(drink.IsAlcoholic.ToString());
 
+            // test
+            li.Tag = drink;   // link drink object to listview item
             return li;
         }
+
         private void DisplayOrderDrinks(List<Drink> drinks)
         {
             // clear the listview before filling it
@@ -370,12 +391,12 @@ namespace SomerenUI
             foreach (Drink drink in drinks)
             {
                 ListViewItem li = CreateOrderingDrinkLiItem(drink);
-
-                li.Tag = drink;   // link drink object to listview item
                 listViewOrderingDrinks.Items.Add(li);
             }
         }
-        //Students that order
+
+
+        //Students orders
 
         private void ShowStudentsOrderingPanel()
         {
@@ -387,6 +408,7 @@ namespace SomerenUI
             }
             catch (Exception e)
             {
+                // throw exception
                 MessageBox.Show("Something went wrong while loading the students: " + e.Message);
             }
         }
@@ -409,11 +431,11 @@ namespace SomerenUI
             {
                 ListViewItem selectedDrink = listViewOrderingDrinks.SelectedItems[0];
                 ListViewItem selectedStudent = listViewStudentsOrdering.SelectedItems[0];
+
                 double price = Convert.ToDouble(numericUpDownAmount.Value) * Convert.ToDouble(selectedDrink.SubItems[1].Text);
+
                 MessageBox.Show($"Student: {selectedStudent.Text}\nSelected drink: {selectedDrink.Text}\nPrice: ${price} ");
-
             }
-
         }
     }
 }

@@ -6,11 +6,11 @@ namespace SomerenService
 {
     public class DrinkService
     {
-        private DrinkDAO drinkdb;
+        private DrinkDao drinkdb;
 
         public DrinkService()
         {
-            drinkdb = new DrinkDAO();
+            drinkdb = new DrinkDao();
         }
 
         public List<Drink> GetDrinks()

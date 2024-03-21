@@ -25,9 +25,11 @@ namespace SomerenDAL
 
                 Room room = new Room()
                 {
-                    Number = (int)dr["roomNumber"],
-                    Type = !isTeacherRoom,
-                    Capacity = (int)dr["roomCapacity"]
+                    Building = dr["building"].ToString(),
+                    Number = (int)dr["roomnumber"],
+                    Size = (int)dr["roomsize"],
+                    Capacity = (int)dr["roomcapacity"],
+                    Type = dr["roomtype"].ToString()
                 };
                 rooms.Add(room);
             }
