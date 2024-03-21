@@ -196,8 +196,7 @@ namespace SomerenUI
 
         private static ListViewItem CreateRoomLiItem(Room room)
         {
-            ListViewItem li = new ListViewItem(room.Id.ToString());
-            li.SubItems.Add(room.Building);
+            ListViewItem li = new ListViewItem(room.Building.ToString());
             li.SubItems.Add(room.Number.ToString());
             li.SubItems.Add(room.Size.ToString());
             li.SubItems.Add(room.Capacity.ToString());
