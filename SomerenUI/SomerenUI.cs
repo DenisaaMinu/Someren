@@ -257,6 +257,7 @@ namespace SomerenUI
             li.SubItems.Add(drink.Price.ToString());
             li.SubItems.Add(drink.Stock.ToString());
             li.SubItems.Add(drink.StockStatus);
+            li.SubItems.Add(drink.IsAlcoholic.ToString());
 
             // test
             li.Tag = drink;   // link drink object to listview item
@@ -276,25 +277,44 @@ namespace SomerenUI
                 Drink selectedDrink = (Drink)selectedItem.Tag;
 
                 MessageBox.Show($"Drink {selectedDrink.Name} selected.");
+                FillTextBoxes(selectedDrink);
             }
+        }
+
+        private void FillTextBoxes(Drink selectedDrink)
+        {
+            txtName.Text = selectedDrink.Name;
+            txtPrice.Text = selectedDrink.Price.ToString();
+            txtVATRate.Text = selectedDrink.VATRate.ToString();
+            txtStock.Text = selectedDrink.Stock.ToString();
+            txtStockStatus.Text = selectedDrink.StockStatus.ToString();
+            txtAlcoholic.Text = selectedDrink.IsAlcoholic.ToString();
+        }
+
+        private void ClearTextBoxes()
+        {
+            txtName.Text = null;
+            txtPrice.Text = null;
+            txtVATRate.Text = null;
+            txtStock.Text = null;
+            txtStockStatus.Text = null;
+            txtAlcoholic.Text = null;
         }
 
         private void buttonAddDrink_Click(object sender, EventArgs e)
         {
             try
             {
-                Drink drink = new Drink
-                {
-                    Name = txtName.Text,
-                    VATRate = int.Parse(txtVATRate.Text),
-                    Price = int.Parse(txtPrice.Text),
-                    Stock = int.Parse(txtStock.Text),
-                    StockStatus = txtStockStatus.Text
-                };
+                Drink drink = new Drink(txtName.Text, decimal.Parse(txtPrice.Text), decimal.Parse(txtVATRate.Text), int.Parse(txtStock.Text), bool.Parse(txtAlcoholic.Text));
 
                 DrinkDao drinkDAO = new DrinkDao();
                 drinkDAO.AddDrink(drink);
+
                 MessageBox.Show("Drink added");
+
+                // Show updated list view
+                ShowDrinkSuppliesPanel();
+                ClearTextBoxes();
             }
             catch (Exception ex)
             {
@@ -306,13 +326,25 @@ namespace SomerenUI
         {
             try
             {
-                Drink drink = new Drink
+                // Check if a drink has been selected
+                if (listViewDrinks.SelectedItems.Count > 0)
                 {
-                    Id = int.Parse(txtId.Text)
-                };
+                    // Get te selected drink from the list view
+                    ListViewItem selectedItem = listViewDrinks.SelectedItems[0];
+                    Drink selectedDrink = (Drink)selectedItem.Tag;
+                    Drink drink = new Drink(txtName.Text, decimal.Parse(txtPrice.Text), decimal.Parse(txtVATRate.Text), int.Parse(txtStock.Text), bool.Parse(txtAlcoholic.Text));
+                    int drinkId = drink.Id;
 
-                DrinkDao drinkDAO = new DrinkDao();
-                drinkDAO.DeleteDrink(drink);
+                    // Delete item
+                    DrinkDao drinkDAO = new DrinkDao();
+                    drinkDAO.DeleteDrink(drink);
+
+                    MessageBox.Show("Drink deleted");
+
+                    // Show updated list view 
+                    ShowDrinkSuppliesPanel();
+                    ClearTextBoxes();
+                }
             }
             catch (Exception ex)
             {
@@ -324,18 +356,28 @@ namespace SomerenUI
         {
             try
             {
-                Drink drink = new Drink
+                // Check if a drink has been selected
+                if (listViewDrinks.SelectedItems.Count > 0)
                 {
-                    Id = int.Parse(txtId.Text),
-                    Name = txtName.Text,
-                    VATRate = int.Parse(txtVATRate.Text),
-                    Price = int.Parse(txtPrice.Text),
-                    Stock = int.Parse(txtStock.Text),
-                    StockStatus = txtStockStatus.Text
-                };
+                    // Get te selected drink from the list view
+                    ListViewItem selectedItem = listViewDrinks.SelectedItems[0];
+                    Drink selectedDrink = (Drink)selectedItem.Tag;
 
-                DrinkDao drinkDAO = new DrinkDao();
-                drinkDAO.ModifyDrink(drink);
+                    MessageBox.Show("Drink modified");
+
+                    // Show updated list view
+                    DrinkDao drinkDao = new DrinkDao();
+
+                    drinkDao.ModifyDrink(selectedDrink);
+
+                    // Show updated list view 
+                    ShowDrinkSuppliesPanel();
+                    ClearTextBoxes();
+                }
+                else
+                {
+                    MessageBox.Show("Choose a drink.");
+                }
             }
             catch (Exception ex)
             {
@@ -344,15 +386,13 @@ namespace SomerenUI
         }
 
 
-
+        // Ordering drinks 
         private void orderingDrinksToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowDrinksOrderingPanel();
             ShowStudentsOrderingPanel();
         }
 
-
-        // Ordering drinks 
         private void ShowDrinksOrderingPanel()
         {
             //showing the ordering panel 
@@ -396,7 +436,6 @@ namespace SomerenUI
 
 
         //Students orders
-
         private void ShowStudentsOrderingPanel()
         {
             try
@@ -420,6 +459,8 @@ namespace SomerenUI
             foreach (Student student in students)
             {
                 ListViewItem li = new ListViewItem(student.Name);
+                li.Tag = student;
+
                 listViewStudentsOrdering.Items.Add(li);
             }
         }
@@ -432,9 +473,62 @@ namespace SomerenUI
                 ListViewItem selectedStudent = listViewStudentsOrdering.SelectedItems[0];
 
                 double price = Convert.ToDouble(numericUpDownAmount.Value) * Convert.ToDouble(selectedDrink.SubItems[1].Text);
+                int drinkId = ((Drink)selectedDrink.Tag).Id;
+                int studentId = ((Student)selectedStudent.Tag).Id;
+                int amount = Convert.ToInt32(numericUpDownAmount.Value);
+                DateTime date = DateTime.Now;
+
+                DrinkDao drinkDao = new DrinkDao();
+                drinkDao.PlaceOrder(amount, price, date, drinkId, studentId);
 
                 MessageBox.Show($"Student: {selectedStudent.Text}\nSelected drink: {selectedDrink.Text}\nPrice: ${price} ");
+
+                // Clear section and reset values
+                listViewOrderingDrinks.SelectedItems.Clear();
+                numericUpDownAmount.Value = 1;
+
+                // Refresh the list with updated data
+                ShowDrinksOrderingPanel();
             }
+        }
+
+
+        // Revenue report
+        private void ShowRevenuePanel()
+        {
+            try
+            {
+                // get and display all students
+                List<Student> students = GetStudents();
+                DisplayRevenueReport(students);
+            }
+            catch (Exception e)
+            {
+                // throw exception
+                MessageBox.Show("Something went wrong while loading the students: " + e.Message);
+            }
+        }
+
+        private void DisplayRevenueReport(List<Student> students)
+        {
+            // clear the listview before filling it
+            listViewStudentsOrdering.Items.Clear();
+
+            foreach (Student student in students)
+            {
+                ListViewItem li = new ListViewItem(student.Name);
+                listViewStudentsOrdering.Items.Add(li);
+            }
+        }
+
+        private void revenueReportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowRevenuePanel();
+        }
+
+        private void buttonGenerateRevenue_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

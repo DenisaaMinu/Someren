@@ -7,8 +7,8 @@ namespace SomerenDAL
 {
     public abstract class BaseDao
     {
-        private SqlDataAdapter adapter;
-        private SqlConnection conn;
+        protected SqlDataAdapter adapter;
+        protected SqlConnection conn;
 
         public BaseDao()
         {
@@ -16,7 +16,6 @@ namespace SomerenDAL
             
                 conn = new SqlConnection(ConfigurationManager.ConnectionStrings["SomerenDatabase"].ConnectionString);
                 adapter = new SqlDataAdapter(); 
-            
         }
 
         protected SqlConnection OpenConnection()

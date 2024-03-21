@@ -15,6 +15,15 @@ namespace SomerenModel
         public int Stock {  get; set; }    // number of drinks, e.g. wine: 120 
         public string StockStatus {  get; set; }  // > 40: "Stock sufficient", < 40: "Nearly depleted"
 
-        public bool IsAlcoholic { get; set; }  // alcoholic = true, non-alcoholic= = false
+        public bool IsAlcoholic { get; set; }  // alcoholic = true, non-alcoholic = false
+   
+        public Drink(string name, decimal price, decimal vatRate, int stock, bool isAlcoholic)
+        {
+            Name = name;
+            Price = price;
+            VATRate = vatRate; 
+            Stock = stock;
+            IsAlcoholic = isAlcoholic;
+        }
     }
 }
