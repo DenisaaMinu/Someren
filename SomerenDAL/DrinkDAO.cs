@@ -11,7 +11,7 @@ namespace SomerenDAL
     {
         public List<Drink> GetAllDrinks()
         {
-            string query = "SELECT name, VATRate, price, stock, alcoholic  FROM [DRINK]" +
+            string query = "SELECT drinkId, name, VATRate, price, stock, alcoholic  FROM [DRINK]" +
                            "ORDER BY name";
             SqlParameter[] sqlParameters = new SqlParameter[0];
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
@@ -28,8 +28,9 @@ namespace SomerenDAL
                     vatRate: (decimal)dr["VATRate"],
                     price: (decimal)dr["price"],
                     stock: (int)dr["stock"],
-                    isAlcoholic: (bool)dr["alcoholic"]
-                );
+                    isAlcoholic: (bool)dr["alcoholic"]);
+
+                drink.Id = (int)dr["drinkId"];
 
                 if (drink.Stock > 10)
                     drink.StockStatus = "Stock sufficient";
@@ -52,9 +53,9 @@ namespace SomerenDAL
             try
             {
                 string query = "INSERT INTO [DRINK] (name, VATRate, price, stock, alcoholic)" +
-                               "VALUES (@Name, @VATRate, @Price, @Stock, @Alcoholic);" ;
+                               "VALUES (@Name, @VATRate, @Price, @Stock, @Alcoholic);";
 
-                SqlParameter[] parameters = 
+                SqlParameter[] parameters =
                 {
                     new SqlParameter("@Name", drink.Name),
                     new SqlParameter("@VATRate", drink.VATRate),
@@ -88,34 +89,34 @@ namespace SomerenDAL
         public void ModifyDrink(Drink drink)
         {
             string query = "UPDATE [DRINK] " +
-                           "SET name = @Name, VATRate = @VATRate, price = @Price, stock = @Stock, alcoholic = @Alcoholic " +
+                           "SET [name] = @Name, VATRate = @VATRate, price = @Price, stock = @Stock, alcoholic = @Alcoholic " +
                            "WHERE drinkId = @Id;";
 
             SqlParameter[] sqlParameters =
             {
-                new SqlParameter("@Id", drink.Id),
                 new SqlParameter("@Name", drink.Name),
                 new SqlParameter("@VATRate", drink.VATRate),
                 new SqlParameter("@Price", drink.Price),
                 new SqlParameter("@Stock", drink.Stock),
-                new SqlParameter("@Alcoholic", drink.IsAlcoholic)
+                new SqlParameter("@Alcoholic", drink.IsAlcoholic),
+                new SqlParameter("@Id", drink.Id)
             };
 
             ExecuteEditQuery(query, sqlParameters);
         }
-    
-        public void PlaceOrder(int amount, double price, DateTime date, int drinkId, int studentId)
+
+        public void PlaceOrder(int drinkId, int studentId, int amount, double price, DateTime date)
         {
-            string query = "INSERT INTO [ORDER] " +
-                           "VALUES (@amount, @price, @date, @drinkId, @studentId)";
+            string query = "INSERT INTO [ORDER] (drinkId, studentId, amount, price, date) " +
+                           "VALUES (@DrinkId, @StudentId, @Amount, @Price, @Date)";
 
             SqlParameter[] sqlParameters =
             {
-                new SqlParameter("@amount", amount),
-                new SqlParameter("@price", price),
-                new SqlParameter("@date", date),
-                new SqlParameter("@drinkId", drinkId),
-                new SqlParameter("@studentId", studentId)
+                new SqlParameter("@DrinkId", drinkId),
+                new SqlParameter("@StudentId", studentId),
+                new SqlParameter("@Amount", amount),
+                new SqlParameter("@Price", price),
+                new SqlParameter("@Date", date)
             };
 
             ExecuteEditQuery(query, sqlParameters);

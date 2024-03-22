@@ -301,20 +301,34 @@ namespace SomerenUI
             txtAlcoholic.Text = null;
         }
 
+        private void ModifyDrinkProperties(Drink selectedDrink)
+        {
+            selectedDrink.Name = txtName.Text;
+            selectedDrink.VATRate = decimal.Parse(txtVATRate.Text);
+            selectedDrink.Price = decimal.Parse(txtPrice.Text);
+            selectedDrink.Stock = int.Parse(txtStock.Text);
+            selectedDrink.StockStatus = txtStockStatus.Text;
+            selectedDrink.IsAlcoholic = bool.Parse(txtAlcoholic.Text);
+        }
+
+
         private void buttonAddDrink_Click(object sender, EventArgs e)
         {
             try
             {
+                // Get new drink
                 Drink drink = new Drink(txtName.Text, decimal.Parse(txtPrice.Text), decimal.Parse(txtVATRate.Text), int.Parse(txtStock.Text), bool.Parse(txtAlcoholic.Text));
 
+                // Add new drink
                 DrinkDao drinkDAO = new DrinkDao();
                 drinkDAO.AddDrink(drink);
-
-                MessageBox.Show("Drink added");
 
                 // Show updated list view
                 ShowDrinkSuppliesPanel();
                 ClearTextBoxes();
+
+                // Show confirmation
+                MessageBox.Show("Drink added");
             }
             catch (Exception ex)
             {
@@ -332,18 +346,17 @@ namespace SomerenUI
                     // Get te selected drink from the list view
                     ListViewItem selectedItem = listViewDrinks.SelectedItems[0];
                     Drink selectedDrink = (Drink)selectedItem.Tag;
-                    Drink drink = new Drink(txtName.Text, decimal.Parse(txtPrice.Text), decimal.Parse(txtVATRate.Text), int.Parse(txtStock.Text), bool.Parse(txtAlcoholic.Text));
-                    int drinkId = drink.Id;
 
                     // Delete item
                     DrinkDao drinkDAO = new DrinkDao();
-                    drinkDAO.DeleteDrink(drink);
-
-                    MessageBox.Show("Drink deleted");
+                    drinkDAO.DeleteDrink(selectedDrink);
 
                     // Show updated list view 
                     ShowDrinkSuppliesPanel();
                     ClearTextBoxes();
+
+                    // Show confirmation
+                    MessageBox.Show("Drink deleted");
                 }
             }
             catch (Exception ex)
@@ -363,16 +376,17 @@ namespace SomerenUI
                     ListViewItem selectedItem = listViewDrinks.SelectedItems[0];
                     Drink selectedDrink = (Drink)selectedItem.Tag;
 
-                    MessageBox.Show("Drink modified");
+                    ModifyDrinkProperties(selectedDrink);
 
-                    // Show updated list view
                     DrinkDao drinkDao = new DrinkDao();
-
                     drinkDao.ModifyDrink(selectedDrink);
 
                     // Show updated list view 
                     ShowDrinkSuppliesPanel();
                     ClearTextBoxes();
+
+                    // Show confirmation
+                    MessageBox.Show("Drink modified");
                 }
                 else
                 {
@@ -479,16 +493,13 @@ namespace SomerenUI
                 DateTime date = DateTime.Now;
 
                 DrinkDao drinkDao = new DrinkDao();
-                drinkDao.PlaceOrder(amount, price, date, drinkId, studentId);
+                drinkDao.PlaceOrder(drinkId, studentId, amount, price, date);
 
-                MessageBox.Show($"Student: {selectedStudent.Text}\nSelected drink: {selectedDrink.Text}\nPrice: ${price} ");
+                MessageBox.Show($"Student: {selectedStudent.Text}\nSelected drink: {selectedDrink.Text}\nPrice: ${price:0.00} ");
 
                 // Clear section and reset values
                 listViewOrderingDrinks.SelectedItems.Clear();
                 numericUpDownAmount.Value = 1;
-
-                // Refresh the list with updated data
-                ShowDrinksOrderingPanel();
             }
         }
 
