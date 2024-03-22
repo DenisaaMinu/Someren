@@ -91,6 +91,7 @@
             columnHeader8 = new System.Windows.Forms.ColumnHeader();
             columnHeader9 = new System.Windows.Forms.ColumnHeader();
             columnHeader10 = new System.Windows.Forms.ColumnHeader();
+            columnHeader11 = new System.Windows.Forms.ColumnHeader();
             label4 = new System.Windows.Forms.Label();
             pnlOrdering = new System.Windows.Forms.Panel();
             pictureBox5 = new System.Windows.Forms.PictureBox();
@@ -108,7 +109,7 @@
             listViewStudentsOrdering = new System.Windows.Forms.ListView();
             columnHeader18 = new System.Windows.Forms.ColumnHeader();
             pnlRevenue = new System.Windows.Forms.Panel();
-            lblCustomerNumber = new System.Windows.Forms.Label();
+            lblNumberOfCustomers = new System.Windows.Forms.Label();
             lblTurnover = new System.Windows.Forms.Label();
             lblSales = new System.Windows.Forms.Label();
             buttonGenerateRevenue = new System.Windows.Forms.Button();
@@ -118,7 +119,6 @@
             pictureBox6 = new System.Windows.Forms.PictureBox();
             label8 = new System.Windows.Forms.Label();
             label10 = new System.Windows.Forms.Label();
-            columnHeader11 = new System.Windows.Forms.ColumnHeader();
             menuStrip1.SuspendLayout();
             pnlDashboard.SuspendLayout();
             pnlStudents.SuspendLayout();
@@ -626,6 +626,11 @@
             columnHeader10.Text = "Stock status";
             columnHeader10.Width = 160;
             // 
+            // columnHeader11
+            // 
+            columnHeader11.Text = "Alcoholic";
+            columnHeader11.Width = 160;
+            // 
             // label4
             // 
             label4.AutoSize = true;
@@ -781,7 +786,7 @@
             // 
             // pnlRevenue
             // 
-            pnlRevenue.Controls.Add(lblCustomerNumber);
+            pnlRevenue.Controls.Add(lblNumberOfCustomers);
             pnlRevenue.Controls.Add(lblTurnover);
             pnlRevenue.Controls.Add(lblSales);
             pnlRevenue.Controls.Add(buttonGenerateRevenue);
@@ -797,19 +802,19 @@
             pnlRevenue.Size = new System.Drawing.Size(1336, 774);
             pnlRevenue.TabIndex = 18;
             // 
-            // lblCustomerNumber
+            // lblNumberOfCustomers
             // 
-            lblCustomerNumber.AutoSize = true;
-            lblCustomerNumber.Location = new System.Drawing.Point(583, 339);
-            lblCustomerNumber.Name = "lblCustomerNumber";
-            lblCustomerNumber.Size = new System.Drawing.Size(69, 25);
-            lblCustomerNumber.TabIndex = 17;
-            lblCustomerNumber.Text = "label14";
+            lblNumberOfCustomers.AutoSize = true;
+            lblNumberOfCustomers.Location = new System.Drawing.Point(454, 339);
+            lblNumberOfCustomers.Name = "lblNumberOfCustomers";
+            lblNumberOfCustomers.Size = new System.Drawing.Size(69, 25);
+            lblNumberOfCustomers.TabIndex = 17;
+            lblNumberOfCustomers.Text = "label14";
             // 
             // lblTurnover
             // 
             lblTurnover.AutoSize = true;
-            lblTurnover.Location = new System.Drawing.Point(301, 339);
+            lblTurnover.Location = new System.Drawing.Point(226, 339);
             lblTurnover.Name = "lblTurnover";
             lblTurnover.Size = new System.Drawing.Size(69, 25);
             lblTurnover.TabIndex = 16;
@@ -837,16 +842,16 @@
             // dateTimePickerEndDate
             // 
             dateTimePickerEndDate.Location = new System.Drawing.Point(352, 186);
-            dateTimePickerEndDate.MaxDate = new System.DateTime(2024, 3, 21, 0, 0, 0, 0);
+            dateTimePickerEndDate.MaxDate = new System.DateTime(2025, 7, 31, 0, 0, 0, 0);
             dateTimePickerEndDate.Name = "dateTimePickerEndDate";
             dateTimePickerEndDate.Size = new System.Drawing.Size(300, 31);
             dateTimePickerEndDate.TabIndex = 13;
-            dateTimePickerEndDate.Value = new System.DateTime(2024, 3, 21, 0, 0, 0, 0);
+            dateTimePickerEndDate.Value = new System.DateTime(2024, 3, 22, 0, 0, 0, 0);
             // 
             // dateTimePickerStartDate
             // 
             dateTimePickerStartDate.Location = new System.Drawing.Point(352, 120);
-            dateTimePickerStartDate.MaxDate = new System.DateTime(2024, 3, 21, 0, 0, 0, 0);
+            dateTimePickerStartDate.MaxDate = new System.DateTime(2024, 11, 1, 0, 0, 0, 0);
             dateTimePickerStartDate.Name = "dateTimePickerStartDate";
             dateTimePickerStartDate.Size = new System.Drawing.Size(300, 31);
             dateTimePickerStartDate.TabIndex = 12;
@@ -895,24 +900,19 @@
             label10.TabIndex = 4;
             label10.Text = "Revenue report";
             // 
-            // columnHeader11
-            // 
-            columnHeader11.Text = "Alcoholic";
-            columnHeader11.Width = 160;
-            // 
             // SomerenUI
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(1374, 842);
             Controls.Add(menuStrip1);
+            Controls.Add(pnlRevenue);
+            Controls.Add(pnlOrdering);
             Controls.Add(pnlDrinks);
             Controls.Add(pnlStudents);
             Controls.Add(pnlDashboard);
             Controls.Add(pnlRooms);
             Controls.Add(pnlTeachers);
-            Controls.Add(pnlRevenue);
-            Controls.Add(pnlOrdering);
             MainMenuStrip = menuStrip1;
             Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             Name = "SomerenUI";
@@ -1030,7 +1030,7 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Button buttonGenerateRevenue;
-        private System.Windows.Forms.Label lblCustomerNumber;
+        private System.Windows.Forms.Label lblNumberOfCustomers;
         private System.Windows.Forms.Label lblTurnover;
         private System.Windows.Forms.Label lblSales;
         private System.Windows.Forms.PictureBox pictureBox4;

@@ -121,5 +121,74 @@ namespace SomerenDAL
 
             ExecuteEditQuery(query, sqlParameters);
         }
+
+        public int GetTotalDrinksSold(DateTime startDate, DateTime endDate)
+        {
+            string query = "SELECT SUM(amount) " +
+                           "FROM [ORDER] " +
+                           "WHERE [date] BETWEEN @StartDate AND @EndDate;";
+
+            SqlParameter[] parameters =
+            {
+                new SqlParameter("@StartDate", startDate),
+                new SqlParameter("@EndDate", endDate)
+            };
+
+            DataTable resultTable = ExecuteSelectQuery(query, parameters);
+
+            if (resultTable.Rows.Count > 0 && resultTable.Rows[0][0] != DBNull.Value)
+            {
+                int numberOfDrinksSold = Convert.ToInt32(resultTable.Rows[0][0] );
+                return numberOfDrinksSold;
+            }
+
+            return 0;
+        }
+
+        public decimal GetTurnover(DateTime startDate, DateTime endDate)
+        {
+            string query = "SELECT SUM(amount * price) " +
+                           "FROM [ORDER] " +
+                           "WHERE [date] BETWEEN @StartDate AND @EndDate;";
+
+            SqlParameter[] parameters =
+            {
+                new SqlParameter("@StartDate", startDate),
+                new SqlParameter("@EndDate", endDate)
+            };
+
+            DataTable resultTable = ExecuteSelectQuery(query, parameters);
+
+            if (resultTable.Rows.Count > 0 && resultTable.Rows[0][0] != DBNull.Value)
+            {
+                decimal totalTurnover = Convert.ToInt32(resultTable.Rows[0][0]);
+                return totalTurnover;
+            }
+
+            return 0;
+        }
+
+        public int GetNumberOfCustomers(DateTime startDate, DateTime endDate)
+        {
+            string query = "SELECT COUNT(DISTINCT studentId) " +
+                           "FROM [ORDER] " +
+                           "WHERE [date] BETWEEN @startDate AND @endDate";
+
+            SqlParameter[] parameters =
+            {
+                new SqlParameter("@startdate", startDate),
+                new SqlParameter("@endDate", endDate)
+            };
+
+            DataTable resultTable = ExecuteSelectQuery(query, parameters);
+
+            if(resultTable.Rows.Count > 0 && resultTable.Rows[0][0] != DBNull.Value)
+            {
+                int numberOfCustomers = Convert.ToInt32(resultTable.Rows[0][0]);
+                return numberOfCustomers;
+            }
+
+            return 0;
+        }
     }
 }

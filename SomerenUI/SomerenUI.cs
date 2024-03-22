@@ -495,7 +495,7 @@ namespace SomerenUI
                 DrinkDao drinkDao = new DrinkDao();
                 drinkDao.PlaceOrder(drinkId, studentId, amount, price, date);
 
-                MessageBox.Show($"Student: {selectedStudent.Text}\nSelected drink: {selectedDrink.Text}\nPrice: ${price:0.00} ");
+                MessageBox.Show($"Student: {selectedStudent.Text}\nSelected drink: {selectedDrink.Text}\nPrice: {price.ToString("C")} ");
 
                 // Clear section and reset values
                 listViewOrderingDrinks.SelectedItems.Clear();
@@ -505,41 +505,43 @@ namespace SomerenUI
 
 
         // Revenue report
-        private void ShowRevenuePanel()
-        {
-            try
-            {
-                // get and display all students
-                List<Student> students = GetStudents();
-                DisplayRevenueReport(students);
-            }
-            catch (Exception e)
-            {
-                // throw exception
-                MessageBox.Show("Something went wrong while loading the students: " + e.Message);
-            }
-        }
-
-        private void DisplayRevenueReport(List<Student> students)
-        {
-            // clear the listview before filling it
-            listViewStudentsOrdering.Items.Clear();
-
-            foreach (Student student in students)
-            {
-                ListViewItem li = new ListViewItem(student.Name);
-                listViewStudentsOrdering.Items.Add(li);
-            }
-        }
 
         private void revenueReportToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ShowRevenuePanel();
+            ShowCurrentPanel(pnlRevenue);
+        }
+
+        public void GenerateRevenueReport(DateTime startDate, DateTime endDate)
+        {
+            if (startDate <= endDate && endDate <= DateTime.Now)
+            {
+                DrinkDao drinkDao = new DrinkDao();
+                int numberOfDrinksSold = drinkDao.GetTotalDrinksSold(startDate, endDate);
+                decimal totalTurnover = drinkDao.GetTurnover(startDate, endDate);
+                int numberOfCustomers = drinkDao.GetNumberOfCustomers(startDate, endDate);
+
+                lblSales.Text = $"Sales: \n{numberOfDrinksSold}";
+                lblTurnover.Text = $"Turnover: \n{totalTurnover:C}";
+                lblNumberOfCustomers.Text = $"Number of customers: \n{numberOfCustomers}";
+            }
         }
 
         private void buttonGenerateRevenue_Click(object sender, EventArgs e)
         {
+            try
+            {
+                DateTime startDate = dateTimePickerStartDate.Value.Date;
+                DateTime endDate = dateTimePickerEndDate.Value.Date;
 
+                if (startDate <= endDate && endDate <= DateTime.Now)
+                {
+                    GenerateRevenueReport(startDate, endDate);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
