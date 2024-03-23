@@ -14,7 +14,7 @@ namespace SomerenDAL
 
         public List<Drink> GetAllDrinks()
         {
-            string query = "SELECT drinkId, name, VATRate, price, stock, alcoholic  FROM [DRINK]" +
+            string query = "SELECT drinkId, name, VATRate, price, stock, alcoholic, numberOfDrinksSold  FROM [DRINK]" +
                            "ORDER BY name";
             SqlParameter[] sqlParameters = new SqlParameter[0];
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
@@ -34,6 +34,7 @@ namespace SomerenDAL
                     isAlcoholic: (bool)dr["alcoholic"]);
 
                 drink.Id = (int)dr["drinkId"];
+                drink.NumberOfDrinksSold = (int)dr["numberOfDrinksSold"];
 
                 if (drink.Stock > SufficientStock)
                     drink.StockStatus = "Stock sufficient";
@@ -55,8 +56,8 @@ namespace SomerenDAL
         {
             try
             {
-                string query = "INSERT INTO [DRINK] (name, VATRate, price, stock, alcoholic)" +
-                               "VALUES (@Name, @VATRate, @Price, @Stock, @Alcoholic);";
+                string query = "INSERT INTO [DRINK] (name, VATRate, price, stock, alcoholic, numberOfDrinksSold)" +
+                               "VALUES (@Name, @VATRate, @Price, @Stock, @NumberOfDrinksSold);";
 
                 SqlParameter[] parameters =
                 {
@@ -64,7 +65,8 @@ namespace SomerenDAL
                     new SqlParameter("@VATRate", drink.VATRate),
                     new SqlParameter("@Price", drink.Price),
                     new SqlParameter("@Stock", drink.Stock),
-                    new SqlParameter("@Alcoholic", drink.IsAlcoholic)
+                    new SqlParameter("@Alcoholic", drink.IsAlcoholic),
+                    new SqlParameter("@NumberOfDrinksSold", drink.NumberOfDrinksSold)
                 };
 
                 ExecuteEditQuery(query, parameters);
@@ -106,92 +108,6 @@ namespace SomerenDAL
             };
 
             ExecuteEditQuery(query, sqlParameters);
-        }
-
-        public void PlaceOrder(int drinkId, int studentId, int amount, double price, DateTime date)
-        {
-            string query = "INSERT INTO [ORDER] (drinkId, studentId, amount, price, date) " +
-                           "VALUES (@DrinkId, @StudentId, @Amount, @Price, @Date)";
-
-            SqlParameter[] sqlParameters =
-            {
-                new SqlParameter("@DrinkId", drinkId),
-                new SqlParameter("@StudentId", studentId),
-                new SqlParameter("@Amount", amount),
-                new SqlParameter("@Price", price),
-                new SqlParameter("@Date", date)
-            };
-
-            ExecuteEditQuery(query, sqlParameters);
-        }
-
-        public int GetTotalDrinksSold(DateTime startDate, DateTime endDate)
-        {
-            string query = "SELECT SUM(amount) " +
-                           "FROM [ORDER] " +
-                           "WHERE [date] BETWEEN @StartDate AND @EndDate;";
-
-            SqlParameter[] parameters =
-            {
-                new SqlParameter("@StartDate", startDate),
-                new SqlParameter("@EndDate", endDate)
-            };
-
-            DataTable resultTable = ExecuteSelectQuery(query, parameters);
-
-            if (resultTable.Rows.Count > 0 && resultTable.Rows[0][0] != DBNull.Value)
-            {
-                int numberOfDrinksSold = Convert.ToInt32(resultTable.Rows[0][0] );
-                return numberOfDrinksSold;
-            }
-
-            return 0;
-        }
-
-        public decimal GetTurnover(DateTime startDate, DateTime endDate)
-        {
-            string query = "SELECT SUM(amount * price) " +
-                           "FROM [ORDER] " +
-                           "WHERE [date] BETWEEN @StartDate AND @EndDate;";
-
-            SqlParameter[] parameters =
-            {
-                new SqlParameter("@StartDate", startDate),
-                new SqlParameter("@EndDate", endDate)
-            };
-
-            DataTable resultTable = ExecuteSelectQuery(query, parameters);
-
-            if (resultTable.Rows.Count > 0 && resultTable.Rows[0][0] != DBNull.Value)
-            {
-                decimal totalTurnover = Convert.ToInt32(resultTable.Rows[0][0]);
-                return totalTurnover;
-            }
-
-            return 0;
-        }
-
-        public int GetNumberOfCustomers(DateTime startDate, DateTime endDate)
-        {
-            string query = "SELECT COUNT(DISTINCT studentId) " +
-                           "FROM [ORDER] " +
-                           "WHERE [date] BETWEEN @startDate AND @endDate";
-
-            SqlParameter[] parameters =
-            {
-                new SqlParameter("@startdate", startDate),
-                new SqlParameter("@endDate", endDate)
-            };
-
-            DataTable resultTable = ExecuteSelectQuery(query, parameters);
-
-            if(resultTable.Rows.Count > 0 && resultTable.Rows[0][0] != DBNull.Value)
-            {
-                int numberOfCustomers = Convert.ToInt32(resultTable.Rows[0][0]);
-                return numberOfCustomers;
-            }
-
-            return 0;
         }
     }
 }

@@ -252,12 +252,19 @@ namespace SomerenUI
         }
         private static ListViewItem CreateDrinkSuppliesLiItem(Drink drink)
         {
+            string isAlcoholic;
+            if (drink.IsAlcoholic)
+                isAlcoholic = "Yes";
+            else
+                isAlcoholic = "No";
+
             ListViewItem li = new ListViewItem(drink.Name);
             li.SubItems.Add(drink.VATRate.ToString());
             li.SubItems.Add(drink.Price.ToString());
             li.SubItems.Add(drink.Stock.ToString());
             li.SubItems.Add(drink.StockStatus);
-            li.SubItems.Add(drink.IsAlcoholic.ToString());
+            li.SubItems.Add(isAlcoholic);
+            li.SubItems.Add(drink.NumberOfDrinksSold.ToString());
 
             // test
             li.Tag = drink;   // link drink object to listview item
@@ -483,18 +490,24 @@ namespace SomerenUI
         {
             if (listViewOrderingDrinks.SelectedItems.Count > 0 && listViewStudentsOrdering.SelectedItems.Count > 0)
             {
+                // Get the selected drink
                 ListViewItem selectedDrink = listViewOrderingDrinks.SelectedItems[0];
                 ListViewItem selectedStudent = listViewStudentsOrdering.SelectedItems[0];
 
+                // Get the values necessary for placing an order
                 double price = Convert.ToDouble(numericUpDownAmount.Value) * Convert.ToDouble(selectedDrink.SubItems[1].Text);
                 int drinkId = ((Drink)selectedDrink.Tag).Id;
                 int studentId = ((Student)selectedStudent.Tag).Id;
                 int amount = Convert.ToInt32(numericUpDownAmount.Value);
                 DateTime date = DateTime.Now;
 
-                DrinkDao drinkDao = new DrinkDao();
-                drinkDao.PlaceOrder(drinkId, studentId, amount, price, date);
+                // Place order and Update drink supplies list
+                OrderDao orderDao = new OrderDao();
+                orderDao.PlaceOrder(drinkId, studentId, amount, price, date);
 
+                orderDao.UpdateDrinkSupplies(drinkId, amount);
+
+                // Show confirmation
                 MessageBox.Show($"Student: {selectedStudent.Text}\nSelected drink: {selectedDrink.Text}\nPrice: {price.ToString("C")} ");
 
                 // Clear section and reset values
@@ -513,34 +526,28 @@ namespace SomerenUI
 
         public void GenerateRevenueReport(DateTime startDate, DateTime endDate)
         {
-            if (startDate <= endDate && endDate <= DateTime.Now)
-            {
-                DrinkDao drinkDao = new DrinkDao();
-                int numberOfDrinksSold = drinkDao.GetTotalDrinksSold(startDate, endDate);
-                decimal totalTurnover = drinkDao.GetTurnover(startDate, endDate);
-                int numberOfCustomers = drinkDao.GetNumberOfCustomers(startDate, endDate);
+            OrderDao orderDao = new OrderDao();
+            int numberOfDrinksSold = orderDao.GetTotalDrinksSold(startDate, endDate);
+            decimal totalTurnover = orderDao.GetTurnover(startDate, endDate);
+            int numberOfCustomers = orderDao.GetNumberOfCustomers(startDate, endDate);
 
-                lblSales.Text = $"Sales: \n{numberOfDrinksSold}";
-                lblTurnover.Text = $"Turnover: \n{totalTurnover:C}";
-                lblNumberOfCustomers.Text = $"Number of customers: \n{numberOfCustomers}";
-            }
+            lblSales.Text = $"Sales: \n{numberOfDrinksSold}";
+            lblTurnover.Text = $"Turnover: \n{totalTurnover:C}";
+            lblNumberOfCustomers.Text = $"Number of customers: \n{numberOfCustomers}";
         }
 
         private void buttonGenerateRevenue_Click(object sender, EventArgs e)
         {
-            try
-            {
-                DateTime startDate = dateTimePickerStartDate.Value.Date;
-                DateTime endDate = dateTimePickerEndDate.Value.Date;
+            DateTime startDate = dateTimePickerStartDate.Value;
+            DateTime endDate = dateTimePickerEndDate.Value;
 
-                if (startDate <= endDate && endDate <= DateTime.Now)
-                {
-                    GenerateRevenueReport(startDate, endDate);
-                }
-            }
-            catch (Exception ex)
+            if (startDate <= endDate && endDate <= DateTime.Now)
             {
-                MessageBox.Show(ex.Message);
+                GenerateRevenueReport(startDate, endDate);
+            }
+            else
+            {
+                MessageBox.Show("Invalid date. Please select a valid date.");
             }
         }
     }
