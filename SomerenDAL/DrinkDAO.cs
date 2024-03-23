@@ -9,6 +9,9 @@ namespace SomerenDAL
 {
     public class DrinkDao : BaseDao
     {
+        protected const decimal VATRateAlcohol = 0.21m;
+        protected int SufficientStock = 10;
+
         public List<Drink> GetAllDrinks()
         {
             string query = "SELECT drinkId, name, VATRate, price, stock, alcoholic  FROM [DRINK]" +
@@ -32,12 +35,12 @@ namespace SomerenDAL
 
                 drink.Id = (int)dr["drinkId"];
 
-                if (drink.Stock > 10)
+                if (drink.Stock > SufficientStock)
                     drink.StockStatus = "Stock sufficient";
                 else
                     drink.StockStatus = "Stock nearly depleted";
 
-                if (drink.VATRate == 0.21m)
+                if (drink.VATRate == VATRateAlcohol)
                     drink.IsAlcoholic = true;
                 else
                     drink.IsAlcoholic = false;
