@@ -26,15 +26,16 @@ namespace SomerenDAL
 
             foreach (DataRow dr in dataTable.Rows)
             {
-                Drink drink = new Drink(
-                    name: dr["name"].ToString(),
-                    vatRate: (decimal)dr["VATRate"],
-                    price: (decimal)dr["price"],
-                    stock: (int)dr["stock"],
-                    isAlcoholic: (bool)dr["alcoholic"]);
-
-                drink.Id = (int)dr["drinkId"];
-                drink.NumberOfDrinksSold = (int)dr["numberOfDrinksSold"];
+                Drink drink = new Drink()
+                {
+                    Id = (int)dr["drinkId"],
+                    Name = dr["name"].ToString(),
+                    VATRate = (decimal)dr["VATRate"],
+                    Price = (decimal)dr["price"],
+                    Stock = (int)dr["stock"],
+                    IsAlcoholic = (bool)dr["alcoholic"],
+                    NumberOfDrinksSold = (int)dr["numberOfDrinksSold"]
+                };
 
                 if (drink.Stock > SufficientStock)
                     drink.StockStatus = "Stock sufficient";
@@ -57,7 +58,7 @@ namespace SomerenDAL
             try
             {
                 string query = "INSERT INTO [DRINK] (name, VATRate, price, stock, alcoholic, numberOfDrinksSold)" +
-                               "VALUES (@Name, @VATRate, @Price, @Stock, @NumberOfDrinksSold);";
+                               "VALUES (@Name, @VATRate, @Price, @Stock, @Alcoholic, @NumberOfDrinksSold);";
 
                 SqlParameter[] parameters =
                 {

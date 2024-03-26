@@ -17,14 +17,5 @@ namespace SomerenModel
 
         public bool IsAlcoholic { get; set; }  // alcoholic = true, non-alcoholic = false
         public int NumberOfDrinksSold { get; set; } // number of drinks sold, e.g. 120
-   
-        public Drink(string name, decimal price, decimal vatRate, int stock, bool isAlcoholic)
-        {
-            Name = name;
-            Price = price;
-            VATRate = vatRate; 
-            Stock = stock;
-            IsAlcoholic = isAlcoholic;
-        }
     }
 }

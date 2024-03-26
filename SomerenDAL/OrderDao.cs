@@ -3,9 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SomerenDAL
 {
@@ -25,13 +22,15 @@ namespace SomerenDAL
 
             foreach (DataRow dr in dataTable.Rows)
             {
-                Order order = new Order(
-                    amount: (int)dr["amount"],
-                    price: (decimal)dr["price"]);
-
-                order.Id = (int)dr["orderId"];
-                order.DrinkId = (int)dr["drinkId"];
-                order.StudentId = (int)dr["studentId"];
+                Order order = new Order()
+                {
+                    Id = (int)dr["orderId"],
+                    DrinkId = (int)dr["drinkId"],
+                    StudentId = (int)dr["studentId"],
+                    Amount = (int)dr["amount"],
+                    Price = (decimal)dr["price"],
+                    Date = (DateTime)dr["date"]
+                };
             }
 
             return orders;
@@ -56,8 +55,7 @@ namespace SomerenDAL
 
         public void UpdateDrinkSupplies(int drinkId, int amount)
         {
-            string query = "UPDATE [DRINK] " +
-                           "SET numberOfDrinksSold = @amount " +
+            string query = "UPDATE [DRINK] SET numberOfDrinksSold = @amount " +
                            "WHERE drinkId = @drinkId";
 
             SqlParameter[] parameters =
@@ -71,8 +69,7 @@ namespace SomerenDAL
 
         public int GetTotalDrinksSold(DateTime startDate, DateTime endDate)
         {
-            string query = "SELECT SUM(amount) " +
-                           "FROM [ORDER] " +
+            string query = "SELECT SUM(amount) FROM [ORDER] " +
                            "WHERE CAST([date] AS DATE) BETWEEN @StartDate AND @EndDate;";
 
             SqlParameter[] parameters =
@@ -94,10 +91,9 @@ namespace SomerenDAL
 
         public decimal GetTurnover(DateTime startDate, DateTime endDate)
         {
-            string query = "SELECT SUM(amount * price) " +
-                           "FROM [ORDER] " +
+            string query = "SELECT SUM(amount * price) FROM [ORDER] " +
                            "WHERE CAST([date] AS DATE) BETWEEN @StartDate AND @EndDate;";
-            
+
             SqlParameter[] parameters =
             {
                 new SqlParameter("@StartDate", startDate),
@@ -117,8 +113,7 @@ namespace SomerenDAL
 
         public int GetNumberOfCustomers(DateTime startDate, DateTime endDate)
         {
-            string query = "SELECT COUNT(DISTINCT studentId) " +
-                           "FROM [ORDER] " +
+            string query = "SELECT COUNT(DISTINCT studentId) FROM [ORDER] " +
                            "WHERE CAST([date] AS DATE) BETWEEN @startDate AND @endDate";
 
             SqlParameter[] parameters =
