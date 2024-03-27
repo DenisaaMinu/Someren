@@ -13,6 +13,7 @@ namespace SomerenModel
         public int StudentId { get; set; }    // student's id
         public int Amount { get; set; }     // number of drinks orderd
         public decimal Price { get; set; }  // order's price, e.g. $12.50
+
        
        
         public Order(int amount, decimal price)
