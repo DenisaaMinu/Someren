@@ -40,6 +40,9 @@
             drinkSuppliesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             orderingDrinksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             revenueReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            activityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            activitySupervisorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            activityParticipantsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             pnlDashboard = new System.Windows.Forms.Panel();
             lblDashboard = new System.Windows.Forms.Label();
             pnlStudents = new System.Windows.Forms.Panel();
@@ -132,9 +135,21 @@
             pictureBox6 = new System.Windows.Forms.PictureBox();
             label8 = new System.Windows.Forms.Label();
             label10 = new System.Windows.Forms.Label();
-            activityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            activitySupervisorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            activityParticipantsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            panel1 = new System.Windows.Forms.Panel();
+            textBox3 = new System.Windows.Forms.TextBox();
+            txt = new System.Windows.Forms.TextBox();
+            listView3 = new System.Windows.Forms.ListView();
+            columnHeader16 = new System.Windows.Forms.ColumnHeader();
+            columnHeader27 = new System.Windows.Forms.ColumnHeader();
+            button1 = new System.Windows.Forms.Button();
+            button2 = new System.Windows.Forms.Button();
+            button3 = new System.Windows.Forms.Button();
+            label14 = new System.Windows.Forms.Label();
+            pictureBox7 = new System.Windows.Forms.PictureBox();
+            listView4 = new System.Windows.Forms.ListView();
+            columnHeader34 = new System.Windows.Forms.ColumnHeader();
+            columnHeader40 = new System.Windows.Forms.ColumnHeader();
+            label15 = new System.Windows.Forms.Label();
             menuStrip1.SuspendLayout();
             pnlDashboard.SuspendLayout();
             pnlStudents.SuspendLayout();
@@ -150,6 +165,8 @@
             ((System.ComponentModel.ISupportInitialize)numericUpDownAmount).BeginInit();
             pnlRevenue.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox6).BeginInit();
+            panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox7).BeginInit();
             SuspendLayout();
             // 
             // menuStrip1
@@ -215,23 +232,43 @@
             // drinkSuppliesToolStripMenuItem
             // 
             drinkSuppliesToolStripMenuItem.Name = "drinkSuppliesToolStripMenuItem";
-            drinkSuppliesToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            drinkSuppliesToolStripMenuItem.Size = new System.Drawing.Size(238, 34);
             drinkSuppliesToolStripMenuItem.Text = "Drink supplies";
             drinkSuppliesToolStripMenuItem.Click += drinkSuppliesToolStripMenuItem_Click;
             // 
             // orderingDrinksToolStripMenuItem
             // 
             orderingDrinksToolStripMenuItem.Name = "orderingDrinksToolStripMenuItem";
-            orderingDrinksToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            orderingDrinksToolStripMenuItem.Size = new System.Drawing.Size(238, 34);
             orderingDrinksToolStripMenuItem.Text = "Ordering drinks";
             orderingDrinksToolStripMenuItem.Click += orderingDrinksToolStripMenuItem_Click;
             // 
             // revenueReportToolStripMenuItem
             // 
             revenueReportToolStripMenuItem.Name = "revenueReportToolStripMenuItem";
-            revenueReportToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            revenueReportToolStripMenuItem.Size = new System.Drawing.Size(238, 34);
             revenueReportToolStripMenuItem.Text = "Revenue report";
             revenueReportToolStripMenuItem.Click += revenueReportToolStripMenuItem_Click;
+            // 
+            // activityToolStripMenuItem
+            // 
+            activityToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { activitySupervisorsToolStripMenuItem, activityParticipantsToolStripMenuItem });
+            activityToolStripMenuItem.Name = "activityToolStripMenuItem";
+            activityToolStripMenuItem.Size = new System.Drawing.Size(86, 29);
+            activityToolStripMenuItem.Text = "Activity";
+            // 
+            // activitySupervisorsToolStripMenuItem
+            // 
+            activitySupervisorsToolStripMenuItem.Name = "activitySupervisorsToolStripMenuItem";
+            activitySupervisorsToolStripMenuItem.Size = new System.Drawing.Size(269, 34);
+            activitySupervisorsToolStripMenuItem.Text = "Activity supervisors";
+            activitySupervisorsToolStripMenuItem.Click += activitySupervisorsToolStripMenuItem_Click;
+            // 
+            // activityParticipantsToolStripMenuItem
+            // 
+            activityParticipantsToolStripMenuItem.Name = "activityParticipantsToolStripMenuItem";
+            activityParticipantsToolStripMenuItem.Size = new System.Drawing.Size(269, 34);
+            activityParticipantsToolStripMenuItem.Text = "Activity participants";
             // 
             // pnlDashboard
             // 
@@ -254,6 +291,7 @@
             // 
             // pnlStudents
             // 
+            pnlStudents.Controls.Add(panel1);
             pnlStudents.Controls.Add(txtStudentClass);
             pnlStudents.Controls.Add(txtStudentTelephoneNumber);
             pnlStudents.Controls.Add(txtStudentNumber);
@@ -1036,25 +1074,145 @@
             label10.TabIndex = 4;
             label10.Text = "Revenue report";
             // 
-            // activityToolStripMenuItem
+            // panel1
             // 
-            activityToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { activitySupervisorsToolStripMenuItem, activityParticipantsToolStripMenuItem });
-            activityToolStripMenuItem.Name = "activityToolStripMenuItem";
-            activityToolStripMenuItem.Size = new System.Drawing.Size(86, 29);
-            activityToolStripMenuItem.Text = "Activity";
+            panel1.Controls.Add(textBox3);
+            panel1.Controls.Add(txt);
+            panel1.Controls.Add(listView3);
+            panel1.Controls.Add(button1);
+            panel1.Controls.Add(button2);
+            panel1.Controls.Add(button3);
+            panel1.Controls.Add(label14);
+            panel1.Controls.Add(pictureBox7);
+            panel1.Controls.Add(listView4);
+            panel1.Controls.Add(label15);
+            panel1.Location = new System.Drawing.Point(8, 8);
+            panel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            panel1.Name = "panel1";
+            panel1.Size = new System.Drawing.Size(1340, 778);
+            panel1.TabIndex = 28;
             // 
-            // activitySupervisorsToolStripMenuItem
+            // textBox3
             // 
-            activitySupervisorsToolStripMenuItem.Name = "activitySupervisorsToolStripMenuItem";
-            activitySupervisorsToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
-            activitySupervisorsToolStripMenuItem.Text = "Activity supervisors";
-            activitySupervisorsToolStripMenuItem.Click += activitySupervisorsToolStripMenuItem_Click;
+            textBox3.Location = new System.Drawing.Point(391, 509);
+            textBox3.Margin = new System.Windows.Forms.Padding(2);
+            textBox3.Name = "textBox3";
+            textBox3.Size = new System.Drawing.Size(378, 31);
+            textBox3.TabIndex = 25;
             // 
-            // activityParticipantsToolStripMenuItem
+            // txt
             // 
-            activityParticipantsToolStripMenuItem.Name = "activityParticipantsToolStripMenuItem";
-            activityParticipantsToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
-            activityParticipantsToolStripMenuItem.Text = "Activity participants";
+            txt.Location = new System.Drawing.Point(20, 509);
+            txt.Margin = new System.Windows.Forms.Padding(2);
+            txt.Name = "txt";
+            txt.Size = new System.Drawing.Size(412, 31);
+            txt.TabIndex = 24;
+            // 
+            // listView3
+            // 
+            listView3.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { columnHeader16, columnHeader27 });
+            listView3.FullRowSelect = true;
+            listView3.Location = new System.Drawing.Point(20, 466);
+            listView3.Margin = new System.Windows.Forms.Padding(2);
+            listView3.Name = "listView3";
+            listView3.Size = new System.Drawing.Size(749, 74);
+            listView3.TabIndex = 23;
+            listView3.UseCompatibleStateImageBehavior = false;
+            listView3.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader16
+            // 
+            columnHeader16.Text = "Name";
+            columnHeader16.Width = 370;
+            // 
+            // columnHeader27
+            // 
+            columnHeader27.Text = "Student";
+            columnHeader27.Width = 370;
+            // 
+            // button1
+            // 
+            button1.Location = new System.Drawing.Point(493, 592);
+            button1.Margin = new System.Windows.Forms.Padding(2);
+            button1.Name = "button1";
+            button1.Size = new System.Drawing.Size(276, 34);
+            button1.TabIndex = 22;
+            button1.Text = "Modify";
+            button1.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            button2.Location = new System.Drawing.Point(240, 592);
+            button2.Margin = new System.Windows.Forms.Padding(2);
+            button2.Name = "button2";
+            button2.Size = new System.Drawing.Size(223, 34);
+            button2.TabIndex = 21;
+            button2.Text = "Delete";
+            button2.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            button3.Location = new System.Drawing.Point(20, 592);
+            button3.Margin = new System.Windows.Forms.Padding(2);
+            button3.Name = "button3";
+            button3.Size = new System.Drawing.Size(182, 34);
+            button3.TabIndex = 20;
+            button3.Text = "Add";
+            button3.UseVisualStyleBackColor = true;
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            label14.Location = new System.Drawing.Point(22, 410);
+            label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label14.Name = "label14";
+            label14.Size = new System.Drawing.Size(295, 48);
+            label14.TabIndex = 3;
+            label14.Text = "Manage activities";
+            // 
+            // pictureBox7
+            // 
+            pictureBox7.Image = (System.Drawing.Image)resources.GetObject("pictureBox7.Image");
+            pictureBox7.Location = new System.Drawing.Point(1150, 0);
+            pictureBox7.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            pictureBox7.Name = "pictureBox7";
+            pictureBox7.Size = new System.Drawing.Size(186, 205);
+            pictureBox7.TabIndex = 2;
+            pictureBox7.TabStop = false;
+            // 
+            // listView4
+            // 
+            listView4.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { columnHeader34, columnHeader40 });
+            listView4.FullRowSelect = true;
+            listView4.Location = new System.Drawing.Point(22, 70);
+            listView4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            listView4.Name = "listView4";
+            listView4.Size = new System.Drawing.Size(747, 294);
+            listView4.TabIndex = 1;
+            listView4.UseCompatibleStateImageBehavior = false;
+            listView4.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader34
+            // 
+            columnHeader34.Text = "Name";
+            columnHeader34.Width = 370;
+            // 
+            // columnHeader40
+            // 
+            columnHeader40.Text = "Student";
+            columnHeader40.Width = 370;
+            // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            label15.Location = new System.Drawing.Point(19, 12);
+            label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label15.Name = "label15";
+            label15.Size = new System.Drawing.Size(162, 48);
+            label15.TabIndex = 0;
+            label15.Text = "Activities";
             // 
             // SomerenUI
             // 
@@ -1096,6 +1254,9 @@
             pnlRevenue.ResumeLayout(false);
             pnlRevenue.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox6).EndInit();
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox7).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1208,5 +1369,20 @@
         private System.Windows.Forms.ToolStripMenuItem activityToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem activitySupervisorsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem activityParticipantsToolStripMenuItem;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox txt;
+        private System.Windows.Forms.ListView listView3;
+        private System.Windows.Forms.ColumnHeader columnHeader16;
+        private System.Windows.Forms.ColumnHeader columnHeader27;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.PictureBox pictureBox7;
+        private System.Windows.Forms.ListView listView4;
+        private System.Windows.Forms.ColumnHeader columnHeader34;
+        private System.Windows.Forms.ColumnHeader columnHeader40;
+        private System.Windows.Forms.Label label15;
     }
 }
