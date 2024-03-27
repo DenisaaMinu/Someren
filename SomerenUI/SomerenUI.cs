@@ -4,6 +4,9 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using System;
 using SomerenDAL;
+using static System.Collections.Specialized.BitVector32;
+using System.Text.RegularExpressions;
+using System.Diagnostics;
 
 namespace SomerenUI
 {
@@ -44,7 +47,7 @@ namespace SomerenUI
         }
 
 
-        //students
+        //Students
         private void ShowStudentsPanel()
         {
             // show students
@@ -66,6 +69,26 @@ namespace SomerenUI
         private void studentsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowStudentsPanel();
+        }
+
+        private void listViewStudents_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listViewStudents.SelectedItems.Count > 0)
+            {
+                ListViewItem selectedItem = listViewStudents.SelectedItems[0];
+                Student selectedStudent = (Student)selectedItem.Tag;
+
+                MessageBox.Show($"Student {selectedStudent.Name} selected.");
+                FillTextBoxesStudent(selectedStudent);
+            }
+        }
+
+        private void FillTextBoxesStudent(Student student)
+        {
+            txtStudentName.Text = student.Name;
+            txtStudentNumber.Text = student.Number.ToString();
+            txtStudentTelephoneNumber.Text = student.PhoneNumber;
+            txtStudentClass.Text = student.Class;
         }
 
         private List<Student> GetStudents()
@@ -91,7 +114,7 @@ namespace SomerenUI
         {
             ListViewItem li = new ListViewItem(student.Name);
             li.SubItems.Add(student.Number);
-            li.SubItems.Add(student.TelephoneNumber);
+            li.SubItems.Add(student.PhoneNumber);
             li.SubItems.Add(student.Class);
 
             //test
@@ -284,27 +307,25 @@ namespace SomerenUI
                 Drink selectedDrink = (Drink)selectedItem.Tag;
 
                 MessageBox.Show($"Drink {selectedDrink.Name} selected.");
-                FillTextBoxes(selectedDrink);
+                FillTextBoxesDrink(selectedDrink);
             }
         }
 
-        private void FillTextBoxes(Drink selectedDrink)
+        private void FillTextBoxesDrink(Drink selectedDrink)
         {
             txtName.Text = selectedDrink.Name;
             txtPrice.Text = selectedDrink.Price.ToString();
             txtVATRate.Text = selectedDrink.VATRate.ToString();
             txtStock.Text = selectedDrink.Stock.ToString();
-            txtStockStatus.Text = selectedDrink.StockStatus.ToString();
             txtAlcoholic.Text = selectedDrink.IsAlcoholic.ToString();
         }
 
-        private void ClearTextBoxes()
+        private void ClearTextBoxesDrink()
         {
             txtName.Text = null;
             txtPrice.Text = null;
             txtVATRate.Text = null;
             txtStock.Text = null;
-            txtStockStatus.Text = null;
             txtAlcoholic.Text = null;
         }
 
@@ -314,7 +335,6 @@ namespace SomerenUI
             selectedDrink.VATRate = decimal.Parse(txtVATRate.Text);
             selectedDrink.Price = decimal.Parse(txtPrice.Text);
             selectedDrink.Stock = int.Parse(txtStock.Text);
-            selectedDrink.StockStatus = txtStockStatus.Text;
             selectedDrink.IsAlcoholic = bool.Parse(txtAlcoholic.Text);
         }
 
@@ -324,15 +344,16 @@ namespace SomerenUI
             try
             {
                 // Get new drink
-                Drink drink = new Drink(txtName.Text, decimal.Parse(txtPrice.Text), decimal.Parse(txtVATRate.Text), int.Parse(txtStock.Text), bool.Parse(txtAlcoholic.Text));
+                Drink drink = new Drink();
+                ModifyDrinkProperties(drink);
 
                 // Add new drink
-                DrinkDao drinkDAO = new DrinkDao();
-                drinkDAO.AddDrink(drink);
+                DrinkService drinkService = new DrinkService();
+                drinkService.AddDrink(drink);
 
                 // Show updated list view
                 ShowDrinkSuppliesPanel();
-                ClearTextBoxes();
+                ClearTextBoxesDrink();
 
                 // Show confirmation
                 MessageBox.Show("Drink added");
@@ -355,12 +376,12 @@ namespace SomerenUI
                     Drink selectedDrink = (Drink)selectedItem.Tag;
 
                     // Delete item
-                    DrinkDao drinkDAO = new DrinkDao();
-                    drinkDAO.DeleteDrink(selectedDrink);
+                    DrinkService drinkService = new DrinkService();
+                    drinkService.DeleteDrink(selectedDrink);
 
                     // Show updated list view 
                     ShowDrinkSuppliesPanel();
-                    ClearTextBoxes();
+                    ClearTextBoxesDrink();
 
                     // Show confirmation
                     MessageBox.Show("Drink deleted");
@@ -385,12 +406,12 @@ namespace SomerenUI
 
                     ModifyDrinkProperties(selectedDrink);
 
-                    DrinkDao drinkDao = new DrinkDao();
-                    drinkDao.ModifyDrink(selectedDrink);
+                    DrinkService drinkService = new DrinkService();
+                    drinkService.ModifyDrink(selectedDrink);
 
                     // Show updated list view 
                     ShowDrinkSuppliesPanel();
-                    ClearTextBoxes();
+                    ClearTextBoxesDrink();
 
                     // Show confirmation
                     MessageBox.Show("Drink modified");
@@ -456,7 +477,7 @@ namespace SomerenUI
         }
 
 
-        //Students orders
+        //Student's orders
         private void ShowStudentsOrderingPanel()
         {
             try
@@ -486,34 +507,57 @@ namespace SomerenUI
             }
         }
 
-        private void buttonPlaceOrder_Click(object sender, EventArgs e)
+       private void buttonPlaceOrder_Click(object sender, EventArgs e)
+        {
+            // Get the selected drink
+            Order order = GetOrderDetails();
+
+            if (order != null)
+            {
+                // Place order and Update drink supplies list if the order is valid
+                PlaceOrderAndUpdateDrinkSupplies(order);
+
+                // Show confirmation
+                MessageBox.Show($"Student: {listViewStudentsOrdering.SelectedItems[0]}\nSelected drink: {listViewStudentsOrdering.SelectedItems[0]}\nPrice: {order.Price.ToString("C")} ");
+
+                // Clear section and reset values
+                ClearSectionAndResetValues();
+            }
+            else
+            {
+                MessageBox.Show("Please select a drink and a student.");
+            }
+        }
+
+        private static void PlaceOrderAndUpdateDrinkSupplies(Order order)
+        {
+            OrderService orderService = new OrderService();
+            orderService.PlaceOrder(order);
+            orderService.UpdateDrinkSupplies(order);
+        }
+
+        public Order GetOrderDetails()
         {
             if (listViewOrderingDrinks.SelectedItems.Count > 0 && listViewStudentsOrdering.SelectedItems.Count > 0)
             {
-                // Get the selected drink
-                ListViewItem selectedDrink = listViewOrderingDrinks.SelectedItems[0];
+                ListViewItem selectedDrink = listViewOrderingDrinks.SelectedItems[0];                                          // Get the selected drink
                 ListViewItem selectedStudent = listViewStudentsOrdering.SelectedItems[0];
-
-                // Get the values necessary for placing an order
-                double price = Convert.ToDouble(numericUpDownAmount.Value) * Convert.ToDouble(selectedDrink.SubItems[1].Text);
+                                                                                                                              // Get values for placing an order
                 int drinkId = ((Drink)selectedDrink.Tag).Id;
                 int studentId = ((Student)selectedStudent.Tag).Id;
+                decimal price = Convert.ToDecimal(numericUpDownAmount.Value) * Convert.ToDecimal(selectedDrink.SubItems[1].Text);
                 int amount = Convert.ToInt32(numericUpDownAmount.Value);
                 DateTime date = DateTime.Now;
-
-                // Place order and Update drink supplies list
-                OrderDao orderDao = new OrderDao();
-                orderDao.PlaceOrder(drinkId, studentId, amount, price, date);
-
-                orderDao.UpdateDrinkSupplies(drinkId, amount);
-
-                // Show confirmation
-                MessageBox.Show($"Student: {selectedStudent.Text}\nSelected drink: {selectedDrink.Text}\nPrice: {price.ToString("C")} ");
-
-                // Clear section and reset values
-                listViewOrderingDrinks.SelectedItems.Clear();
-                numericUpDownAmount.Value = 1;
+                
+                return new Order { DrinkId = drinkId, Amount = amount, Price = price, StudentId = studentId, Date = date };  // Return drink
             }
+            return null;
+        }
+
+        public void ClearSectionAndResetValues()
+        {
+            listViewOrderingDrinks.SelectedItems.Clear();
+            numericUpDownAmount.Value = 1;
         }
 
 
@@ -526,12 +570,12 @@ namespace SomerenUI
 
         public void GenerateRevenueReport(DateTime startDate, DateTime endDate)
         {
-            OrderDao orderDao = new OrderDao();
-            int numberOfDrinksSold = orderDao.GetTotalDrinksSold(startDate, endDate);
-            decimal totalTurnover = orderDao.GetTurnover(startDate, endDate);
-            int numberOfCustomers = orderDao.GetNumberOfCustomers(startDate, endDate);
+            OrderService orderService = new OrderService();                                  // Get report values
+            int numberOfDrinksSold = orderService.GetTotalDrinksSold(startDate, endDate);
+            decimal totalTurnover = orderService.GetTurnover(startDate, endDate);
+            int numberOfCustomers = orderService.GetNumberOfCustomers(startDate, endDate);
 
-            lblSales.Text = $"Sales: \n{numberOfDrinksSold}";
+            lblSales.Text = $"Sales: \n{numberOfDrinksSold}";                               // Fill labels with values
             lblTurnover.Text = $"Turnover: \n{totalTurnover:C}";
             lblNumberOfCustomers.Text = $"Number of customers: \n{numberOfCustomers}";
         }
@@ -549,6 +593,100 @@ namespace SomerenUI
             {
                 MessageBox.Show("Invalid date. Please select a valid date.");
             }
+        }
+
+        // Manage students
+        private void ModifyStudentProperties(Student selectedStudent)
+        {
+            selectedStudent.Name = txtStudentName.Text;
+            selectedStudent.Number = txtStudentNumber.Text;
+            selectedStudent.PhoneNumber = txtStudentTelephoneNumber.Text;
+            selectedStudent.Class = txtStudentClass.Text;
+        }
+
+        private void btnAddStudent_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Student student = new Student();                              // Get new student
+                ModifyStudentProperties(student);
+
+                StudentService studentService = new StudentService();        // Add new drink
+                studentService.AddStudent(student);   
+
+                ShowStudentsPanel();                   // Show updated list view
+                ClearTextBoxesStudent();
+                 
+                MessageBox.Show("Student added");     // Show confirmation
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);         // Throw exception
+            }
+        }
+
+        private void btnDeleteStudent_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DialogResult answer = MessageBox.Show("Are you sure you want to delete this student?");   // Get confirmation from the user
+
+                ListViewItem selectedItem = listViewStudents.SelectedItems[0];
+                Student selectedStudent = (Student)selectedItem.Tag;
+
+                if (answer == DialogResult.OK)
+                {
+                    StudentService studentService = new StudentService();
+                    studentService.DeleteStudent(selectedStudent);                          // Delete student
+                    ShowStudentsPanel();                                             // Show the updated list 
+                }
+                else
+                {
+                    MessageBox.Show($"{selectedStudent.Name} won't be deleted.");  // Cancel deletion
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);                                      // Throw exception
+            }
+        }
+
+        private void btnModifyStudent_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (listViewStudents.SelectedItems.Count > 0)                           // Check if a student has been selected
+                {
+                    ListViewItem selectedItem = listViewStudents.SelectedItems[0];     // Get the selected student from the list view
+                    Student selectedStudent = (Student)selectedItem.Tag;
+
+                    ModifyStudentProperties(selectedStudent);
+
+                    StudentService studentService = new StudentService();
+                    studentService.ModifyStudent(selectedStudent);
+
+                    ShowStudentsPanel();                        // Show updated list view 
+                    ClearTextBoxesStudent();
+
+                    MessageBox.Show("Student modified");       // Show confirmation
+                }
+                else
+                {
+                    MessageBox.Show("Choose a student.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);                 // Throw exception
+            }
+        }
+
+        private void ClearTextBoxesStudent()
+        {
+            txtStudentName.Text = null;
+            txtStudentNumber.Text = null;
+            txtStudentClass.Text = null;
+            txtStudentTelephoneNumber.Text = null;
         }
     }
 }
