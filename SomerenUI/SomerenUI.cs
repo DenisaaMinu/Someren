@@ -507,7 +507,7 @@ namespace SomerenUI
             }
         }
 
-       private void buttonPlaceOrder_Click(object sender, EventArgs e)
+        private void buttonPlaceOrder_Click(object sender, EventArgs e)
         {
             // Get the selected drink
             Order order = GetOrderDetails();
@@ -542,13 +542,13 @@ namespace SomerenUI
             {
                 ListViewItem selectedDrink = listViewOrderingDrinks.SelectedItems[0];                                          // Get the selected drink
                 ListViewItem selectedStudent = listViewStudentsOrdering.SelectedItems[0];
-                                                                                                                              // Get values for placing an order
+                // Get values for placing an order
                 int drinkId = ((Drink)selectedDrink.Tag).Id;
                 int studentId = ((Student)selectedStudent.Tag).Id;
                 decimal price = Convert.ToDecimal(numericUpDownAmount.Value) * Convert.ToDecimal(selectedDrink.SubItems[1].Text);
                 int amount = Convert.ToInt32(numericUpDownAmount.Value);
                 DateTime date = DateTime.Now;
-                
+
                 return new Order { DrinkId = drinkId, Amount = amount, Price = price, StudentId = studentId, Date = date };  // Return drink
             }
             return null;
@@ -571,13 +571,11 @@ namespace SomerenUI
         public void GenerateRevenueReport(DateTime startDate, DateTime endDate)
         {
             OrderService orderService = new OrderService();                                  // Get report values
-            int numberOfDrinksSold = orderService.GetTotalDrinksSold(startDate, endDate);
-            decimal totalTurnover = orderService.GetTurnover(startDate, endDate);
-            int numberOfCustomers = orderService.GetNumberOfCustomers(startDate, endDate);
+            RevenueReport revenueReport = orderService.GetRevenueReport(startDate, endDate);
 
-            lblSales.Text = $"Sales: \n{numberOfDrinksSold}";                               // Fill labels with values
-            lblTurnover.Text = $"Turnover: \n{totalTurnover:C}";
-            lblNumberOfCustomers.Text = $"Number of customers: \n{numberOfCustomers}";
+            lblSales.Text = $"Sales: \n{revenueReport.Sales}";                               // Fill labels with values
+            lblTurnover.Text = $"Turnover: \n{revenueReport.Turnover:C}";
+            lblNumberOfCustomers.Text = $"Number of customers: \n{revenueReport.NumberOfCustomers}";
         }
 
         private void buttonGenerateRevenue_Click(object sender, EventArgs e)
@@ -602,6 +600,7 @@ namespace SomerenUI
             selectedStudent.Number = txtStudentNumber.Text;
             selectedStudent.PhoneNumber = txtStudentTelephoneNumber.Text;
             selectedStudent.Class = txtStudentClass.Text;
+            selectedStudent.RoomId = 1;
         }
 
         private void btnAddStudent_Click(object sender, EventArgs e)
@@ -612,11 +611,11 @@ namespace SomerenUI
                 ModifyStudentProperties(student);
 
                 StudentService studentService = new StudentService();        // Add new drink
-                studentService.AddStudent(student);   
+                studentService.AddStudent(student);
 
                 ShowStudentsPanel();                   // Show updated list view
                 ClearTextBoxesStudent();
-                 
+
                 MessageBox.Show("Student added");     // Show confirmation
             }
             catch (Exception ex)
@@ -687,6 +686,13 @@ namespace SomerenUI
             txtStudentNumber.Text = null;
             txtStudentClass.Text = null;
             txtStudentTelephoneNumber.Text = null;
+        }
+
+
+        // Activity supervisors
+        private void activitySupervisorsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
