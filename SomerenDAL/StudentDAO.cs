@@ -40,7 +40,6 @@ namespace SomerenDAL
         {
             try
             {
-
                 string query = "INSERT INTO [STUDENT] (roomID, studentNumber, name, phoneNumber, class) " +
                                "VALUES (@RoomId, @Number, @Name, @PhoneNumber, @Class);";
 

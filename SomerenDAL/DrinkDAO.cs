@@ -16,6 +16,7 @@ namespace SomerenDAL
         {
             string query = "SELECT drinkId, name, VATRate, price, stock, alcoholic, numberOfDrinksSold  FROM [DRINK]" +
                            "ORDER BY name";
+
             SqlParameter[] sqlParameters = new SqlParameter[0];
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
