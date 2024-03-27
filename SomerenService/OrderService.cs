@@ -27,19 +27,9 @@ namespace SomerenService
             orderdb.UpdateDrinkSupplies(order.DrinkId, order.Amount);
         }
 
-        public int GetTotalDrinksSold(DateTime startDate, DateTime endDate)
+        public RevenueReport GetRevenueReport(DateTime startDate, DateTime endDate)
         {
-            return orderdb.GetTotalDrinksSold(startDate, endDate);
-        }
-
-        public decimal GetTurnover(DateTime startDate, DateTime endDate)
-        {
-            return orderdb.GetTurnover(startDate, endDate);
-        }
-
-        public int GetNumberOfCustomers(DateTime startDate, DateTime endDate)
-        {
-            return orderdb.GetNumberOfCustomers(startDate, endDate);
+            return orderdb.GetRevenueReport(startDate, endDate);
         }
     }
 }

@@ -132,6 +132,9 @@
             pictureBox6 = new System.Windows.Forms.PictureBox();
             label8 = new System.Windows.Forms.Label();
             label10 = new System.Windows.Forms.Label();
+            activityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            activitySupervisorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            activityParticipantsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             pnlDashboard.SuspendLayout();
             pnlStudents.SuspendLayout();
@@ -152,7 +155,7 @@
             // menuStrip1
             // 
             menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
-            menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { dashboardToolStripMenuItem, studentsToolStripMenuItem, lecturersToolStripMenuItem, roomsToolStripMenuItem, drinksToolStripMenuItem });
+            menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { dashboardToolStripMenuItem, studentsToolStripMenuItem, lecturersToolStripMenuItem, roomsToolStripMenuItem, drinksToolStripMenuItem, activityToolStripMenuItem });
             menuStrip1.Location = new System.Drawing.Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Padding = new System.Windows.Forms.Padding(9, 2, 0, 2);
@@ -212,21 +215,21 @@
             // drinkSuppliesToolStripMenuItem
             // 
             drinkSuppliesToolStripMenuItem.Name = "drinkSuppliesToolStripMenuItem";
-            drinkSuppliesToolStripMenuItem.Size = new System.Drawing.Size(238, 34);
+            drinkSuppliesToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             drinkSuppliesToolStripMenuItem.Text = "Drink supplies";
             drinkSuppliesToolStripMenuItem.Click += drinkSuppliesToolStripMenuItem_Click;
             // 
             // orderingDrinksToolStripMenuItem
             // 
             orderingDrinksToolStripMenuItem.Name = "orderingDrinksToolStripMenuItem";
-            orderingDrinksToolStripMenuItem.Size = new System.Drawing.Size(238, 34);
+            orderingDrinksToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             orderingDrinksToolStripMenuItem.Text = "Ordering drinks";
             orderingDrinksToolStripMenuItem.Click += orderingDrinksToolStripMenuItem_Click;
             // 
             // revenueReportToolStripMenuItem
             // 
             revenueReportToolStripMenuItem.Name = "revenueReportToolStripMenuItem";
-            revenueReportToolStripMenuItem.Size = new System.Drawing.Size(238, 34);
+            revenueReportToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
             revenueReportToolStripMenuItem.Text = "Revenue report";
             revenueReportToolStripMenuItem.Click += revenueReportToolStripMenuItem_Click;
             // 
@@ -1033,6 +1036,26 @@
             label10.TabIndex = 4;
             label10.Text = "Revenue report";
             // 
+            // activityToolStripMenuItem
+            // 
+            activityToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { activitySupervisorsToolStripMenuItem, activityParticipantsToolStripMenuItem });
+            activityToolStripMenuItem.Name = "activityToolStripMenuItem";
+            activityToolStripMenuItem.Size = new System.Drawing.Size(86, 29);
+            activityToolStripMenuItem.Text = "Activity";
+            // 
+            // activitySupervisorsToolStripMenuItem
+            // 
+            activitySupervisorsToolStripMenuItem.Name = "activitySupervisorsToolStripMenuItem";
+            activitySupervisorsToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            activitySupervisorsToolStripMenuItem.Text = "Activity supervisors";
+            activitySupervisorsToolStripMenuItem.Click += activitySupervisorsToolStripMenuItem_Click;
+            // 
+            // activityParticipantsToolStripMenuItem
+            // 
+            activityParticipantsToolStripMenuItem.Name = "activityParticipantsToolStripMenuItem";
+            activityParticipantsToolStripMenuItem.Size = new System.Drawing.Size(270, 34);
+            activityParticipantsToolStripMenuItem.Text = "Activity participants";
+            // 
             // SomerenUI
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
@@ -1182,5 +1205,8 @@
         private System.Windows.Forms.Button btnModifyStudent;
         private System.Windows.Forms.Button btnDeleteStudent;
         private System.Windows.Forms.Button btnAddStudent;
+        private System.Windows.Forms.ToolStripMenuItem activityToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem activitySupervisorsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem activityParticipantsToolStripMenuItem;
     }
 }

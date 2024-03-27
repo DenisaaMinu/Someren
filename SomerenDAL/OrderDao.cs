@@ -69,10 +69,10 @@ namespace SomerenDAL
             ExecuteEditQuery(query, parameters);
         }
 
-        public int GetTotalDrinksSold(DateTime startDate, DateTime endDate)
+        public RevenueReport GetRevenueReport(DateTime startDate, DateTime endDate)
         {
-            string query = "SELECT SUM(amount) FROM [ORDER] " +
-                           "WHERE CAST([date] AS DATE) BETWEEN @StartDate AND @EndDate;";
+            string query = "SELECT SUM(amount) AS Sales, SUM(amount * price), COUNT(DISTINCT StudentId) " +
+                           "FROM[ORDER] AS O JOIN DRINK AS D ON O.drinkId = D.drinkId WHERE CAST([date] AS DATE) BETWEEN @StartDate AND @EndDate;";
 
             SqlParameter[] parameters =
             {
@@ -81,58 +81,18 @@ namespace SomerenDAL
             };
 
             DataTable resultTable = ExecuteSelectQuery(query, parameters);
+            RevenueReport revenueReport = new RevenueReport();
 
             if (resultTable.Rows.Count > 0 && resultTable.Rows[0][0] != DBNull.Value)
             {
-                int numberOfDrinksSold = Convert.ToInt32(resultTable.Rows[0][0]);
-                return numberOfDrinksSold;
+                revenueReport.Sales =  Convert.ToInt32(resultTable.Rows[0][0]);
+                revenueReport.Turnover = Convert.ToInt32(resultTable.Rows[0][1]);
+                revenueReport.NumberOfCustomers = Convert.ToInt32(resultTable.Rows[0][2]);
+
+                return revenueReport;
             }
 
-            return 0;
-        }
-
-        public decimal GetTurnover(DateTime startDate, DateTime endDate)
-        {
-            string query = "SELECT SUM(amount * price) FROM [ORDER] " +
-                           "WHERE CAST([date] AS DATE) BETWEEN @StartDate AND @EndDate;";
-
-            SqlParameter[] parameters =
-            {
-                new SqlParameter("@StartDate", startDate),
-                new SqlParameter("@EndDate", endDate)
-            };
-
-            DataTable resultTable = ExecuteSelectQuery(query, parameters);
-
-            if (resultTable.Rows.Count > 0 && resultTable.Rows[0][0] != DBNull.Value)
-            {
-                decimal totalTurnover = Convert.ToInt32(resultTable.Rows[0][0]);
-                return totalTurnover;
-            }
-
-            return 0;
-        }
-
-        public int GetNumberOfCustomers(DateTime startDate, DateTime endDate)
-        {
-            string query = "SELECT COUNT(DISTINCT studentId) FROM [ORDER] " +
-                           "WHERE CAST([date] AS DATE) BETWEEN @startDate AND @endDate";
-
-            SqlParameter[] parameters =
-            {
-                new SqlParameter("@startdate", startDate),
-                new SqlParameter("@endDate", endDate)
-            };
-
-            DataTable resultTable = ExecuteSelectQuery(query, parameters);
-
-            if (resultTable.Rows.Count > 0 && resultTable.Rows[0][0] != DBNull.Value)
-            {
-                int numberOfCustomers = Convert.ToInt32(resultTable.Rows[0][0]);
-                return numberOfCustomers;
-            }
-
-            return 0;
+            return null;
         }
     }
 }
