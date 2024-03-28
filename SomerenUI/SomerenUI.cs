@@ -6,7 +6,6 @@ using System;
 using SomerenDAL;
 using static System.Collections.Specialized.BitVector32;
 using System.Text.RegularExpressions;
-using System.Diagnostics;
 
 namespace SomerenUI
 {
@@ -78,7 +77,6 @@ namespace SomerenUI
                 ListViewItem selectedItem = listViewStudents.SelectedItems[0];
                 Student selectedStudent = (Student)selectedItem.Tag;
 
-                MessageBox.Show($"Student {selectedStudent.Name} selected.");
                 FillTextBoxesStudent(selectedStudent);
             }
         }
@@ -690,9 +688,5 @@ namespace SomerenUI
 
 
         // Activity supervisors
-        private void activitySupervisorsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }
