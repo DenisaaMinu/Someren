@@ -27,6 +27,8 @@ namespace SomerenUI
                 }
             }
             currentPanel.Show();
+
+
         }
 
         private void ShowDashboardPanel()
