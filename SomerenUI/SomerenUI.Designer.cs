@@ -170,6 +170,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             pnlActivitiesStudents.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox7).BeginInit();
+            pnlParticipants.SuspendLayout();
             pnlTeachers.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             pnlRooms.SuspendLayout();
@@ -1374,13 +1375,13 @@
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(1718, 1050);
             Controls.Add(menuStrip1);
-            Controls.Add(pnlStudents);
             Controls.Add(pnlDashboard);
             Controls.Add(pnlRooms);
             Controls.Add(pnlTeachers);
             Controls.Add(pnlRevenue);
             Controls.Add(pnlOrdering);
             Controls.Add(pnlDrinks);
+            Controls.Add(pnlStudents);
             MainMenuStrip = menuStrip1;
             Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             Name = "SomerenUI";
@@ -1395,6 +1396,8 @@
             pnlActivitiesStudents.ResumeLayout(false);
             pnlActivitiesStudents.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox7).EndInit();
+            pnlParticipants.ResumeLayout(false);
+            pnlParticipants.PerformLayout();
             pnlTeachers.ResumeLayout(false);
             pnlTeachers.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
