@@ -13,7 +13,7 @@ namespace SomerenDAL
     {
         public List<Activity> GetAllActivities()
         {
-            string query = "SELECT activityId, studentId, name FROM [ACTIVITY]";
+            string query = "SELECT activityId, name FROM [ACTIVITY]";
 
             SqlParameter[] sqlParameters = new SqlParameter[0];
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
@@ -28,7 +28,6 @@ namespace SomerenDAL
                 Activity activity = new Activity()
                 {
                     Id = (int)dr["activityId"],
-                    StudentId = (int)dr["building"],
                     Name = dr["roomNumber"].ToString()
                 };
                 activities.Add(activity);

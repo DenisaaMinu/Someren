@@ -13,17 +13,34 @@ namespace SomerenDAL
     {
         public List<Participants> GetAllParticipants() 
         {
-            string query = "SELECT studentId, activityId FROM [PARTICIPANTS]";
+            string query = "SELECT activityId, studentId FROM [PARTICIPANTS]";
 
             SqlParameter[] sqlParameters = new SqlParameter[0];
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
 
+        private List<Participants> ReadTables(DataTable dataTable)
+        {
+            List<Participants> participants = new List<Participants>();
+
+            foreach (DataRow dr in dataTable.Rows)
+            {
+                Participants participant = new Participants()
+                {
+                    ActivityId = (int)dr["activityId"],
+                    StudentId = (int)dr["studentId"]
+                };
+                participants.Add(participant);
+            }
+            return participants;
+        }
+
         public void AddParticipant(Participants participants)
         {
-            try 
+            try
             {
-                string query = "INSERT INTO PARTICIPANTS (activityId, studentId)" + "VALUES (@ActivityId, @StudentId)";
+                string query = "INSERT INTO PARTICIPANTS (studentId)" +
+                               "VALUES (@StudentId)";
 
 
                 SqlParameter[] parameters =
@@ -31,13 +48,12 @@ namespace SomerenDAL
                   new SqlParameter("@ActivityId", participants.ActivityId),
                   new SqlParameter("@StudentId", participants.StudentId),
                 };
-                 ExecuteEditQuery(query, parameters);
+                ExecuteEditQuery(query, parameters);
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
-            }
-            
+            }  
         }
 
         public void DeleteParticipant(Participants participants)
@@ -46,37 +62,19 @@ namespace SomerenDAL
             {
 
                 string query = "DELETE FROM [PARTICIPANTS]" +
-                          "WHERE activityId = @ActivityId AND studentId = @StudentId";
+                               "WHERE activityId = @ActivityId";
 
                 SqlParameter[] sqlParameters =
                 {
-                new SqlParameter("@ActivityId", participants.ActivityId),
-                new SqlParameter("@StudentId", participants.StudentId)
-               };
-                ExecuteEditQuery(query, sqlParameters);
+                new SqlParameter("@ActivityId", participants.ActivityId)
+                };
 
+                ExecuteEditQuery(query, sqlParameters);
             }
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }
-
-        }
-       
-        private List<Participants> ReadTables(DataTable dataTable)
-        {
-            List<Participants> participants = new List<Participants>();
-
-            foreach (DataRow dr in dataTable.Rows) 
-            { 
-                Participants participant = new Participants()
-                {
-                    StudentId = (int)dr["studentId"],
-                    ActivityId = (int)dr["activityId"],
-                };
-                participants.Add(participant);
-            }
-            return participants;
         }
     }
 }
