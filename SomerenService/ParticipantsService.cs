@@ -18,18 +18,9 @@ namespace SomerenService
             participantdb = new ParticipantsDAO();
         }
 
-        public List<Student> GetParticipants(int activityId)
+        public List<Participants> GetParticipants(int activityId)
         {
-            List<Participants> participantsInfo = participantdb.GetAllParticipants(activityId);
-            List<Student> participants = new List<Student>();
-
-            foreach (Participants participant in participantsInfo)
-            {
-                Student student = studentDao.GetStudentById(participant.StudentId);
-                participants.Add(student);
-            }
-
-            return participants;
+            return participantdb.GetAllParticipants(activityId);
         }
 
         public List<Student> GetNonParticipants(int activityId)
@@ -42,7 +33,7 @@ namespace SomerenService
 
             foreach (Participants nonParticipant in nonPrticipantsInfo)
             {
-                Student student = studentDao.GetStudentById(nonParticipant.StudentId);
+                Student student = studentDao.GetStudentById(activityId);
                 nonParticipants.Add(student);
             }
 

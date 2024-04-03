@@ -693,10 +693,8 @@ namespace SomerenUI
         // Activity supervisors
 
 
-
-
         // Activity participants
-        private void activityParticipantsToolStripMenuItem_Click_1(object sender, EventArgs e)
+        private void activityParticipantsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowParticipantsPanel();
         }
@@ -704,7 +702,7 @@ namespace SomerenUI
         private void ShowParticipantsPanel()
         {
             //show Participants
-            ShowCurrentPanel(pnlParticipants);
+            ShowCurrentPanel(panelParticipants);
 
             try
             {
@@ -714,7 +712,7 @@ namespace SomerenUI
             }
             catch (Exception e)
             {
-                MessageBox.Show("Something went wrong while loading the ativities: " + e.Message);
+                MessageBox.Show("Something went wrong while loading the activities: " + e.Message);
             }
         }
 
@@ -728,12 +726,12 @@ namespace SomerenUI
         private void DisplayActivities(List<Activity> activities)
         {
             // clear the listview before filling it
-            listViewActivities.Items.Clear();
+            listViewActivity.Items.Clear();
 
             foreach (Activity activity in activities)
             {
                 ListViewItem li = new ListViewItem(activity.Name);
-                listViewActivities.Items.Add(li);
+                listViewActivity.Items.Add(li);
 
                 li.Tag = activity;
             }
@@ -741,9 +739,9 @@ namespace SomerenUI
 
         private void listViewActivity_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (listViewActivities.SelectedItems.Count > 0)
+            if (listViewActivity.SelectedItems.Count > 0)
             {
-                ListViewItem selectedItem = listViewActivities.SelectedItems[0];
+                ListViewItem selectedItem = listViewActivity.SelectedItems[0];
                 Activity selectedActivity = (Activity)selectedItem.Tag;
 
                 DisplayParticipants(selectedActivity);
@@ -757,25 +755,30 @@ namespace SomerenUI
             {
                 // Get all participants for the selected activity
                 ParticipantsService participantsService = new ParticipantsService();
-                List<Student> participants = participantsService.GetParticipants(selectedActivity.Id);
+                List<Participants> participants = participantsService.GetParticipants(selectedActivity.Id);
 
-                //Clear the list view
-                listViewParticipants.Items.Clear();
+                // Clear the list view
+                listParticipants.Items.Clear();
 
                 // Display participants in the list view
-                foreach (Student participant in participants)
+                foreach (Participants participant in participants)
                 {
-                    ListViewItem li = new ListViewItem(participant.Name);
-                    listViewParticipants.Items.Add(li);
+                    // Fetch student details based on student ID
+                    Student student = participantsService.GetStudentById(participant.StudentId);
 
-                    li.Tag = participant;
+                    // Create a ListViewItem with student name
+                    ListViewItem li = new ListViewItem(student.Name);
+                    listParticipants.Items.Add(li);
+
+                    li.Tag = student; // Set ListViewItem tag to student for reference
                 }
             }
             catch (Exception e)
             {
-                MessageBox.Show("Something went wrong" + e);
+                MessageBox.Show("Something went wrong: " + e.Message);
             }
         }
+
 
         private void DisplayNonParticipants(Activity selectedActivity)
         {
@@ -786,15 +789,15 @@ namespace SomerenUI
                 List<Student> nonParticipants = participantsService.GetNonParticipants(selectedActivity.Id);
 
                 //Clear the list view
-                listViewParticipants.Items.Clear();
+                listParticipants.Items.Clear();
 
                 // Display participants in the list view
-                foreach (Student participant in nonParticipants)
+                foreach (Student nonParticipant in nonParticipants)
                 {
-                    ListViewItem li = new ListViewItem(participant.Name);
-                    listViewParticipants.Items.Add(li);
+                    ListViewItem li = new ListViewItem(nonParticipant.Name);
+                    listParticipants.Items.Add(li);
 
-                    li.Tag = participant;
+                    li.Tag = nonParticipant;
                 }
             }
             catch (Exception e)

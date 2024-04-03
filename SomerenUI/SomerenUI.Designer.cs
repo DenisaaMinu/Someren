@@ -164,6 +164,19 @@
             pictureBox6 = new System.Windows.Forms.PictureBox();
             label8 = new System.Windows.Forms.Label();
             label10 = new System.Windows.Forms.Label();
+            panelParticipants = new System.Windows.Forms.Panel();
+            listViewActivity = new System.Windows.Forms.ListView();
+            columnHeader44 = new System.Windows.Forms.ColumnHeader();
+            label17 = new System.Windows.Forms.Label();
+            button3 = new System.Windows.Forms.Button();
+            button4 = new System.Windows.Forms.Button();
+            listNonParticipants = new System.Windows.Forms.ListView();
+            columnHeader45 = new System.Windows.Forms.ColumnHeader();
+            listParticipants = new System.Windows.Forms.ListView();
+            columnHeader40 = new System.Windows.Forms.ColumnHeader();
+            label19 = new System.Windows.Forms.Label();
+            label20 = new System.Windows.Forms.Label();
+            label21 = new System.Windows.Forms.Label();
             menuStrip1.SuspendLayout();
             pnlDashboard.SuspendLayout();
             pnlStudents.SuspendLayout();
@@ -182,6 +195,7 @@
             ((System.ComponentModel.ISupportInitialize)numericUpDownAmount).BeginInit();
             pnlRevenue.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox6).BeginInit();
+            panelParticipants.SuspendLayout();
             SuspendLayout();
             // 
             // menuStrip1
@@ -283,6 +297,7 @@
             activityParticipantsToolStripMenuItem.Name = "activityParticipantsToolStripMenuItem";
             activityParticipantsToolStripMenuItem.Size = new System.Drawing.Size(269, 34);
             activityParticipantsToolStripMenuItem.Text = "Activity participants";
+            activityParticipantsToolStripMenuItem.Click += activityParticipantsToolStripMenuItem_Click;
             // 
             // pnlDashboard
             // 
@@ -1369,11 +1384,143 @@
             label10.TabIndex = 4;
             label10.Text = "Revenue report";
             // 
+            // panelParticipants
+            // 
+            panelParticipants.Controls.Add(listViewActivity);
+            panelParticipants.Controls.Add(label17);
+            panelParticipants.Controls.Add(button3);
+            panelParticipants.Controls.Add(button4);
+            panelParticipants.Controls.Add(listNonParticipants);
+            panelParticipants.Controls.Add(listParticipants);
+            panelParticipants.Controls.Add(label19);
+            panelParticipants.Controls.Add(label20);
+            panelParticipants.Controls.Add(label21);
+            panelParticipants.Location = new System.Drawing.Point(22, 39);
+            panelParticipants.Margin = new System.Windows.Forms.Padding(4);
+            panelParticipants.Name = "panelParticipants";
+            panelParticipants.Size = new System.Drawing.Size(1675, 972);
+            panelParticipants.TabIndex = 27;
+            // 
+            // listViewActivity
+            // 
+            listViewActivity.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { columnHeader44 });
+            listViewActivity.Location = new System.Drawing.Point(48, 282);
+            listViewActivity.Margin = new System.Windows.Forms.Padding(4);
+            listViewActivity.Name = "listViewActivity";
+            listViewActivity.Size = new System.Drawing.Size(418, 262);
+            listViewActivity.TabIndex = 9;
+            listViewActivity.UseCompatibleStateImageBehavior = false;
+            listViewActivity.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader44
+            // 
+            columnHeader44.Text = "Name";
+            columnHeader44.Width = 250;
+            // 
+            // label17
+            // 
+            label17.AutoSize = true;
+            label17.Font = new System.Drawing.Font("Segoe UI", 19.8000011F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            label17.Location = new System.Drawing.Point(40, 26);
+            label17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label17.Name = "label17";
+            label17.Size = new System.Drawing.Size(228, 54);
+            label17.TabIndex = 8;
+            label17.Text = "Participants";
+            // 
+            // button3
+            // 
+            button3.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            button3.Location = new System.Drawing.Point(1058, 555);
+            button3.Margin = new System.Windows.Forms.Padding(4);
+            button3.Name = "button3";
+            button3.Size = new System.Drawing.Size(126, 50);
+            button3.TabIndex = 7;
+            button3.Text = "Add";
+            button3.UseVisualStyleBackColor = true;
+            // 
+            // button4
+            // 
+            button4.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            button4.Location = new System.Drawing.Point(578, 555);
+            button4.Margin = new System.Windows.Forms.Padding(4);
+            button4.Name = "button4";
+            button4.Size = new System.Drawing.Size(145, 58);
+            button4.TabIndex = 6;
+            button4.Text = "Remove";
+            button4.UseVisualStyleBackColor = true;
+            // 
+            // listNonParticipants
+            // 
+            listNonParticipants.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { columnHeader45 });
+            listNonParticipants.Location = new System.Drawing.Point(1058, 282);
+            listNonParticipants.Margin = new System.Windows.Forms.Padding(4);
+            listNonParticipants.Name = "listNonParticipants";
+            listNonParticipants.Size = new System.Drawing.Size(392, 262);
+            listNonParticipants.TabIndex = 4;
+            listNonParticipants.UseCompatibleStateImageBehavior = false;
+            listNonParticipants.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader45
+            // 
+            columnHeader45.Text = "Name";
+            columnHeader45.Width = 260;
+            // 
+            // listParticipants
+            // 
+            listParticipants.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { columnHeader40 });
+            listParticipants.Location = new System.Drawing.Point(578, 282);
+            listParticipants.Margin = new System.Windows.Forms.Padding(4);
+            listParticipants.Name = "listParticipants";
+            listParticipants.Size = new System.Drawing.Size(378, 262);
+            listParticipants.TabIndex = 3;
+            listParticipants.UseCompatibleStateImageBehavior = false;
+            listParticipants.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader40
+            // 
+            columnHeader40.Text = "Name";
+            columnHeader40.Width = 260;
+            // 
+            // label19
+            // 
+            label19.AutoSize = true;
+            label19.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            label19.Location = new System.Drawing.Point(1088, 222);
+            label19.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label19.Name = "label19";
+            label19.Size = new System.Drawing.Size(293, 32);
+            label19.TabIndex = 2;
+            label19.Text = "Non-participants Students";
+            // 
+            // label20
+            // 
+            label20.AutoSize = true;
+            label20.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            label20.Location = new System.Drawing.Point(696, 228);
+            label20.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label20.Name = "label20";
+            label20.Size = new System.Drawing.Size(135, 32);
+            label20.TabIndex = 1;
+            label20.Text = "Participants";
+            // 
+            // label21
+            // 
+            label21.AutoSize = true;
+            label21.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            label21.Location = new System.Drawing.Point(124, 228);
+            label21.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label21.Name = "label21";
+            label21.Size = new System.Drawing.Size(92, 32);
+            label21.TabIndex = 0;
+            label21.Text = "Activity";
+            // 
             // SomerenUI
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(1718, 1050);
+            Controls.Add(panelParticipants);
             Controls.Add(menuStrip1);
             Controls.Add(pnlDashboard);
             Controls.Add(pnlRooms);
@@ -1414,6 +1561,8 @@
             pnlRevenue.ResumeLayout(false);
             pnlRevenue.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox6).EndInit();
+            panelParticipants.ResumeLayout(false);
+            panelParticipants.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1555,5 +1704,18 @@
         private System.Windows.Forms.ColumnHeader columnHeader41;
         private System.Windows.Forms.ColumnHeader columnHeader43;
         private System.Windows.Forms.ColumnHeader columnHeader42;
+        private System.Windows.Forms.Panel panelParticipants;
+        private System.Windows.Forms.ListView listViewActivity;
+        private System.Windows.Forms.ColumnHeader columnHeader44;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.ListView listNonParticipants;
+        private System.Windows.Forms.ListView listParticipants;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.ColumnHeader columnHeader45;
+        private System.Windows.Forms.ColumnHeader columnHeader40;
     }
 }
