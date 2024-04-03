@@ -9,8 +9,6 @@ namespace SomerenModel
     public class Activity
     {
         public int Id { get; set; }
-        public int StudentId { get; set; }
-        public int LecturerId { get; set; }
         public string Name { get; set; }
     }
 }

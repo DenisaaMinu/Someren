@@ -11,72 +11,35 @@ namespace SomerenDAL
 {
     public class ParticipantsDAO : BaseDao
     {
-        public List<Participants> GetAllParticipants() 
-        {
-            string query = "SELECT studentId, activityId FROM [PARTICIPANTS]";
 
-            SqlParameter[] sqlParameters = new SqlParameter[0];
-            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
+        public void DeleteParticipants(int studentNumber, int activityNumber)
+        {
+            string query = "DELETE FROM PARTICIPANTS WHERE [studentId] = @studentId AND [activityId] = @activityId";
+            SqlParameter[] sqlParameters ={
+            new SqlParameter("@studentId", studentNumber),
+            new SqlParameter("@activityId", activityNumber)
+            };
+
+            // Execute the SQL DELETE statement
+            ExecuteEditQuery(query, sqlParameters);
         }
 
-        public void AddParticipant(Participants participants)
+
+        public void AddParticpants(int studentNumber, int activityNumber)
         {
-            try 
-            {
-                string query = "INSERT INTO PARTICIPANTS (activityId, studentId)" + "VALUES (@ActivityId, @StudentId)";
+            string query = "INSERT INTO PARTICIPANTS ([studentId], [activityId])VALUES (@studentId, @activityId)";
+            SqlParameter[] sqlParameters ={
+            new SqlParameter("@studentId", studentNumber),
+            new SqlParameter("@activityId", activityNumber)
+           };
 
-
-                SqlParameter[] parameters =
-                {
-                  new SqlParameter("@ActivityId", participants.ActivityId),
-                  new SqlParameter("@StudentId", participants.StudentId),
-                };
-                 ExecuteEditQuery(query, parameters);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-            
+            // Execute the SQL INSERT statement
+            ExecuteEditQuery(query, sqlParameters);
         }
 
-        public void DeleteParticipant(Participants participants)
-        {
-            try
-            {
-
-                string query = "DELETE FROM [PARTICIPANTS]" +
-                          "WHERE activityId = @ActivityId AND studentId = @StudentId";
-
-                SqlParameter[] sqlParameters =
-                {
-                new SqlParameter("@ActivityId", participants.ActivityId),
-                new SqlParameter("@StudentId", participants.StudentId)
-               };
-                ExecuteEditQuery(query, sqlParameters);
-
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-
-        }
-       
-        private List<Participants> ReadTables(DataTable dataTable)
-        {
-            List<Participants> participants = new List<Participants>();
-
-            foreach (DataRow dr in dataTable.Rows) 
-            { 
-                Participants participant = new Participants()
-                {
-                    StudentId = (int)dr["studentId"],
-                    ActivityId = (int)dr["activityId"],
-                };
-                participants.Add(participant);
-            }
-            return participants;
-        }
     }
+
+
+
 }
+

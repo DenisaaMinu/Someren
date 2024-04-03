@@ -13,25 +13,21 @@ namespace SomerenService
 
         private ParticipantsDAO participantdb;
 
+    
         public ParticipantsService()
         {
             participantdb = new ParticipantsDAO();
         }
 
-        public List<Participants> GetParticipants()
+        public void DeleteParticipants(int studentNumber, int activityNumber)
         {
-            List<Participants> participants = participantdb.GetAllParticipants();
-            return participants;
+            participantdb.DeleteParticipants(studentNumber, activityNumber);
         }
 
-        public void AddParticipant(Participants participant)
+        public void AddParticipants(int studentNumber, int activityNumber)
         {
-            participantdb.AddParticipant(participant);
+            participantdb.AddParticpants(studentNumber, activityNumber);
         }
 
-        public void DeleteParticipant(Participants participant) 
-        { 
-            participantdb.DeleteParticipant(participant);
-        }
     }
 }
