@@ -89,5 +89,30 @@ namespace SomerenDAL
 
             ExecuteEditQuery(query, sqlParameters);
         }
+
+        public Student GetStudentById(int studentId)
+        {
+            string query = "SELECT * FROM [STUDENT] WHERE studentId = @StudentId";
+
+            SqlParameter[] sqlParameters =
+            {
+                new SqlParameter("@StudentId", studentId)
+            };
+
+            // Execute the query and retrieve data
+            DataTable dataTable = ExecuteSelectQuery(query, sqlParameters);
+
+            if (dataTable.Rows.Count == 0)
+                return null;
+
+            DataRow dr = dataTable.Rows[0];
+            Student student = new Student
+            {
+                Id = (int)dr["studentId"],
+                Name = (string)dr["name"]
+            };
+
+            return student;
+        }
     }
 }

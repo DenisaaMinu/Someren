@@ -542,6 +542,7 @@ namespace SomerenUI
             {
                 ListViewItem selectedDrink = listViewOrderingDrinks.SelectedItems[0];                                          // Get the selected drink
                 ListViewItem selectedStudent = listViewStudentsOrdering.SelectedItems[0];
+
                 // Get values for placing an order
                 int drinkId = ((Drink)selectedDrink.Tag).Id;
                 int studentId = ((Student)selectedStudent.Tag).Id;
@@ -690,5 +691,116 @@ namespace SomerenUI
 
 
         // Activity supervisors
+
+
+
+
+        // Activity participants
+        private void activityParticipantsToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            ShowParticipantsPanel();
+        }
+
+        private void ShowParticipantsPanel()
+        {
+            //show Participants
+            ShowCurrentPanel(pnlParticipants);
+
+            try
+            {
+                //get and display activities
+                List<Activity> activities = GetActivity();
+                DisplayActivities(activities);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Something went wrong while loading the ativities: " + e.Message);
+            }
+        }
+
+        private List<Activity> GetActivity()
+        {
+            ActivityService activityService = new ActivityService();
+            List<Activity> activities = activityService.GetActivities();
+            return activities;
+        }
+
+        private void DisplayActivities(List<Activity> activities)
+        {
+            // clear the listview before filling it
+            listViewActivities.Items.Clear();
+
+            foreach (Activity activity in activities)
+            {
+                ListViewItem li = new ListViewItem(activity.Name);
+                listViewActivities.Items.Add(li);
+
+                li.Tag = activity;
+            }
+        }
+
+        private void listViewActivity_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listViewActivities.SelectedItems.Count > 0)
+            {
+                ListViewItem selectedItem = listViewActivities.SelectedItems[0];
+                Activity selectedActivity = (Activity)selectedItem.Tag;
+
+                DisplayParticipants(selectedActivity);
+                DisplayNonParticipants(selectedActivity);
+            }
+        }
+
+        private void DisplayParticipants(Activity selectedActivity)
+        {
+            try
+            {
+                // Get all participants for the selected activity
+                ParticipantsService participantsService = new ParticipantsService();
+                List<Student> participants = participantsService.GetParticipants(selectedActivity.Id);
+
+                //Clear the list view
+                listViewParticipants.Items.Clear();
+
+                // Display participants in the list view
+                foreach (Student participant in participants)
+                {
+                    ListViewItem li = new ListViewItem(participant.Name);
+                    listViewParticipants.Items.Add(li);
+
+                    li.Tag = participant;
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Something went wrong" + e);
+            }
+        }
+
+        private void DisplayNonParticipants(Activity selectedActivity)
+        {
+            try
+            {
+                // Get all non-participants for the selected activity
+                ParticipantsService participantsService = new ParticipantsService();
+                List<Student> nonParticipants = participantsService.GetNonParticipants(selectedActivity.Id);
+
+                //Clear the list view
+                listViewParticipants.Items.Clear();
+
+                // Display participants in the list view
+                foreach (Student participant in nonParticipants)
+                {
+                    ListViewItem li = new ListViewItem(participant.Name);
+                    listViewParticipants.Items.Add(li);
+
+                    li.Tag = participant;
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Something went wrong" + e);
+            }
+        }
     }
 }

@@ -11,9 +11,27 @@ namespace SomerenDAL
 {
     public class ParticipantsDAO : BaseDao
     {
-        public List<Participants> GetAllParticipants() 
+        public List<Participants> GetAllParticipants(int activityId)
         {
-            string query = "SELECT activityId, studentId FROM [PARTICIPANTS]";
+            string query = "SELECT A.activityId, S.studentId FROM ACTIVITY AS A " +
+                                  "JOIN PARTICIPANTS AS P ON P.activityId = A.activityId " +
+                                  "JOIN STUDENT AS S ON P.studentId = S.studentId " +
+                                  "WHERE A.activityId = @ActivityId";
+
+            SqlParameter[] sqlParameters = {
+        new SqlParameter("@ActivityId", SqlDbType.Int) { Value = activityId }
+    };
+
+            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
+        }
+
+        public List<Participants> GetAllNonParticipants()
+        {
+            string query = "SELECT  A.activityId, S.studentId FROM ACTIVITY AS A " +
+                                 "JOIN STUDENT AS S ON 1 = 1 " +
+                           "WHERE NOT EXISTS " +
+                                             "(SELECT 1 FROM PARTICIPANTS AS P " +
+                                             "WHERE P.activityId = A.activityId AND P.studentId = S.studentId)";
 
             SqlParameter[] sqlParameters = new SqlParameter[0];
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
@@ -34,6 +52,20 @@ namespace SomerenDAL
             }
             return participants;
         }
+
+            SqlParameter[] sqlParameters = new SqlParameter[0];
+            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
+        }
+
+        private List<Participants> ReadTables(DataTable dataTable)
+        {
+            string query = "DELETE FROM PARTICIPANTS WHERE [studentId] = @studentId AND [activityId] = @activityId";
+            
+            SqlParameter[] sqlParameters =
+            {
+               new SqlParameter("@studentId", studentNumber),
+               new SqlParameter("@activityId", activityNumber)
+            };
 
         public void AddParticipant(Participants participants)
         {
@@ -64,10 +96,16 @@ namespace SomerenDAL
                 string query = "DELETE FROM [PARTICIPANTS]" +
                                "WHERE activityId = @ActivityId";
 
-                SqlParameter[] sqlParameters =
-                {
-                new SqlParameter("@ActivityId", participants.ActivityId)
-                };
+        public void AddParticpants(int studentNumber, int activityNumber)
+        {
+            string query = "INSERT INTO PARTICIPANTS (activityId, studentId)" +
+                           "VALUES (@activityId, @studentId)";
+            
+            SqlParameter[] sqlParameters =
+            {
+              new SqlParameter("@studentId", studentNumber),
+              new SqlParameter("@activityId", activityNumber)
+            };
 
                 ExecuteEditQuery(query, sqlParameters);
             }
