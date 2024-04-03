@@ -67,7 +67,7 @@ namespace SomerenService
 
         public void DeleteParticipant(Participants participant) 
         { 
-            participantdb.DeleteParticipant(participant);
+            
         }
     }
 }
