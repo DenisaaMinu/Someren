@@ -776,19 +776,16 @@ namespace SomerenUI
             {
                 ListViewItem item = new ListViewItem(new string[]
                 {
+                   activity.Id.ToString(),
+                   activity.Name
+                });
 
-                 activity.Id.ToString(),
-                 activity.Name
-
-                }
-                );
+                item.Tag = activity;
 
                 listViewActivity.Items.Add(item);
             }
-
-
-
         }
+
 
         private void listViewActivity_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -801,21 +798,18 @@ namespace SomerenUI
             if (listViewActivity.SelectedItems.Count == 0)
                 return;
 
-            ListViewItem selectedItem = listViewActivity.SelectedItems.Count > 0 ? listViewActivity.SelectedItems[0] : null;
-            Activity activity = selectedItem != null ? (Activity)selectedItem.Tag : null;
+            ListViewItem selectedItem = listViewActivity.SelectedItems[0];
+            Activity activity = (Activity)selectedItem.Tag;
 
-            // Create an instance of StudentDao
             StudentDao studentDao = new StudentDao();
 
             try
             {
-                // Get the participating and non-participating students
                 List<Student> participatingStudents = studentDao.GetParticipants(activity?.Id ?? 0); // Use null-conditional operator for safety
                 List<Student> nonParticipatingStudents = GetNonParticipants(activity?.Id ?? 0); // Use null-conditional operator for safety
 
-                // Display participating and non-participating students
-                DisplayParticipants(participatingStudents);
-                DisplayNonStudentParticipants(nonParticipatingStudents);
+                DisplayParticipants(activity.Id, participatingStudents);
+                DisplayNonStudentParticipants(activity.Id, nonParticipatingStudents);
             }
             catch (Exception ex)
             {
@@ -823,7 +817,7 @@ namespace SomerenUI
             }
         }
 
-        private void DisplayParticipants(List<Student> students)
+        private void DisplayParticipants(int activityId, List<Student> students)
         {
             // Clear the list view for participating students
             listViewParticipants.Items.Clear();
@@ -833,21 +827,27 @@ namespace SomerenUI
             {
                 listViewParticipants.Columns.AddRange(new[]
                 {
-                  new ColumnHeader { Text = "Id", Width = 130 },
-                  new ColumnHeader { Text = "Name", Width = 100 },
-                  new ColumnHeader { Text = "Class", Width = 100 }
-                });
+            new ColumnHeader { Text = "Id", Width = 130 },
+            new ColumnHeader { Text = "Name", Width = 100 },
+            new ColumnHeader { Text = "Class", Width = 100 }
+        });
             }
 
+            // Add a column for Activity ID
+            if (!listViewParticipants.Columns.Cast<ColumnHeader>().Any(c => c.Text == "Activity ID"))
+            {
+                listViewParticipants.Columns.Add("Activity ID", 100);
+            }
 
             // List all students who are participating
             foreach (Student student in students)
             {
                 ListViewItem item = new ListViewItem(new string[]
                 {
-                  student.Id.ToString(),
-                  student.Name,
-                  student.Class
+            student.Id.ToString(),
+            student.Name,
+            student.Class,
+            activityId.ToString() // Add the activity ID as a column value
                 });
                 item.Tag = student;
                 listViewParticipants.Items.Add(item);
@@ -874,7 +874,6 @@ namespace SomerenUI
                         nonParticipantStudents.Add(student);
                     }
                 }
-
             }
 
             catch (Exception e)
@@ -886,7 +885,7 @@ namespace SomerenUI
         }
         // Display all Stuudents Participating
 
-        private void DisplayNonStudentParticipants(List<Student> nonParticipants)
+        private void DisplayNonStudentParticipants(int activityId, List<Student> nonParticipants)
         {
             // Clear the list view for non-participating students
             listViewNotParticipating.Items.Clear();
@@ -897,10 +896,11 @@ namespace SomerenUI
             {
                 listViewNotParticipating.Columns.AddRange(new[]
                 {
-                   new ColumnHeader { Text = "Id", Width = 130 },
-                   new ColumnHeader { Text = "Name", Width = 100 },
-                   new ColumnHeader { Text = "Class", Width = 100 }
-                });
+            new ColumnHeader { Text = "Id", Width = 130 },
+            new ColumnHeader { Text = "Name", Width = 100 },
+            new ColumnHeader { Text = "Class", Width = 100 },
+            new ColumnHeader { Text = "Activity ID", Width = 100 } // Add column for Activity ID
+        });
             }
 
             // Populate the list view with the non-participating students
@@ -908,23 +908,88 @@ namespace SomerenUI
             {
                 ListViewItem item = new ListViewItem(new string[]
                 {
-                   nonParticipant.Id.ToString(),
-                   nonParticipant.Name,
-                   nonParticipant.Class
+            nonParticipant.Id.ToString(),
+            nonParticipant.Name,
+            nonParticipant.Class,
+            activityId.ToString() // Add the activity ID as a column value
                 });
                 item.Tag = nonParticipant;
                 listViewNotParticipating.Items.Add(item);
             }
         }
-      private void  listViewNotParticipating_SelectedIndexChanged (object sender, EventArgs e)
+
+        private void listViewNotParticipating_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
 
-        private void listViewParticipants_SelectedIndexChanged (object sender, EventArgs e)
+        private void listViewParticipants_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            // Check if both a student and an activity are selected
+            if (listViewActivity.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Please select activity.");
+                return; // Exit the method early
+            }
+            else if(listViewParticipants.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Please select student.");
+                return; // Exit the method early
+            }
+
+            // Retrieve the selected activity and student
+            ListViewItem selectedActivity = listViewActivity.SelectedItems[0];
+            Activity activity = (Activity)selectedActivity.Tag;
+            int activityId = activity.Id; // Get the activity ID
+
+            ListViewItem selectedParticipant = listViewParticipants.SelectedItems[0];
+            Student student = (Student)selectedParticipant.Tag;
+            int studentId = student.Id; // Get the student ID
+
+            // Proceed with deleting the participant
+            ParticipantsDAO participantDao = new ParticipantsDAO();
+            participantDao.DeleteParticipants(studentId, activityId);
+
+            // Update the UI
+            ShowParticipantsPanel();
+        }
+
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            //add
+            // Check if both a student and an activity are selected
+            if (listViewActivity.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Please select activity.");
+                return; // Exit the method early
+            }
+            else if (listViewNotParticipating.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Please select student.");
+                return; // Exit the method early
+            }
+
+            // Retrieve the selected activity and student
+            ListViewItem selectedActivity = listViewActivity.SelectedItems[0];
+            Activity activity = (Activity)selectedActivity.Tag;
+            int activityId = activity.Id; // Get the activity ID
+
+            ListViewItem selectedParticipant = listViewNotParticipating.SelectedItems[0];
+            Student student = (Student)selectedParticipant.Tag;
+            int studentId = student.Id; // Get the student ID
+
+            // Proceed with deleting the participant
+            ParticipantsDAO participantDao = new ParticipantsDAO();
+            participantDao.AddParticpants(studentId, activityId);
+
+            // Update the UI
+            ShowParticipantsPanel();
+        }
     }
 }

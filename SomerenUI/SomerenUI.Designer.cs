@@ -683,6 +683,7 @@
             button2.TabIndex = 7;
             button2.Text = "Add";
             button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             // 
             // button1
             // 
@@ -693,6 +694,7 @@
             button1.TabIndex = 6;
             button1.Text = "Remove";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // listViewNotParticipating
             // 

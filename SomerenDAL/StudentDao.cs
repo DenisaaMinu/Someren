@@ -94,7 +94,7 @@ namespace SomerenDAL
         public List<Student> GetParticipants(int activityNumber)
         {
             // SQL query to select all students associated with the provided activity number
-            string query = "SELECT s.* FROM STUDENT s " +
+            string query = "SELECT * FROM STUDENT s " +
                            "JOIN PARTICIPANTS p ON s.[studentId] = p.[studentId] " +
                            "WHERE p.[activityId] = @activityId";
 

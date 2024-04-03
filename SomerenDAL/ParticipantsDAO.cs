@@ -16,9 +16,9 @@ namespace SomerenDAL
         {
             string query = "DELETE FROM PARTICIPANTS WHERE [studentId] = @studentId AND [activityId] = @activityId";
             SqlParameter[] sqlParameters ={
-            new SqlParameter("@studentId", studentNumber),
-            new SqlParameter("@activityId", activityNumber)
-            };
+        new SqlParameter("@studentId", studentNumber),
+        new SqlParameter("@activityId", activityNumber)
+    };
 
             // Execute the SQL DELETE statement
             ExecuteEditQuery(query, sqlParameters);
@@ -38,8 +38,5 @@ namespace SomerenDAL
         }
 
     }
-
-
-
 }
 
