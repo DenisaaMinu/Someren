@@ -59,6 +59,38 @@ namespace SomerenDAL
 
         private List<Participants> ReadTables(DataTable dataTable)
         {
+            List<Participants> participants = new List<Participants>();
+
+            foreach (DataRow dr in dataTable.Rows)
+            {
+                Participants participant = new Participants()
+                {
+                    ActivityId = (int)dr["activityId"],
+                    StudentId = (int)dr["studentId"]
+                };
+                participants.Add(participant);
+            }
+            return participants;
+        }
+
+            foreach (DataRow dr in dataTable.Rows)
+            {
+                Participants participant = new Participants()
+                {
+                    ActivityId = (int)dr["activityId"],
+                    StudentId = (int)dr["studentId"]
+                };
+                participants.Add(participant);
+            }
+            return participants;
+        }
+
+            SqlParameter[] sqlParameters = new SqlParameter[0];
+            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
+        }
+
+        private List<Participants> ReadTables(DataTable dataTable)
+        {
             string query = "DELETE FROM PARTICIPANTS WHERE [studentId] = @studentId AND [activityId] = @activityId";
             
             SqlParameter[] sqlParameters =
