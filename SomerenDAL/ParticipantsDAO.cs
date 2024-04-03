@@ -53,41 +53,6 @@ namespace SomerenDAL
             return participants;
         }
 
-            SqlParameter[] sqlParameters = {
-        new SqlParameter("@ActivityId", SqlDbType.Int) { Value = activityId }
-    };
-
-            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
-        }
-
-        public List<Participants> GetAllNonParticipants()
-        {
-            string query = "SELECT  A.activityId, S.studentId FROM ACTIVITY AS A " +
-                                 "JOIN STUDENT AS S ON 1 = 1 " +
-                           "WHERE NOT EXISTS " +
-                                             "(SELECT 1 FROM PARTICIPANTS AS P " +
-                                             "WHERE P.activityId = A.activityId AND P.studentId = S.studentId)";
-
-            SqlParameter[] sqlParameters = new SqlParameter[0];
-            return ReadTables(ExecuteSelectQuery(query, sqlParameters));
-        }
-
-        private List<Participants> ReadTables(DataTable dataTable)
-        {
-            List<Participants> participants = new List<Participants>();
-
-            foreach (DataRow dr in dataTable.Rows)
-            {
-                Participants participant = new Participants()
-                {
-                    ActivityId = (int)dr["activityId"],
-                    StudentId = (int)dr["studentId"]
-                };
-                participants.Add(participant);
-            }
-            return participants;
-        }
-
             SqlParameter[] sqlParameters = new SqlParameter[0];
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
