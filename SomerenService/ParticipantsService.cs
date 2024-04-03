@@ -56,8 +56,7 @@ namespace SomerenService
 
         public void DeleteParticipants(int studentNumber, int activityNumber)
         {
-            List<Participants> participants = participantdb.GetAllParticipants();
-            return participants;
+            List<Participants> participants;
         }
 
         public void AddParticipant(Participants participant)
