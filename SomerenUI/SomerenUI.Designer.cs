@@ -270,7 +270,6 @@
             activityToolStripMenuItem.Name = "activityToolStripMenuItem";
             activityToolStripMenuItem.Size = new System.Drawing.Size(72, 24);
             activityToolStripMenuItem.Text = "Activity";
-            activityToolStripMenuItem.Click += activityToolStripMenuItem_Click_1;
             // 
             // activitySupervisorsToolStripMenuItem
             // 
@@ -703,7 +702,6 @@
             listViewNotParticipating.Size = new System.Drawing.Size(314, 210);
             listViewNotParticipating.TabIndex = 4;
             listViewNotParticipating.UseCompatibleStateImageBehavior = false;
-            listViewNotParticipating.SelectedIndexChanged += listViewNotParticipating_SelectedIndexChanged;
             // 
             // listViewParticipants
             // 
@@ -713,7 +711,6 @@
             listViewParticipants.TabIndex = 3;
             listViewParticipants.UseCompatibleStateImageBehavior = false;
             listViewParticipants.View = System.Windows.Forms.View.Details;
-            listViewParticipants.SelectedIndexChanged += listViewParticipants_SelectedIndexChanged;
             // 
             // label18
             // 

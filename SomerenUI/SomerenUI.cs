@@ -701,27 +701,10 @@ namespace SomerenUI
 
         // Activity participants
 
-        private void Participants_Click(object sender, EventArgs e)
-        {
-
-        }
-
-
-        private void activityToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void activityParticipantsToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             ShowParticipantsPanel();
         }
-
-        private void activityToolStripMenuItem_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
         private void ShowParticipantsPanel()
         {
             //show Participants
@@ -879,7 +862,7 @@ namespace SomerenUI
             catch (Exception e)
             {
 
-                MessageBox.Show("Something went wrong" + e);
+                MessageBox.Show("Something went wrong while trying to get the participants from the database" + e);
             }
             return nonParticipantStudents;
         }
@@ -918,18 +901,10 @@ namespace SomerenUI
             }
         }
 
-        private void listViewNotParticipating_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void listViewParticipants_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
+
+            //Method for deleting students from an activity
             // Check if both a student and an activity are selected
             if (listViewActivity.SelectedItems.Count == 0)
             {
@@ -938,7 +913,7 @@ namespace SomerenUI
             }
             else if(listViewParticipants.SelectedItems.Count == 0)
             {
-                MessageBox.Show("Please select student.");
+                MessageBox.Show("Please select a student from the participants list fïrst.");
                 return; // Exit the method early
             }
 
@@ -952,17 +927,21 @@ namespace SomerenUI
             int studentId = student.Id; // Get the student ID
 
             // Proceed with deleting the participant
-            ParticipantsDAO participantDao = new ParticipantsDAO();
-            participantDao.DeleteParticipants(studentId, activityId);
 
-            // Update the UI
-            ShowParticipantsPanel();
+            if (MessageBox.Show($"Are you sure that you wish to remove this participant from the activity {activity.Name}?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                ParticipantsDAO participantDao = new ParticipantsDAO();
+                participantDao.DeleteParticipants(studentId, activityId);
+                // Update the UI
+                RefillParticipantListViews();
+            }
+            
         }
 
 
         private void button2_Click(object sender, EventArgs e)
         {
-            //add
+            // //Method for adding students to an activity
             // Check if both a student and an activity are selected
             if (listViewActivity.SelectedItems.Count == 0)
             {
@@ -989,7 +968,7 @@ namespace SomerenUI
             participantDao.AddParticpants(studentId, activityId);
 
             // Update the UI
-            ShowParticipantsPanel();
+            RefillParticipantListViews();
         }
     }
 }
