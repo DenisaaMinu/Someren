@@ -32,5 +32,14 @@ namespace SomerenService
         {
             studentdb.ModifyStudent(student);
         }
+
+        public List<Student> GetByActivityId(int activityNumber)
+        {
+            List<Student> students = studentdb.GetParticipants(activityNumber);
+            return students;
+        }
+
+
     }
+
 }

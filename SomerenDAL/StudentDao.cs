@@ -90,29 +90,24 @@ namespace SomerenDAL
             ExecuteEditQuery(query, sqlParameters);
         }
 
-        public Student GetStudentById(int studentId)
+        // Method to fetch participating students by activity number
+        public List<Student> GetParticipants(int activityNumber)
         {
-            string query = "SELECT * FROM [STUDENT] WHERE studentId = @StudentId";
+            // SQL query to select all students associated with the provided activity number
+            string query = "SELECT * FROM STUDENT s " +
+                           "JOIN PARTICIPANTS p ON s.[studentId] = p.[studentId] " +
+                           "WHERE p.[activityId] = @activityId";
 
-            SqlParameter[] sqlParameters =
-            {
-                new SqlParameter("@StudentId", studentId)
-            };
+            // Parameters for the query
+            SqlParameter[] sqlParameters = new SqlParameter[1];
+            sqlParameters[0] = new SqlParameter("@activityId", SqlDbType.Int);
+            sqlParameters[0].Value = activityNumber;
 
             // Execute the query and retrieve data
             DataTable dataTable = ExecuteSelectQuery(query, sqlParameters);
 
-            if (dataTable.Rows.Count == 0)
-                return null;
-
-            DataRow dr = dataTable.Rows[0];
-            Student student = new Student
-            {
-                Id = (int)dr["studentId"],
-                Name = (string)dr["name"]
-            };
-
-            return student;
+            // Convert the DataTable to a list of Student objects
+            return ReadTables(dataTable);
         }
     }
 }
