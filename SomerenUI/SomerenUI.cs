@@ -696,114 +696,11 @@ namespace SomerenUI
         // Activity participants
         private void activityParticipantsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ShowParticipantsPanel();
+           // ShowParticipantsPanel();
         }
 
-        private void ShowParticipantsPanel()
-        {
-            //show Participants
-            ShowCurrentPanel(panelParticipants);
-
-            try
-            {
-                //get and display activities
-                List<Activity> activities = GetActivity();
-                DisplayActivities(activities);
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("Something went wrong while loading the activities: " + e.Message);
-            }
-        }
-
-        private List<Activity> GetActivity()
-        {
-            ActivityService activityService = new ActivityService();
-            List<Activity> activities = activityService.GetActivities();
-            return activities;
-        }
-
-        private void DisplayActivities(List<Activity> activities)
-        {
-            // clear the listview before filling it
-            listViewActivity.Items.Clear();
-
-            foreach (Activity activity in activities)
-            {
-                ListViewItem li = new ListViewItem(activity.Name);
-                listViewActivity.Items.Add(li);
-
-                li.Tag = activity;
-            }
-        }
-
-        private void listViewActivity_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (listViewActivity.SelectedItems.Count > 0)
-            {
-                ListViewItem selectedItem = listViewActivity.SelectedItems[0];
-                Activity selectedActivity = (Activity)selectedItem.Tag;
-
-                DisplayParticipants(selectedActivity);
-                DisplayNonParticipants(selectedActivity);
-            }
-        }
-
-        private void DisplayParticipants(Activity selectedActivity)
-        {
-            try
-            {
-                // Get all participants for the selected activity
-                ParticipantsService participantsService = new ParticipantsService();
-                List<Participants> participants = participantsService.GetParticipants(selectedActivity.Id);
-
-                // Clear the list view
-                listParticipants.Items.Clear();
-
-                // Display participants in the list view
-                foreach (Participants participant in participants)
-                {
-                    // Fetch student details based on student ID
-                    Student student = participantsService.GetStudentById(participant.StudentId);
-
-                    // Create a ListViewItem with student name
-                    ListViewItem li = new ListViewItem(student.Name);
-                    listParticipants.Items.Add(li);
-
-                    li.Tag = student; // Set ListViewItem tag to student for reference
-                }
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("Something went wrong: " + e.Message);
-            }
-        }
-
-
-        private void DisplayNonParticipants(Activity selectedActivity)
-        {
-            try
-            {
-                // Get all non-participants for the selected activity
-                ParticipantsService participantsService = new ParticipantsService();
-                List<Student> nonParticipants = participantsService.GetNonParticipants(selectedActivity.Id);
-
-                //Clear the list view
-                listParticipants.Items.Clear();
-
-                // Display participants in the list view
-                foreach (Student nonParticipant in nonParticipants)
-                {
-                    ListViewItem li = new ListViewItem(nonParticipant.Name);
-                    listParticipants.Items.Add(li);
-
-                    li.Tag = nonParticipant;
-                }
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("Something went wrong" + e);
-            }
-        }
+        
+        
+        
     }
 }
