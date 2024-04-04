@@ -546,6 +546,7 @@ namespace SomerenUI
             {
                 ListViewItem selectedDrink = listViewOrderingDrinks.SelectedItems[0];                                          // Get the selected drink
                 ListViewItem selectedStudent = listViewStudentsOrdering.SelectedItems[0];
+
                 // Get values for placing an order
                 int drinkId = ((Drink)selectedDrink.Tag).Id;
                 int studentId = ((Student)selectedStudent.Tag).Id;
@@ -913,7 +914,7 @@ namespace SomerenUI
             }
             else if(listViewParticipants.SelectedItems.Count == 0)
             {
-                MessageBox.Show("Please select a student from the participants list fïrst.");
+                MessageBox.Show("Please select a student from the participants list fï¿½rst.");
                 return; // Exit the method early
             }
 
