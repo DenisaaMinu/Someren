@@ -10,8 +10,8 @@ namespace SomerenService
 {
     public class ParticipantsService
     {
+
         private ParticipantsDAO participantdb;
-        StudentDao studentDao = new StudentDao();
 
     
         public ParticipantsService()
