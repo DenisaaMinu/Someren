@@ -11,7 +11,7 @@ namespace SomerenService
         public RoomService()
         {
             roomdb = new RoomDao();
-        } 
+        }
 
         public List<Room> GetRooms()
         {

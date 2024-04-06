@@ -11,7 +11,7 @@ namespace SomerenService
         public TeacherService()
         {
             teacherdb = new TeacherDAO();
-        } 
+        }
 
         public List<Teacher> GetTeachers()
         {
