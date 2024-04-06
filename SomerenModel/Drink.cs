@@ -8,12 +8,14 @@ namespace SomerenModel
 {
     public class Drink
     {
-        public int Id {  get; set; }
-        public string Name { get; set; }
-        public decimal Price { get; set; }
-        public decimal VATRate { get; set; }
-        public bool IsAlcoholic { get; set; }
-        public int Stock {  get; set; }
-        public string StockStatus {  get; set; }
+        public int Id {  get; set; }         // database id
+        public string Name { get; set; }    // drink's name, e.g. wine, beer
+        public decimal Price { get; set; }  // drink's price, e.g. $2.50
+        public decimal VATRate { get; set; }  // alcoholic drink: 0.21, non-alcoholic drink: 0.09
+        public int Stock {  get; set; }    // number of drinks, e.g. wine: 120 
+        public string StockStatus {  get; set; }  // > 40: "Stock sufficient", < 40: "Nearly depleted"
+
+        public bool IsAlcoholic { get; set; }  // alcoholic = true, non-alcoholic = false
+        public int NumberOfDrinksSold { get; set; } // number of drinks sold, e.g. 120
     }
 }
