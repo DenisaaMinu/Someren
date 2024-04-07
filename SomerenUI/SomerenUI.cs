@@ -990,19 +990,19 @@ namespace SomerenUI
 
         private void GetSupervisors(int activityId)
         {
-            List<Teacher> supervisors = teacherService.GetSupervisors(activityId);
+            List<Teacher> supervisors = TeacherService.GetSupervisors(activityId);
             DisplaySupervisors(supervisors);
         }
 
         private void GetNonSupervisors(int activityId)
         {
-            List<Teacher> nonSupervisors = teacherService.GetNonSupervisors(activityId);
+            List<Teacher> nonSupervisors = TeacherService.GetNonSupervisors(activityId);
             DisplayNonSupervisors(nonSupervisors);
         }
 
         private void lstActivities_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (lstActivities.SelectedItems.Count > 0)
+            if (Activity.SelectedItems.Count > 0)
             {
                 ListViewItem selectedItem = lstActivities.SelectedItems[0];
                 int selectedActivityId = (int)selectedItem.Tag; // Assuming Tag property stores activity ID as int
