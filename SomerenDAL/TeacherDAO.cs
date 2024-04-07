@@ -13,6 +13,20 @@ namespace SomerenDAL
             SqlParameter[] sqlParameters = new SqlParameter[0];
             return ReadTables(ExecuteSelectQuery(query, sqlParameters));
         }
+        public List<Teacher> GetTeachers(int activityId)
+        {
+            string query = "SELECT * FROM STUDENT s " +
+                           "JOIN SUPERVISION p ON s.[lecturerId] = p.[lecturerId] " +
+                           "WHERE p.[activityId] = @activityId";
+
+            SqlParameter[] sqlParameters = new SqlParameter[1];
+            sqlParameters[0] = new SqlParameter("@activityId", SqlDbType.Int);
+            sqlParameters[0].Value = activityId;
+
+            DataTable dataTable = ExecuteSelectQuery(query, sqlParameters);
+
+            return ReadTables(dataTable);
+        }
 
         private List<Teacher> ReadTables(DataTable dataTable)
         {

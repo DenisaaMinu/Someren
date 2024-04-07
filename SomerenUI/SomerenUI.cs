@@ -146,10 +146,10 @@ namespace SomerenUI
             }
         }
 
-        private List<Teacher> GetTeachers()
+        private List<Teacher> GetTeachers(int activityId)
         {
             TeacherService teacherService = new TeacherService();
-            List<Teacher> teachers = teacherService.GetTeachers();
+            List<Teacher> teachers = teacherService.GetTeachers(activityId);
             return teachers;
         }
 
@@ -177,10 +177,6 @@ namespace SomerenUI
             return li;
         }
 
-        private void lecturersToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ShowTeachersPanel();
-        }
 
 
         //rooms
@@ -911,7 +907,7 @@ namespace SomerenUI
                 MessageBox.Show("Please select activity.");
                 return; // Exit the method early
             }
-            else if(listViewParticipants.SelectedItems.Count == 0)
+            else if (listViewParticipants.SelectedItems.Count == 0)
             {
                 MessageBox.Show("Please select a student from the participants list fïrst.");
                 return; // Exit the method early
@@ -935,7 +931,7 @@ namespace SomerenUI
                 // Update the UI
                 RefillParticipantListViews();
             }
-            
+
         }
 
 
@@ -969,6 +965,54 @@ namespace SomerenUI
 
             // Update the UI
             RefillParticipantListViews();
+        }
+
+
+
+
+        private void DisplaySupervisors(List<Teacher> supervisors)
+        {
+            listViewTeachers.Items.Clear();
+
+            foreach (Teacher teacher in supervisors)
+            {
+                ListViewItem item = new ListViewItem(teacher.FirstName);
+                item.SubItems.Add(teacher.LastName);
+
+                item.Tag = teacher;
+
+                listViewTeachers.Items.Add(item);
+            }
+        }
+        private List<Teacher> GetActivitySupervisors(int activityId)
+        {
+            TeacherService activityService = new TeacherService();
+            List<Teacher> activitySupervisors = activityService.GetAllTeachers(activityId);
+            return activitySupervisors;
+        }
+        private void DisplayActivitySupervisors(List<Teacher> activitySupervisors)
+        {
+            listViewActivity.Items.Clear();
+
+            foreach (Teacher teacher in activitySupervisors)
+            {
+                ListViewItem item = new ListViewItem(teacher.FirstName);
+                item.SubItems.Add(teacher.LastName);
+
+                item.Tag = teacher;
+
+                listViewTeachers.Items.Add(item);
+            }
+        }
+        private List<Teacher> GetTeachers()
+        {
+            TeacherService teacherService = new TeacherService();
+            List<Teacher> teachers = teacherService.GetTeachers();
+            return teachers;
+        }
+        private void activitySupervisorsToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+
         }
     }
 }
