@@ -7,9 +7,7 @@ using System.Threading.Tasks;
 
 namespace SomerenDAL
 {
-    internal class SupervisorDAO
-    {
-        public class supervisorDAO : BaseDao
+    public class SupervisorDAO : BaseDao
         {
 
             public void DeleteSupervisors(int studentNumber, int activityNumber)
@@ -39,4 +37,4 @@ namespace SomerenDAL
 
         }
     }
-}
+

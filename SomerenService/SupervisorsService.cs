@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SomerenDAL;
 
 namespace SomerenService
 {
     internal class SupervisorsService
     {
-        private TeacherDAO teacherdb;
+        private Teacher teacherdb;
 
         public List<SupervisorsService> GetAllSupervisors(int activityNumber)
         {

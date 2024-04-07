@@ -972,43 +972,43 @@ namespace SomerenUI
 
         private void DisplaySupervisors(List<Teacher> supervisors)
         {
-            listViewTeachers.Items.Clear();
-
-            foreach (Teacher teacher in supervisors)
+            lstSupervisors.Items.Clear();
+            foreach (Teacher supervisor in supervisors)
             {
-                ListViewItem item = new ListViewItem(teacher.FirstName);
-                item.SubItems.Add(teacher.LastName);
-
-                item.Tag = teacher;
-
-                listViewTeachers.Items.Add(item);
+                lstSupervisors.Items.Add($"{supervisor.FirstName} {supervisor.LastName}");
             }
         }
-        private List<Teacher> GetActivitySupervisors(int activityId)
-        {
-            TeacherService activityService = new TeacherService();
-            List<Teacher> activitySupervisors = activityService.GetAllTeachers(activityId);
-            return activitySupervisors;
-        }
-        private void DisplayActivitySupervisors(List<Teacher> activitySupervisors)
-        {
-            listViewActivity.Items.Clear();
 
-            foreach (Teacher teacher in activitySupervisors)
+        private void DisplayNonSupervisors(List<Teacher> nonSupervisors)
+        {
+            lstNonSupervisors.Items.Clear();
+            foreach (Teacher nonSupervisor in nonSupervisors)
             {
-                ListViewItem item = new ListViewItem(teacher.FirstName);
-                item.SubItems.Add(teacher.LastName);
-
-                item.Tag = teacher;
-
-                listViewTeachers.Items.Add(item);
+                lstNonSupervisors.Items.Add($"{nonSupervisor.FirstName} {nonSupervisor.LastName}");
             }
         }
-        private List<Teacher> GetTeachers()
+
+        private void GetSupervisors(int activityId)
         {
-            TeacherService teacherService = new TeacherService();
-            List<Teacher> teachers = teacherService.GetTeachers();
-            return teachers;
+            List<Teacher> supervisors = teacherService.GetSupervisors(activityId);
+            DisplaySupervisors(supervisors);
+        }
+
+        private void GetNonSupervisors(int activityId)
+        {
+            List<Teacher> nonSupervisors = teacherService.GetNonSupervisors(activityId);
+            DisplayNonSupervisors(nonSupervisors);
+        }
+
+        private void lstActivities_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lstActivities.SelectedItems.Count > 0)
+            {
+                ListViewItem selectedItem = lstActivities.SelectedItems[0];
+                int selectedActivityId = (int)selectedItem.Tag; // Assuming Tag property stores activity ID as int
+                GetSupervisors(selectedActivityId);
+                GetNonSupervisors(selectedActivityId);
+            }
         }
         private void activitySupervisorsToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
