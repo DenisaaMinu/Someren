@@ -1,22 +1,32 @@
 ﻿using SomerenDAL;
 using SomerenModel;
+using System;
 using System.Collections.Generic;
 
 namespace SomerenService
 {
     public class TeacherService
     {
-        private TeacherDAO teacherdb;
+        private TeacherDAO teacherDao;
 
         public TeacherService()
         {
-            teacherdb = new TeacherDAO();
-        } 
+            teacherDao = new TeacherDAO();
+        }
 
         public List<Teacher> GetTeachers()
         {
-            List<Teacher> teachers = teacherdb.GetAllTeachers();
-            return teachers;
+            return teacherDao.GetAllTeachers();
+        }
+
+        public List<Teacher> GetSupervisors(int activityId)
+        {
+            return teacherDao.GetSupervisors(activityId);
+        }
+
+        public List<Teacher> GetNonSupervisors(int activityId, TeacherDAO teacherDAO)
+        {
+            return teacherDAO.GetNonSupervisorsByActivity(activityId);
         }
     }
 }

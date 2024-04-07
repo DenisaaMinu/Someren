@@ -82,6 +82,18 @@
             columnHeader28 = new System.Windows.Forms.ColumnHeader();
             columnHeader31 = new System.Windows.Forms.ColumnHeader();
             label15 = new System.Windows.Forms.Label();
+            pnlSupervisorActivity = new System.Windows.Forms.Panel();
+            listViewActivityShow = new System.Windows.Forms.ListView();
+            columnHeader42 = new System.Windows.Forms.ColumnHeader();
+            columnHeader43 = new System.Windows.Forms.ColumnHeader();
+            label17 = new System.Windows.Forms.Label();
+            button3 = new System.Windows.Forms.Button();
+            button4 = new System.Windows.Forms.Button();
+            listViewSupervisorNot = new System.Windows.Forms.ListView();
+            listViewSupervisorIs = new System.Windows.Forms.ListView();
+            label19 = new System.Windows.Forms.Label();
+            label20 = new System.Windows.Forms.Label();
+            label21 = new System.Windows.Forms.Label();
             pnlParticipants = new System.Windows.Forms.Panel();
             listViewActivity = new System.Windows.Forms.ListView();
             columnHeader40 = new System.Windows.Forms.ColumnHeader();
@@ -169,6 +181,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             pnlActivitiesStudents.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox7).BeginInit();
+            pnlSupervisorActivity.SuspendLayout();
             pnlParticipants.SuspendLayout();
             pnlTeachers.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
@@ -206,7 +219,6 @@
             dashboardToolStripMenuItem1.Name = "dashboardToolStripMenuItem1";
             dashboardToolStripMenuItem1.Size = new System.Drawing.Size(202, 34);
             dashboardToolStripMenuItem1.Text = "Dashboard";
-            dashboardToolStripMenuItem1.Click += dashboardToolStripMenuItem1_Click;
             // 
             // exitToolStripMenuItem
             // 
@@ -227,7 +239,6 @@
             lecturersToolStripMenuItem.Name = "lecturersToolStripMenuItem";
             lecturersToolStripMenuItem.Size = new System.Drawing.Size(98, 29);
             lecturersToolStripMenuItem.Text = "Lecturers";
-            lecturersToolStripMenuItem.Click += lecturersToolStripMenuItem_Click;
             // 
             // roomsToolStripMenuItem
             // 
@@ -274,13 +285,17 @@
             // activitySupervisorsToolStripMenuItem
             // 
             activitySupervisorsToolStripMenuItem.Name = "activitySupervisorsToolStripMenuItem";
-            activitySupervisorsToolStripMenuItem.Size = new System.Drawing.Size(269, 34);
+            activitySupervisorsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+
             activitySupervisorsToolStripMenuItem.Text = "Activity supervisors";
+            activitySupervisorsToolStripMenuItem.Click += activitySupervisorsToolStripMenuItem_Click;
             // 
             // activityParticipantsToolStripMenuItem
             // 
             activityParticipantsToolStripMenuItem.Name = "activityParticipantsToolStripMenuItem";
-            activityParticipantsToolStripMenuItem.Size = new System.Drawing.Size(269, 34);
+
+            activityParticipantsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+
             activityParticipantsToolStripMenuItem.Text = "Activity participants";
             activityParticipantsToolStripMenuItem.Click += activityParticipantsToolStripMenuItem_Click_1;
             // 
@@ -630,6 +645,119 @@
             label15.TabIndex = 0;
             label15.Text = "Activities";
             // 
+            // pnlSupervisorActivity
+            // 
+            pnlSupervisorActivity.Controls.Add(listViewActivityShow);
+            pnlSupervisorActivity.Controls.Add(label17);
+            pnlSupervisorActivity.Controls.Add(button3);
+            pnlSupervisorActivity.Controls.Add(button4);
+            pnlSupervisorActivity.Controls.Add(listViewSupervisorNot);
+            pnlSupervisorActivity.Controls.Add(listViewSupervisorIs);
+            pnlSupervisorActivity.Controls.Add(label19);
+            pnlSupervisorActivity.Controls.Add(label20);
+            pnlSupervisorActivity.Controls.Add(label21);
+            pnlSupervisorActivity.Location = new System.Drawing.Point(14, 33);
+            pnlSupervisorActivity.Name = "pnlSupervisorActivity";
+            pnlSupervisorActivity.Size = new System.Drawing.Size(1340, 778);
+            pnlSupervisorActivity.TabIndex = 27;
+            // 
+            // listViewActivityShow
+            // 
+            listViewActivityShow.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { columnHeader42, columnHeader43 });
+            listViewActivityShow.Location = new System.Drawing.Point(38, 226);
+            listViewActivityShow.Name = "listViewActivityShow";
+            listViewActivityShow.Size = new System.Drawing.Size(335, 210);
+            listViewActivityShow.TabIndex = 9;
+            listViewActivityShow.UseCompatibleStateImageBehavior = false;
+            listViewActivityShow.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader42
+            // 
+            columnHeader42.Text = "Id";
+            columnHeader42.Width = 150;
+            // 
+            // columnHeader43
+            // 
+            columnHeader43.Text = "Name";
+            columnHeader43.Width = 150;
+            // 
+            // label17
+            // 
+            label17.AutoSize = true;
+            label17.Font = new System.Drawing.Font("Segoe UI", 19.8000011F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            label17.Location = new System.Drawing.Point(32, 21);
+            label17.Name = "label17";
+            label17.Size = new System.Drawing.Size(191, 46);
+            label17.TabIndex = 8;
+            label17.Text = "Supervisors";
+            // 
+            // button3
+            // 
+            button3.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            button3.Location = new System.Drawing.Point(846, 444);
+            button3.Name = "button3";
+            button3.Size = new System.Drawing.Size(101, 40);
+            button3.TabIndex = 7;
+            button3.Text = "Add";
+            button3.UseVisualStyleBackColor = true;
+            // 
+            // button4
+            // 
+            button4.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            button4.Location = new System.Drawing.Point(462, 444);
+            button4.Name = "button4";
+            button4.Size = new System.Drawing.Size(116, 46);
+            button4.TabIndex = 6;
+            button4.Text = "Remove";
+            button4.UseVisualStyleBackColor = true;
+            // 
+            // listViewSupervisorNot
+            // 
+            listViewSupervisorNot.Location = new System.Drawing.Point(846, 226);
+            listViewSupervisorNot.Name = "listViewSupervisorNot";
+            listViewSupervisorNot.Size = new System.Drawing.Size(314, 210);
+            listViewSupervisorNot.TabIndex = 4;
+            listViewSupervisorNot.UseCompatibleStateImageBehavior = false;
+            // 
+            // listViewSupervisorIs
+            // 
+            listViewSupervisorIs.Location = new System.Drawing.Point(462, 226);
+            listViewSupervisorIs.Name = "listViewSupervisorIs";
+            listViewSupervisorIs.Size = new System.Drawing.Size(303, 210);
+            listViewSupervisorIs.TabIndex = 3;
+            listViewSupervisorIs.UseCompatibleStateImageBehavior = false;
+            listViewSupervisorIs.View = System.Windows.Forms.View.Details;
+            // 
+            // label19
+            // 
+            label19.AutoSize = true;
+            label19.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            label19.Location = new System.Drawing.Point(870, 178);
+            label19.Name = "label19";
+            label19.Size = new System.Drawing.Size(264, 28);
+            label19.TabIndex = 2;
+            label19.Text = "Non-participants supervisors";
+            // 
+            // label20
+            // 
+            label20.AutoSize = true;
+            label20.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            label20.Location = new System.Drawing.Point(557, 182);
+            label20.Name = "label20";
+            label20.Size = new System.Drawing.Size(113, 28);
+            label20.TabIndex = 1;
+            label20.Text = "Supervisors";
+            // 
+            // label21
+            // 
+            label21.AutoSize = true;
+            label21.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            label21.Location = new System.Drawing.Point(99, 182);
+            label21.Name = "label21";
+            label21.Size = new System.Drawing.Size(78, 28);
+            label21.TabIndex = 0;
+            label21.Text = "Activity";
+            // 
             // pnlParticipants
             // 
             pnlParticipants.Controls.Add(listViewActivity);
@@ -909,7 +1037,6 @@
             pnlDrinks.Margin = new System.Windows.Forms.Padding(2);
             pnlDrinks.Name = "pnlDrinks";
             pnlDrinks.Size = new System.Drawing.Size(1340, 778);
-            pnlDrinks.TabIndex = 3;
             // 
             // label13
             // 
@@ -979,6 +1106,7 @@
             listView1.Location = new System.Drawing.Point(32, 551);
             listView1.Margin = new System.Windows.Forms.Padding(2);
             listView1.Name = "listView1";
+            listView1.Size = new System.Drawing.Size(829, 60);
             listView1.Size = new System.Drawing.Size(1036, 74);
             listView1.TabIndex = 8;
             listView1.UseCompatibleStateImageBehavior = false;
@@ -1370,6 +1498,9 @@
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(1718, 1050);
             Controls.Add(menuStrip1);
+            Controls.Add(pnlSupervisorActivity);
+            Controls.Add(pnlActivitiesStudents);
+
             Controls.Add(pnlStudents);
             Controls.Add(pnlDashboard);
             Controls.Add(pnlRooms);
@@ -1393,6 +1524,8 @@
             pnlActivitiesStudents.ResumeLayout(false);
             pnlActivitiesStudents.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox7).EndInit();
+            pnlSupervisorActivity.ResumeLayout(false);
+            pnlSupervisorActivity.PerformLayout();
             pnlParticipants.ResumeLayout(false);
             pnlParticipants.PerformLayout();
             pnlTeachers.ResumeLayout(false);
@@ -1551,5 +1684,17 @@
         private System.Windows.Forms.ListView listViewActivity;
         private System.Windows.Forms.ColumnHeader columnHeader40;
         private System.Windows.Forms.ColumnHeader columnHeader41;
+        private System.Windows.Forms.Panel pnlSupervisorActivity;
+        private System.Windows.Forms.ListView listViewActivityShow;
+        private System.Windows.Forms.ColumnHeader columnHeader42;
+        private System.Windows.Forms.ColumnHeader columnHeader43;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.ListView listViewSupervisorNot;
+        private System.Windows.Forms.ListView listViewSupervisorIs;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label21;
     }
 }

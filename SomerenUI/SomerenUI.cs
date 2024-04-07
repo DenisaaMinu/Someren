@@ -17,6 +17,7 @@ namespace SomerenUI
         {
             InitializeComponent();
             ShowCurrentPanel(pnlDashboard);
+
         }
 
         // showing the current panel
@@ -167,10 +168,6 @@ namespace SomerenUI
             return li;
         }
 
-        private void lecturersToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ShowTeachersPanel();
-        }
 
 
         //rooms
@@ -703,7 +700,6 @@ namespace SomerenUI
             txtStudentTelephoneNumber.Text = null;
         }
 
-
         // Activity participants
 
         private void activityParticipantsToolStripMenuItem_Click_1(object sender, EventArgs e)
@@ -918,7 +914,7 @@ namespace SomerenUI
             }
             else if (listViewParticipants.SelectedItems.Count == 0)
             {
-                MessageBox.Show("Please select a student from the participants list fïrst.");
+                MessageBox.Show("Please select a student from the participants list fÃ¯rst.");
                 return; // Exit the method early
             }
 
@@ -974,6 +970,111 @@ namespace SomerenUI
 
             // Update the UI
             RefillParticipantListViews();
+        }
+
+
+
+        // Activity supervisors
+
+
+        public void ShowSupervisorPanel()
+        {
+
+            ShowCurrentPanel(pnlSupervisorActivity);
+
+            try
+            {
+                List<Supervisors> supervisor = GetSupervisors();
+                DisplaySupervisorActivities();
+                DisplayNotSupervisors();
+                DisplaySupervisors();
+
+            }
+
+            catch (Exception e)
+            {
+                // show error message box if there is an error
+                MessageBox.Show("Something went wrong while loading the supervisor page: " + e.Message);
+            }
+
+
+        }
+        private List<Supervisors> GetSupervisedActivities()
+        {
+            SupervisorsService supervisorsService = new SupervisorsService();
+            List<Supervisors> supervisors = supervisorsService.GetSupervisorActivities();
+            return supervisors;
+        }
+        private void DisplaySupervisorActivities()
+        {
+            // clear the listview before filling it
+            listViewActivityShow.Items.Clear();
+            List<Supervisors> activities = GetSupervisedActivities();
+
+            foreach (Supervisors activity in activities)
+            {
+                ListViewItem li = new ListViewItem(activity.activityName.ToString());
+                li.SubItems.Add($"{activity.Date:dd/MM/yyyy}");
+                li.Tag = activity;
+
+
+                listViewActivityShow.Items.Add(li);
+            }
+        }
+
+
+        private List<Supervisors> GetSupervisors()
+        {
+            SupervisorsService supervisorsService = new SupervisorsService();
+            List<Supervisors> supervisors = supervisorsService.GetSupervisors();
+            return supervisors;
+        }
+        private List<Supervisors> GetNotSupervisors()
+        {
+            SupervisorsService supervisorsService = new SupervisorsService();
+            List<Supervisors> supervisors = supervisorsService.GetNotSupervisors();
+            return supervisors;
+        }
+
+        private void DisplayNotSupervisors()
+        {
+            // clear the listview before filling it
+            listViewSupervisorNot.Items.Clear();
+
+            List<Supervisors> supervisors = GetNotSupervisors();
+
+            foreach (Supervisors supervisor in supervisors)
+            {
+                ListViewItem li = new ListViewItem(supervisor.firstName.ToString());
+                li.SubItems.Add(supervisor.lastName.ToString());
+                li.Tag = supervisor;
+
+
+                listViewSupervisorNot.Items.Add(li);
+            }
+        }
+        private void DisplaySupervisors()
+        {
+            // clear the listview before filling it
+            listViewSupervisorIs.Items.Clear();
+
+            List<Supervisors> supervisors = GetSupervisors();
+
+            foreach (Supervisors supervisor in supervisors)
+            {
+                ListViewItem li = new ListViewItem(supervisor.firstName.ToString());
+                li.SubItems.Add(supervisor.lastName.ToString());
+
+                li.SubItems.Add(supervisor.activityName.ToString());
+
+                li.Tag = supervisor;
+                listViewSupervisorIs.Items.Add(li);
+            }
+        }
+
+        private void activitySupervisorsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowSupervisorPanel();
         }
     }
 }

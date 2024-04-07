@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace SomerenService
-{
+{ //
     public class ParticipantsService
     {
 
@@ -31,3 +31,4 @@ namespace SomerenService
 
     }
 }
+ 
