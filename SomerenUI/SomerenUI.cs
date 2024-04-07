@@ -9,7 +9,6 @@ using System.Text.RegularExpressions;
 using System.Drawing.Text;
 using System.Linq;
 
-
 namespace SomerenUI
 {
     public partial class SomerenUI : Form
@@ -18,6 +17,7 @@ namespace SomerenUI
         {
             InitializeComponent();
             ShowCurrentPanel(pnlDashboard);
+
         }
 
         // showing the current panel
@@ -147,10 +147,10 @@ namespace SomerenUI
             }
         }
 
-        private List<Teacher> GetTeachers(int activityId)
+        private List<Teacher> GetTeachers()
         {
             TeacherService teacherService = new TeacherService();
-            List<Teacher> teachers = teacherService.GetTeachers(activityId);
+            List<Teacher> teachers = teacherService.GetTeachers();
             return teachers;
         }
 
@@ -690,11 +690,7 @@ namespace SomerenUI
         }
 
 
-        // Activity supervisors
-        private void activitySupervisorsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
 
-        }
 
         // Activity participants
 
@@ -970,14 +966,17 @@ namespace SomerenUI
 
 
 
+        // Activity supervisors
+
 
         public void ShowSupervisorPanel()
         {
-            ShowCurrentPanel(pnlSupervisors);
 
+            ShowCurrentPanel(pnlSupervisorActivity);
 
             try
             {
+                List<Supervisors> supervisor = GetSupervisors();
                 DisplaySupervisorActivities();
                 DisplayNotSupervisors();
                 DisplaySupervisors();
@@ -992,39 +991,40 @@ namespace SomerenUI
 
 
         }
-        private List<Teacher> GetSupervisedActivities()
+        private List<Supervisors> GetSupervisedActivities()
         {
-            TeacherService supervisorsService = new SupervisorService();
-            List<Teacher> supervisors = supervisorsService.GetSupervisorActivities();
+            SupervisorsService supervisorsService = new SupervisorsService();
+            List<Supervisors> supervisors = supervisorsService.GetSupervisorActivities();
             return supervisors;
         }
         private void DisplaySupervisorActivities()
         {
             // clear the listview before filling it
-            listViewActivity.Items.Clear();
-            List<Activity> activities = GetSupervisedActivities();
+            listViewActivityShow.Items.Clear();
+            List<Supervisors> activities = GetSupervisedActivities();
 
-            foreach (Activity activity in activities)
+            foreach (Supervisors activity in activities)
             {
-                ListViewItem li = new ListViewItem(activity.Name.ToString());
+                ListViewItem li = new ListViewItem(activity.activityName.ToString());
+                li.SubItems.Add($"{activity.Date:dd/MM/yyyy}");
                 li.Tag = activity;
 
 
-                listViewActivity.Items.Add(li);
+                listViewActivityShow.Items.Add(li);
             }
         }
 
 
-        private List<Teacher> GetSupervisors()
+        private List<Supervisors> GetSupervisors()
         {
-            TeacherService supervisorsService = new TeacherService();
-            List<Teacher> supervisors = supervisorsService.GetSupervisors();
+            SupervisorsService supervisorsService = new SupervisorsService();
+            List<Supervisors> supervisors = supervisorsService.GetSupervisors();
             return supervisors;
         }
-        private List<Supervisor> GetNotSupervisors()
+        private List<Supervisors> GetNotSupervisors()
         {
-            SupervisorService supervisorsService = new SupervisorService();
-            List<Supervisor> supervisors = supervisorsService.GetNotSupervisors();
+            SupervisorsService supervisorsService = new SupervisorsService();
+            List<Supervisors> supervisors = supervisorsService.GetNotSupervisors();
             return supervisors;
         }
 
@@ -1033,9 +1033,9 @@ namespace SomerenUI
             // clear the listview before filling it
             listViewSupervisorNot.Items.Clear();
 
-            List<Supervisor> supervisors = GetNotSupervisors();
+            List<Supervisors> supervisors = GetNotSupervisors();
 
-            foreach (Supervisor supervisor in supervisors)
+            foreach (Supervisors supervisor in supervisors)
             {
                 ListViewItem li = new ListViewItem(supervisor.firstName.ToString());
                 li.SubItems.Add(supervisor.lastName.ToString());
@@ -1050,9 +1050,9 @@ namespace SomerenUI
             // clear the listview before filling it
             listViewSupervisorIs.Items.Clear();
 
-            List<Supervisor> supervisors = GetTeachers();
+            List<Supervisors> supervisors = GetSupervisors();
 
-            foreach (Supervisor supervisor in supervisors)
+            foreach (Supervisors supervisor in supervisors)
             {
                 ListViewItem li = new ListViewItem(supervisor.firstName.ToString());
                 li.SubItems.Add(supervisor.lastName.ToString());
@@ -1064,77 +1064,9 @@ namespace SomerenUI
             }
         }
 
-
-
-        private void supervisorToolStripMenuItem_Click(object sender, EventArgs e)
+        private void activitySupervisorsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowSupervisorPanel();
         }
-
-        private void btnAddSupervisor_Click(object sender, EventArgs e)
-        {
-            // select activity and lecturer from the list views
-            if (listViewActivityShow.SelectedItems.Count == 0 || listViewSupervisorNot.SelectedItems.Count == 0)
-            {
-                MessageBox.Show("please select both an activity and a lecturer.");
-                return;
-            }
-
-
-
-        }
-
-        private void btnRemoveSupervisor_Click(object sender, EventArgs e)
-        {
-            // Check if select
-            if (listViewSupervisorIs.SelectedItems.Count != 1)
-            {
-                MessageBox.Show("Please select one association between an activity and a lecturer.");
-                return;
-            }
-
-            // Get the selected 
-            Supervisor selectedAssociation = (Supervisor)listViewSupervisorIs.SelectedItems[0].Tag;
-
-            // Delete
-            SupervisorService supervisorService = new SupervisorService();
-            supervisorService.RemoveSupervisor(selectedAssociation.ActivityID, selectedAssociation.LecturerId);
-
-            // Refresh the ListView
-            DisplaySupervisorActivities();
-            DisplayNotSupervisors();
-            DisplaySupervisors();
-        }
-
-        private void btnUpdateSupervisor_Click(object sender, EventArgs e)
-        {
-            DisplaySupervisorActivities();
-            DisplayNotSupervisors();
-            DisplaySupervisors();
-        }
-
-        private void listViewSupervisorNot_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dashboardToolStripMenuItem1_Click(object sender, System.EventArgs e)
-        {
-            ShowDashboardPanel();
-        }
-
-        private void exitToolStripMenuItem_Click(object sender, System.EventArgs e)
-        {
-            Application.Exit();
-        }
-
-        private void studentsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ShowStudentsPanel();
-        }
-
-        private void lecturersToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ShowLecturersPanel();
-        }
     }
+}

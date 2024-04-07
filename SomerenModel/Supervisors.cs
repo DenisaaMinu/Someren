@@ -6,10 +6,16 @@ using System.Threading.Tasks;
 
 namespace SomerenModel
 {
-    internal class Supervisors
-    {
-        public int TeacherId { get; set; }
+    
+        public class Supervisors
+        {
+            public int lecturerId { get; set; }
+            public string firstName { get; set; }
+            public string lastName { get; set; }
+            public int ActivityID { get; set; }
+            public string activityName { get; set; }
+            public DateTime Date { get; set; }
 
-        public int ActivityId { get; set; }
-    }
+        }
+    
 }

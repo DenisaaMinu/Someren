@@ -24,9 +24,9 @@ namespace SomerenService
             return teacherDao.GetSupervisors(activityId);
         }
 
-        public List<Teacher> GetNonSupervisors(int activityId)
+        public List<Teacher> GetNonSupervisors(int activityId, TeacherDAO teacherDAO)
         {
-            return teacherDao.GetNonSupervisors(activityId);
+            return teacherDAO.GetNonSupervisorsByActivity(activityId);
         }
     }
 }

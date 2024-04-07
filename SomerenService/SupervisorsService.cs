@@ -4,22 +4,39 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SomerenDAL;
+using SomerenModel;
 
 namespace SomerenService
 {
-    internal class SupervisorsService
+    public class SupervisorsService
     {
-        private Teacher teacherdb;
+        private SupervisorDAO supervisordb;
 
-        public List<SupervisorsService> GetAllSupervisors(int activityNumber)
+        public SupervisorsService()
         {
-            List<SupervisorsService> Supervisors = teacherdb.GetAllTeachers();
-            return Supervisors;
+            supervisordb = new SupervisorDAO();
         }
-        public List<SupervisorsService> GetSupervisors(int activityId)
+        public List<Supervisors> GetNotSupervisors()
         {
-            List<SupervisorsService> Supervisors = teacherdb.GetTeachers(activityId);
-            return Supervisors;
+            List<Supervisors> supervisors = supervisordb.GetNotSupervisor();
+            return supervisors;
         }
+        public List<Supervisors> GetSupervisors()
+        {
+            List<Supervisors> supervisors = supervisordb.GetSupervisor();
+            return supervisors;
+        }
+
+        public List<Supervisors> GetSupervisorActivities()
+        {
+            List<Supervisors> activities = supervisordb.GetSupervisorActivities();
+            return activities;
+        }
+
+        public void RemoveSupervisor(int activityID, int lecturerID)
+        {
+            supervisordb.RemoveSupervisor(activityID, lecturerID);
+        }
+
     }
 }

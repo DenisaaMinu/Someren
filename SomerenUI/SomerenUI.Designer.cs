@@ -82,15 +82,15 @@
             columnHeader28 = new System.Windows.Forms.ColumnHeader();
             columnHeader31 = new System.Windows.Forms.ColumnHeader();
             label15 = new System.Windows.Forms.Label();
-            pnlSupervisors = new System.Windows.Forms.Panel();
-            listView3 = new System.Windows.Forms.ListView();
+            pnlSupervisorActivity = new System.Windows.Forms.Panel();
+            listViewActivityShow = new System.Windows.Forms.ListView();
             columnHeader42 = new System.Windows.Forms.ColumnHeader();
             columnHeader43 = new System.Windows.Forms.ColumnHeader();
             label17 = new System.Windows.Forms.Label();
             button3 = new System.Windows.Forms.Button();
             button4 = new System.Windows.Forms.Button();
-            listViewNonSupervisors = new System.Windows.Forms.ListView();
-            listViewSupervisors = new System.Windows.Forms.ListView();
+            listViewSupervisorNot = new System.Windows.Forms.ListView();
+            listViewSupervisorIs = new System.Windows.Forms.ListView();
             label19 = new System.Windows.Forms.Label();
             label20 = new System.Windows.Forms.Label();
             label21 = new System.Windows.Forms.Label();
@@ -181,7 +181,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             pnlActivitiesStudents.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox7).BeginInit();
-            pnlSupervisors.SuspendLayout();
+            pnlSupervisorActivity.SuspendLayout();
             pnlParticipants.SuspendLayout();
             pnlTeachers.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
@@ -219,7 +219,6 @@
             dashboardToolStripMenuItem1.Name = "dashboardToolStripMenuItem1";
             dashboardToolStripMenuItem1.Size = new System.Drawing.Size(165, 26);
             dashboardToolStripMenuItem1.Text = "Dashboard";
-            dashboardToolStripMenuItem1.Click += dashboardToolStripMenuItem1_Click;
             // 
             // exitToolStripMenuItem
             // 
@@ -286,14 +285,14 @@
             // activitySupervisorsToolStripMenuItem
             // 
             activitySupervisorsToolStripMenuItem.Name = "activitySupervisorsToolStripMenuItem";
-            activitySupervisorsToolStripMenuItem.Size = new System.Drawing.Size(223, 26);
+            activitySupervisorsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             activitySupervisorsToolStripMenuItem.Text = "Activity supervisors";
-            activitySupervisorsToolStripMenuItem.Click += activitySupervisorsToolStripMenuItem_Click_1;
+            activitySupervisorsToolStripMenuItem.Click += activitySupervisorsToolStripMenuItem_Click;
             // 
             // activityParticipantsToolStripMenuItem
             // 
             activityParticipantsToolStripMenuItem.Name = "activityParticipantsToolStripMenuItem";
-            activityParticipantsToolStripMenuItem.Size = new System.Drawing.Size(223, 26);
+            activityParticipantsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             activityParticipantsToolStripMenuItem.Text = "Activity participants";
             activityParticipantsToolStripMenuItem.Click += activityParticipantsToolStripMenuItem_Click_1;
             // 
@@ -639,31 +638,31 @@
             label15.TabIndex = 0;
             label15.Text = "Activities";
             // 
-            // pnlSupervisors
+            // pnlSupervisorActivity
             // 
-            pnlSupervisors.Controls.Add(listView3);
-            pnlSupervisors.Controls.Add(label17);
-            pnlSupervisors.Controls.Add(button3);
-            pnlSupervisors.Controls.Add(button4);
-            pnlSupervisors.Controls.Add(listViewNonSupervisors);
-            pnlSupervisors.Controls.Add(listViewSupervisors);
-            pnlSupervisors.Controls.Add(label19);
-            pnlSupervisors.Controls.Add(label20);
-            pnlSupervisors.Controls.Add(label21);
-            pnlSupervisors.Location = new System.Drawing.Point(15, 31);
-            pnlSupervisors.Name = "pnlSupervisors";
-            pnlSupervisors.Size = new System.Drawing.Size(1343, 778);
-            pnlSupervisors.TabIndex = 27;
+            pnlSupervisorActivity.Controls.Add(listViewActivityShow);
+            pnlSupervisorActivity.Controls.Add(label17);
+            pnlSupervisorActivity.Controls.Add(button3);
+            pnlSupervisorActivity.Controls.Add(button4);
+            pnlSupervisorActivity.Controls.Add(listViewSupervisorNot);
+            pnlSupervisorActivity.Controls.Add(listViewSupervisorIs);
+            pnlSupervisorActivity.Controls.Add(label19);
+            pnlSupervisorActivity.Controls.Add(label20);
+            pnlSupervisorActivity.Controls.Add(label21);
+            pnlSupervisorActivity.Location = new System.Drawing.Point(14, 33);
+            pnlSupervisorActivity.Name = "pnlSupervisorActivity";
+            pnlSupervisorActivity.Size = new System.Drawing.Size(1340, 778);
+            pnlSupervisorActivity.TabIndex = 27;
             // 
-            // listView3
+            // listViewActivityShow
             // 
-            listView3.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { columnHeader42, columnHeader43 });
-            listView3.Location = new System.Drawing.Point(38, 226);
-            listView3.Name = "listView3";
-            listView3.Size = new System.Drawing.Size(335, 210);
-            listView3.TabIndex = 9;
-            listView3.UseCompatibleStateImageBehavior = false;
-            listView3.View = System.Windows.Forms.View.Details;
+            listViewActivityShow.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { columnHeader42, columnHeader43 });
+            listViewActivityShow.Location = new System.Drawing.Point(38, 226);
+            listViewActivityShow.Name = "listViewActivityShow";
+            listViewActivityShow.Size = new System.Drawing.Size(335, 210);
+            listViewActivityShow.TabIndex = 9;
+            listViewActivityShow.UseCompatibleStateImageBehavior = false;
+            listViewActivityShow.View = System.Windows.Forms.View.Details;
             // 
             // columnHeader42
             // 
@@ -705,22 +704,22 @@
             button4.Text = "Remove";
             button4.UseVisualStyleBackColor = true;
             // 
-            // listViewNonSupervisors
+            // listViewSupervisorNot
             // 
-            listViewNonSupervisors.Location = new System.Drawing.Point(846, 226);
-            listViewNonSupervisors.Name = "listViewNonSupervisors";
-            listViewNonSupervisors.Size = new System.Drawing.Size(314, 210);
-            listViewNonSupervisors.TabIndex = 4;
-            listViewNonSupervisors.UseCompatibleStateImageBehavior = false;
+            listViewSupervisorNot.Location = new System.Drawing.Point(846, 226);
+            listViewSupervisorNot.Name = "listViewSupervisorNot";
+            listViewSupervisorNot.Size = new System.Drawing.Size(314, 210);
+            listViewSupervisorNot.TabIndex = 4;
+            listViewSupervisorNot.UseCompatibleStateImageBehavior = false;
             // 
-            // listViewSupervisors
+            // listViewSupervisorIs
             // 
-            listViewSupervisors.Location = new System.Drawing.Point(462, 226);
-            listViewSupervisors.Name = "listViewSupervisors";
-            listViewSupervisors.Size = new System.Drawing.Size(303, 210);
-            listViewSupervisors.TabIndex = 3;
-            listViewSupervisors.UseCompatibleStateImageBehavior = false;
-            listViewSupervisors.View = System.Windows.Forms.View.Details;
+            listViewSupervisorIs.Location = new System.Drawing.Point(462, 226);
+            listViewSupervisorIs.Name = "listViewSupervisorIs";
+            listViewSupervisorIs.Size = new System.Drawing.Size(303, 210);
+            listViewSupervisorIs.TabIndex = 3;
+            listViewSupervisorIs.UseCompatibleStateImageBehavior = false;
+            listViewSupervisorIs.View = System.Windows.Forms.View.Details;
             // 
             // label19
             // 
@@ -1020,7 +1019,7 @@
             pnlDrinks.Location = new System.Drawing.Point(14, 36);
             pnlDrinks.Margin = new System.Windows.Forms.Padding(2);
             pnlDrinks.Name = "pnlDrinks";
-            pnlDrinks.Size = new System.Drawing.Size(1072, 622);
+            pnlDrinks.Size = new System.Drawing.Size(1344, 773);
             pnlDrinks.TabIndex = 3;
             // 
             // label13
@@ -1091,7 +1090,7 @@
             listView1.Location = new System.Drawing.Point(26, 441);
             listView1.Margin = new System.Windows.Forms.Padding(2);
             listView1.Name = "listView1";
-            listView1.Size = new System.Drawing.Size(830, 60);
+            listView1.Size = new System.Drawing.Size(829, 60);
             listView1.TabIndex = 8;
             listView1.UseCompatibleStateImageBehavior = false;
             listView1.View = System.Windows.Forms.View.Details;
@@ -1469,7 +1468,7 @@
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(1374, 842);
             Controls.Add(menuStrip1);
-            Controls.Add(pnlSupervisors);
+            Controls.Add(pnlSupervisorActivity);
             Controls.Add(pnlActivitiesStudents);
             Controls.Add(pnlStudents);
             Controls.Add(pnlDashboard);
@@ -1493,8 +1492,8 @@
             pnlActivitiesStudents.ResumeLayout(false);
             pnlActivitiesStudents.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox7).EndInit();
-            pnlSupervisors.ResumeLayout(false);
-            pnlSupervisors.PerformLayout();
+            pnlSupervisorActivity.ResumeLayout(false);
+            pnlSupervisorActivity.PerformLayout();
             pnlParticipants.ResumeLayout(false);
             pnlParticipants.PerformLayout();
             pnlTeachers.ResumeLayout(false);
@@ -1653,15 +1652,15 @@
         private System.Windows.Forms.ListView listViewActivity;
         private System.Windows.Forms.ColumnHeader columnHeader40;
         private System.Windows.Forms.ColumnHeader columnHeader41;
-        private System.Windows.Forms.Panel pnlSupervisors;
-        private System.Windows.Forms.ListView listView3;
+        private System.Windows.Forms.Panel pnlSupervisorActivity;
+        private System.Windows.Forms.ListView listViewActivityShow;
         private System.Windows.Forms.ColumnHeader columnHeader42;
         private System.Windows.Forms.ColumnHeader columnHeader43;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.ListView listViewNonSupervisors;
-        private System.Windows.Forms.ListView listViewSupervisors;
+        private System.Windows.Forms.ListView listViewSupervisorNot;
+        private System.Windows.Forms.ListView listViewSupervisorIs;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label21;
