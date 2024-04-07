@@ -38,8 +38,6 @@ namespace SomerenService
             List<Student> students = studentdb.GetParticipants(activityNumber);
             return students;
         }
-
-
     }
 
 }
