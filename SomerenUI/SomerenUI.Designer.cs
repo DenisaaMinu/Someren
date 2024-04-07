@@ -286,14 +286,14 @@
             // activitySupervisorsToolStripMenuItem
             // 
             activitySupervisorsToolStripMenuItem.Name = "activitySupervisorsToolStripMenuItem";
-            activitySupervisorsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            activitySupervisorsToolStripMenuItem.Size = new System.Drawing.Size(223, 26);
             activitySupervisorsToolStripMenuItem.Text = "Activity supervisors";
             activitySupervisorsToolStripMenuItem.Click += activitySupervisorsToolStripMenuItem_Click_1;
             // 
             // activityParticipantsToolStripMenuItem
             // 
             activityParticipantsToolStripMenuItem.Name = "activityParticipantsToolStripMenuItem";
-            activityParticipantsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            activityParticipantsToolStripMenuItem.Size = new System.Drawing.Size(223, 26);
             activityParticipantsToolStripMenuItem.Text = "Activity participants";
             activityParticipantsToolStripMenuItem.Click += activityParticipantsToolStripMenuItem_Click_1;
             // 
@@ -650,9 +650,9 @@
             pnlSupervisors.Controls.Add(label19);
             pnlSupervisors.Controls.Add(label20);
             pnlSupervisors.Controls.Add(label21);
-            pnlSupervisors.Location = new System.Drawing.Point(14, 33);
+            pnlSupervisors.Location = new System.Drawing.Point(15, 31);
             pnlSupervisors.Name = "pnlSupervisors";
-            pnlSupervisors.Size = new System.Drawing.Size(1340, 778);
+            pnlSupervisors.Size = new System.Drawing.Size(1343, 778);
             pnlSupervisors.TabIndex = 27;
             // 
             // listView3
