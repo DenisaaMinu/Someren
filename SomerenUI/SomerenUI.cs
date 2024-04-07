@@ -74,24 +74,14 @@ namespace SomerenUI
         private void studentsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowStudentsPanel();
+            ClearTextBoxesStudent();
         }
 
-        private void listViewStudents_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (listViewStudents.SelectedItems.Count > 0)
-            {
-                ListViewItem selectedItem = listViewStudents.SelectedItems[0];
-                Student selectedStudent = (Student)selectedItem.Tag;
-
-                MessageBox.Show($"Student {selectedStudent.Name} selected.");
-                FillTextBoxesStudent(selectedStudent);
-            }
-        }
 
         private void FillTextBoxesStudent(Student student)
         {
             txtStudentName.Text = student.Name;
-            txtStudentNumber.Text = student.Number.ToString();
+            txtStudentNumber.Text = student.Number;
             txtStudentTelephoneNumber.Text = student.PhoneNumber;
             txtStudentClass.Text = student.Class;
         }
@@ -595,6 +585,17 @@ namespace SomerenUI
         }
 
         // Manage students
+        private void listViewStudents_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listViewStudents.SelectedItems.Count > 0)
+            {
+                ListViewItem selectedItem = listViewStudents.SelectedItems[0];
+                Student selectedStudent = (Student)selectedItem.Tag;
+
+                FillTextBoxesStudent(selectedStudent);
+            }
+        }
+
         private void ModifyStudentProperties(Student selectedStudent)
         {
             selectedStudent.Name = txtStudentName.Text;
@@ -608,11 +609,11 @@ namespace SomerenUI
         {
             try
             {
-                Student student = new Student();                              // Get new student
-                ModifyStudentProperties(student);
+                Student selectedStudent = GetSelectedStudent(); // Check if a student                              // Get new student
+                ModifyStudentProperties(selectedStudent);
 
                 StudentService studentService = new StudentService();        // Add new drink
-                studentService.AddStudent(student);
+                studentService.AddStudent(selectedStudent);
 
                 ShowStudentsPanel();                   // Show updated list view
                 ClearTextBoxesStudent();
@@ -629,18 +630,16 @@ namespace SomerenUI
         {
             try
             {
-                DialogResult answer = MessageBox.Show("Are you sure you want to delete this student?");   // Get confirmation from the user
+                Student selectedStudent = GetSelectedStudent();
+                DialogResult answer = MessageBox.Show("Are you sure you want to delete this student?", "Confirmation", MessageBoxButtons.YesNo);   // Get confirmation from the user
 
-                ListViewItem selectedItem = listViewStudents.SelectedItems[0];
-                Student selectedStudent = (Student)selectedItem.Tag;
-
-                if (answer == DialogResult.OK)
+                if (answer == DialogResult.Yes)
                 {
                     StudentService studentService = new StudentService();
-                    studentService.DeleteStudent(selectedStudent);                          // Delete student
+                    studentService.DeleteStudent(selectedStudent);                    // Delete student
                     ShowStudentsPanel();                                             // Show the updated list 
                 }
-                else
+                else if (answer == DialogResult.No)
                 {
                     MessageBox.Show($"{selectedStudent.Name} won't be deleted.");  // Cancel deletion
                 }
@@ -655,30 +654,42 @@ namespace SomerenUI
         {
             try
             {
-                if (listViewStudents.SelectedItems.Count > 0)                           // Check if a student has been selected
-                {
-                    ListViewItem selectedItem = listViewStudents.SelectedItems[0];     // Get the selected student from the list view
-                    Student selectedStudent = (Student)selectedItem.Tag;
+                Student student = GetSelectedStudent();
+                ListViewItem selectedItem = listViewStudents.SelectedItems[0];     // Get the selected student from the list view
+                Student selectedStudent = (Student)selectedItem.Tag;
 
-                    ModifyStudentProperties(selectedStudent);
+                ModifyStudentProperties(selectedStudent);
 
-                    StudentService studentService = new StudentService();
-                    studentService.ModifyStudent(selectedStudent);
+                StudentService studentService = new StudentService();
+                studentService.ModifyStudent(selectedStudent);
 
-                    ShowStudentsPanel();                        // Show updated list view 
-                    ClearTextBoxesStudent();
+                ShowStudentsPanel();                        // Show updated list view 
+                ClearTextBoxesStudent();
 
-                    MessageBox.Show("Student modified");       // Show confirmation
-                }
-                else
-                {
-                    MessageBox.Show("Choose a student.");
-                }
+                MessageBox.Show("Student modified");       // Show confirmation
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);                 // Throw exception
             }
+        }
+
+        private Student GetSelectedStudent()
+        {
+            ListViewItem selectedItem;
+
+            if (listViewStudents.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("No student selected.");
+                return null;
+            }
+            else
+            {
+                selectedItem = listViewStudents.SelectedItems[0];     // Get the selected student from the list view
+                Student selectedStudent = (Student)selectedItem.Tag;
+            }
+
+            return (Student)selectedItem.Tag;   // get the selected student
         }
 
         private void ClearTextBoxesStudent()
@@ -688,9 +699,6 @@ namespace SomerenUI
             txtStudentClass.Text = null;
             txtStudentTelephoneNumber.Text = null;
         }
-
-
-
 
         // Activity participants
 
@@ -906,7 +914,7 @@ namespace SomerenUI
             }
             else if (listViewParticipants.SelectedItems.Count == 0)
             {
-                MessageBox.Show("Please select a student from the participants list fïrst.");
+                MessageBox.Show("Please select a student from the participants list fÃ¯rst.");
                 return; // Exit the method early
             }
 
