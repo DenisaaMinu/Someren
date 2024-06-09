@@ -40,15 +40,16 @@ namespace SomerenDAL
 
         public void PlaceOrder(int drinkId, int studentId, int amount, double price, DateTime date)
         {
-            string query = "INSERT INTO [ORDER] (drinkId, studentId, amount, price, date) " +
-                           "VALUES (@DrinkId, @StudentId, @Amount, @Price, @Date)";
+            string query = "INSERT INTO [ORDER] (drinkId, studentId, amount, date) " +
+                           "VALUES (@DrinkId, @StudentId, @Amount, @Date)";
+
 
             SqlParameter[] sqlParameters =
             {
                 new SqlParameter("@DrinkId", drinkId),
                 new SqlParameter("@StudentId", studentId),
                 new SqlParameter("@Amount", amount),
-                new SqlParameter("@Price", price),
+               // new SqlParameter("@Price", price), //decimal
                 new SqlParameter("@Date", date)
             };
 

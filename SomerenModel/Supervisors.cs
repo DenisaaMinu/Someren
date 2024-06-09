@@ -9,7 +9,7 @@ namespace SomerenModel
     
         public class Supervisors
         {
-            public int lecturerId { get; set; }
+            public int lectureId { get; set; }
             public string firstName { get; set; }
             public string lastName { get; set; }
             public int ActivityID { get; set; }

@@ -168,7 +168,10 @@ namespace SomerenUI
             return li;
         }
 
-
+        private void lecturersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowTeachersPanel();
+        }
 
         //rooms
         private void ShowRoomsPanel()
@@ -513,6 +516,8 @@ namespace SomerenUI
 
                 // Clear section and reset values
                 ClearSectionAndResetValues();
+
+
             }
             else
             {
@@ -1076,5 +1081,7 @@ namespace SomerenUI
         {
             ShowSupervisorPanel();
         }
+
+
     }
 }

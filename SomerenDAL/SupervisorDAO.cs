@@ -35,9 +35,9 @@ namespace SomerenDAL
         public List<Supervisors> GetNotSupervisor()
         {
             string query = @"SELECT  l.lecturerId, l.firstName ,  l.lastName 
-            FROM dbo.LECTURER l
-            LEFT JOIN dbo.supervise s ON l.lecturerId = s.lectureID
-            WHERE s.lecturerId IS NULL";
+            FROM dbo.LECTURER l WHERE l.lecturerId NOT IN (SELECT lectureID FROM dbo.supervise)";
+           // LEFT JOIN dbo.supervise s ON l.lecturerId = s.lectureID
+           // WHERE s.lecturerID IS NULL";
             SqlParameter[] sqlParameters = new SqlParameter[0];
 
             return ReadNotSupervisors(ExecuteSelectQuery(query, sqlParameters));
@@ -51,7 +51,7 @@ namespace SomerenDAL
             {
                 Supervisors supervisor = new Supervisors()
                 {
-                    lecturerId = (int)dr["lectureID"],
+                    lectureId = (int)dr["lectureID"],
                     firstName = dr["FirstName"].ToString(),
                     lastName = dr["LastName"].ToString()
                 };
@@ -71,7 +71,7 @@ namespace SomerenDAL
                 {
                     ActivityID = (int)dr["activityID"],
                     
-                    lecturerId = (int)dr["lectureID"],
+                    lectureId = (int)dr["lectureID"],
                     
                 };
                 supervisorActivities.Add(supervisorActivity);
@@ -87,7 +87,7 @@ namespace SomerenDAL
             {
                 Supervisors supervisor = new Supervisors()
                 {
-                    lecturerId = (int)dr["lecturerID"],
+                    lectureId = (int)dr["lecturerId"],
                     firstName = dr["FirstName"].ToString(),
                     lastName = dr["LastName"].ToString()
                 };
@@ -102,22 +102,22 @@ namespace SomerenDAL
         }
         public void RemoveSupervisor(int activityID, int lecturerID)
         {
-            string query = "DELETE FROM dbo.supervise WHERE activityID = @ActivityID AND lectureID = @LecturerID";
+            string query = "DELETE FROM dbo.supervise WHERE activityID = @ActivityID AND lectureID = @LectureID";
             SqlParameter[] parameters = new SqlParameter[]
             {
             new SqlParameter("@ActivityID", activityID),
-            new SqlParameter("@LecturerID", lecturerID)
+            new SqlParameter("@LectureID", lecturerID)
             };
             ExecuteNonQuery(query, parameters);
         }
 
         public void AddSupervisor(int activityID, int lecturerID)
         {
-            string query = "INSERT INTO dbo.supervise(activityID, lectureID) VALUES(@ActivityID, @LecturerID)";
+            string query = "INSERT INTO dbo.supervise(activityID, lectureID) VALUES(@ActivityID, @LectureID)";
             SqlParameter[] parameters = new SqlParameter[]
             {
         new SqlParameter("@ActivityID", SqlDbType.Int) { Value = activityID },
-        new SqlParameter("@LecturerID", SqlDbType.Int) { Value = lecturerID }
+        new SqlParameter("@LectureID", SqlDbType.Int) { Value = lecturerID }
             };
             ExecuteNonQuery(query, parameters);
         }
